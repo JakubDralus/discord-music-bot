@@ -1,5 +1,6 @@
 package com.example;
 
+import com.example.spotify.SpotifyToken;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 
@@ -10,5 +11,6 @@ public class Main {
         JDA jda = JDABuilder.createDefault(token).build();
         
         System.out.println("success!");
+        SpotifyToken.aquireToken();
     }
 }
