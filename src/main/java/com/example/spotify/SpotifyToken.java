@@ -22,10 +22,10 @@ import java.util.concurrent.CompletionException;
 @RequiredArgsConstructor
 public class SpotifyToken {
     
-    // from example file in github
+    // ------------------------------ from github example ----------------------------
     public static void clientCredentials_Async() {
         SpotifyApi spotifyApi = SpotifyApiInstance.getSpotifyApi();
-        final ClientCredentialsRequest clientCredentialsRequest = spotifyApi.clientCredentials().build();
+        ClientCredentialsRequest clientCredentialsRequest = spotifyApi.clientCredentials().build();
         
         try {
             final CompletableFuture<ClientCredentials> clientCredentialsFuture = clientCredentialsRequest.executeAsync();
@@ -45,6 +45,7 @@ public class SpotifyToken {
     }
     
     
+    // ------------ mine -----------
     public static String getToken() {
         // Define the Spotify API endpoint and request data
         String url = "https://accounts.spotify.com/api/token";

@@ -10,6 +10,7 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import java.util.EnumSet;
 
 
+// todo make this shitty class cleaner
 public class Main {
     public static void main(String[] args) throws InterruptedException {
         EnumSet<GatewayIntent> intents = EnumSet.of(
@@ -43,7 +44,6 @@ public class Main {
         
         // Now we can access the fully loaded cache and show some statistics or do other cache dependent things
         System.out.println("Guilds: " + jda.getGuildCache().size());
-    
         
         
         // Spotify

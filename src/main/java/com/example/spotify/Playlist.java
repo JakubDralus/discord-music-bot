@@ -91,8 +91,32 @@ public class Playlist {
         return tracks;
     }
     
+    // todo: make this when endpoint in RatPartyMixTracker is done
+    public String getDailySongId() {
+        String url = "";
+        String dailySongId = "";
     
-    // ------------- from github example ----------------
+        // Create an HTTP request
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .GET()
+                .build();
+        try {
+            HttpClient httpClient = HttpClient.newHttpClient();
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode rootNode = objectMapper.readTree(response.body());
+    
+            return rootNode.get("id").toString();
+        }
+        catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    // ------------------------------ from github example ----------------------------
     public static void getPlaylistsItems_Async() {
         SpotifyToken.clientCredentials_Async(); // get token
         int offset = 0;
