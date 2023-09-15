@@ -1,5 +1,7 @@
 package com.example.modules.discord;
 
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.message.MessageDeleteEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
@@ -9,19 +11,39 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Objects;
+import java.util.stream.IntStream;
 
 
-public class Listeners extends ListenerAdapter {
+public class Listener extends ListenerAdapter {
     
-    private static final Logger LOGGER = LoggerFactory.getLogger(Listeners.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Listener.class);
     
     @Override
     public void onReady(@NotNull ReadyEvent event) {
         LOGGER.info("I am ready to go!");
+        JDA jda = event.getJDA();
+    
+        // Now we can access the fully loaded cache and print out list of all servers where bot is running
+        System.out.println("Guilds: " + jda.getGuildCache().size());
+        IntStream.range(0, jda.getGuilds().size())
+                .forEach(i -> System.out.println((i+1) + " " + jda.getGuilds().get(i).getName()));
+        
+        System.out.println("channels: " + jda.getTextChannels());
+        for(var channel: jda.getTextChannels()) {
+            if (channel.getName().equals("bot-test"))
+                channel.sendMessage("Let's play some fucking bangers :sunglasses:").queue();
+        }
+        
+        long RatPartyMixServerId = 598494742896181267L;
+        Guild guild = jda.getGuildById(RatPartyMixServerId);
+        assert guild != null;
+        guild.upsertCommand("dupa", "test command").queue();
     }
     
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
+        if (event.getAuthor().isBot()) return;
+        
         if (event.isFromGuild()) {
             onGuildMessageReceived(event);
         }
@@ -31,23 +53,25 @@ public class Listeners extends ListenerAdapter {
     }
     
     private void onPrivateMessageReceived(MessageReceivedEvent event) {
-        String authorName = event.getAuthor().getName();
-        String contentDisplay = event.getMessage().getContentDisplay();
-        String nickname = event.getAuthor().getEffectiveName();
         String channelName = "<private channel>";
+        String authorName = event.getAuthor().getName();
+        String nickname = event.getAuthor().getEffectiveName();
+        String contentDisplay = event.getMessage().getContentDisplay();
     
         LOGGER.info(String.format("%s [%s - %s]: %s",
                 channelName,
                 authorName,
                 nickname,
                 contentDisplay));
+        
+        event.getChannel().sendMessage(contentDisplay).queue();
     }
     
     private void onGuildMessageReceived(MessageReceivedEvent event) {
         String guild = event.getGuild().getName();
+        String channelName = event.getChannel().getName();
         String authorName = event.getAuthor().getName();
         String nickname = Objects.requireNonNull(event.getMember()).getNickname();
-        String channelName = event.getChannel().getName();
         String contentDisplay = event.getMessage().getContentDisplay();
         
         if (nickname == null) nickname = "<no nickname>";
@@ -58,12 +82,15 @@ public class Listeners extends ListenerAdapter {
                 authorName,
                 nickname,
                 contentDisplay));
+        
+//        event.getAuthor().openPrivateChannel().queue(privateChannel ->
+//                privateChannel.sendMessage("siema").queue()
+//        );
     }
     
     @Override
     public void onMessageDelete(@NotNull MessageDeleteEvent event) {
         String channelName = event.getChannel().getName();
-    
         LOGGER.info(String.format("Message deleted on channel: #%s", channelName));
     }
 }
