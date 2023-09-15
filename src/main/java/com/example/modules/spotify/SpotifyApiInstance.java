@@ -1,4 +1,4 @@
-package com.example.spotify;
+package com.example.modules.spotify;
 
 import se.michaelthelin.spotify.SpotifyApi;
 

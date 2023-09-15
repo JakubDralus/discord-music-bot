@@ -1,17 +1,17 @@
 package com.example;
 
-import com.example.discord.Listeners;
-import com.example.spotify.Playlist;
+import com.example.modules.discord.Listeners;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 
 import java.util.EnumSet;
+import java.util.stream.IntStream;
 
 
 // todo make this shitty class cleaner
-public class Main {
+public class Application {
     public static void main(String[] args) throws InterruptedException {
         EnumSet<GatewayIntent> intents = EnumSet.of(
                 // Enables MessageReceivedEvent for guild (also known as servers)
@@ -42,11 +42,14 @@ public class Main {
         // If you want to access the cache, you can use awaitReady() to block the main thread until the jda instance is fully loaded
         jda.awaitReady();
         
-        // Now we can access the fully loaded cache and show some statistics or do other cache dependent things
+        // Now we can access the fully loaded cache and print out list of all servers where bot is running
         System.out.println("Guilds: " + jda.getGuildCache().size());
+        IntStream.range(0, jda.getGuilds().size())
+                .forEach(i -> System.out.println((i+1) + " " + jda.getGuilds().get(i).getName()));
         
         
         // Spotify
-        Playlist.getPlaylistsItems_Async();
+        //Playlist.getPlaylistsItems_Async();
+        
     }
 }
