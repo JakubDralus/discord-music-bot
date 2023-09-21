@@ -1,7 +1,8 @@
 package com.example;
 
-import com.example.modules.discord.Listener;
-import com.example.modules.discord.commands.Dupa;
+import com.example.modules.discord.commands.CommandManager;
+import com.example.modules.discord.commands.Listener;
+import com.example.modules.discord.commands.TestCommands;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
@@ -31,14 +32,15 @@ public class Application {
                 GatewayIntent.DIRECT_MESSAGE_REACTIONS
         );
         
-        String discordToken = args[0];
+        final String discordToken = args[0];
         
         // start the bot
         JDA jda = JDABuilder.createDefault(discordToken, intents)
+                .addEventListeners(new CommandManager())
                 .addEventListeners(new Listener())
                 .setActivity(Activity.watching("waiting for a prompt"))
-                .addEventListeners(new Dupa())
                 .build();
+        new TestCommands().addTestCommands(jda, "598494742896181267");
     
         jda.getRestPing().queue(ping ->
                 // shows ping in milliseconds

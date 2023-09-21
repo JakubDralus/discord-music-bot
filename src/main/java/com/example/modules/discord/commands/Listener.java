@@ -1,7 +1,6 @@
-package com.example.modules.discord;
+package com.example.modules.discord.commands;
 
 import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.message.MessageDeleteEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
@@ -35,9 +34,9 @@ public class Listener extends ListenerAdapter {
         }
         
         long RatPartyMixServerId = 598494742896181267L;
-        Guild guild = jda.getGuildById(RatPartyMixServerId);
-        assert guild != null;
-        guild.upsertCommand("dupa", "test command").queue();
+//        Guild guild = jda.getGuildById(RatPartyMixServerId);
+//        assert guild != null;
+//        guild.upsertCommand("dupa", "test command").queue();
     }
     
     @Override
