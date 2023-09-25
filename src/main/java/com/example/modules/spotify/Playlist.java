@@ -27,66 +27,6 @@ public class Playlist {
     private static final String ratPartyMix2023id = "0RHhiQ6hGLKgjE7eqNdXzh";
     private static final Map<Integer, String> tracks = new HashMap<>();
     
-    // @Deprecated
-    public static void getPlaylistItems() {
-        String spotifyToken = SpotifyToken.getToken();
-        String url = "https://api.spotify.com/v1/playlists/" + ratPartyMix2023id + "/tracks";
-        HttpClient httpClient = HttpClient.newHttpClient();
-        ObjectMapper objectMapper = new ObjectMapper();
-        
-        // Create an HTTP request
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .header("Authorization", "Bearer " + spotifyToken)
-                .GET()
-                .build();
-    
-        // Send the request asynchronously
-        try {
-            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-            JsonNode rootNode = objectMapper.readTree(response.body());
-            
-            displayTracks(rootNode.get("items"), 0);
-            url = rootNode.get("next").toString().replace("\"", "");
-        }
-        catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-        }
-        
-        
-        HttpRequest nextRequest = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .header("Authorization", "Bearer " + spotifyToken)
-                .GET()
-                .build();
-    
-        try {
-            HttpResponse<String> response = httpClient.send(nextRequest, HttpResponse.BodyHandlers.ofString());
-            JsonNode rootNode = objectMapper.readTree(response.body());
-        
-            displayTracks(rootNode.get("items"), 100);
-        }
-        catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-    
-    private static void displayTracks(JsonNode items, int offset) {
-        for (var track: items) {
-            StringBuilder song = new StringBuilder();
-            song.append(" ").append(track.get("track").get("name")).append(" - ");
-        
-            for (var artist: track.get("track").get("artists")) {
-                song.append(artist.get("name")).append(", ");
-            }
-            song.setLength(song.length() - 2); //remove last `, `
-            String songStr = song.toString().replace("\"", ""); // remove quotes from json
-            
-            tracks.put(++offset, songStr);
-            System.out.println(offset + " " + songStr);
-        }
-    }
-    
     public static Map<Integer, String> getTracks() {
         return tracks;
     }
@@ -134,7 +74,7 @@ public class Playlist {
                 
                 Paging<PlaylistTrack> playlistTrackPaging = pagingFuture.join();
                 
-                printTracks(playlistTrackPaging.getItems(), offset);
+                loadTracks(playlistTrackPaging.getItems(), offset);
                 
                 // Check if there are more pages
                 morePages = playlistTrackPaging.getNext() != null;
@@ -149,7 +89,7 @@ public class Playlist {
         }
     }
     
-    private static void printTracks(PlaylistTrack[] tracks, int offset) {
+    private static void loadTracks(PlaylistTrack[] tracks, int offset) {
         for (var track: tracks) {
             StringBuilder song = new StringBuilder();
             song.append(" ").append(track.getTrack().getName()).append(" - ");
@@ -162,6 +102,70 @@ public class Playlist {
             String songStr = song.toString().replace("\"", ""); // remove quotes from json
 
             Playlist.tracks.put(++offset, songStr);
+            
+            //System.out.println(offset + " " + songStr);
+        }
+    }
+    
+    // ---------------------------------------------
+    
+    // @Deprecated
+    public static void getPlaylistItems() {
+        String spotifyToken = SpotifyToken.getToken();
+        String url = "https://api.spotify.com/v1/playlists/" + ratPartyMix2023id + "/tracks";
+        HttpClient httpClient = HttpClient.newHttpClient();
+        ObjectMapper objectMapper = new ObjectMapper();
+        
+        // Create an HTTP request
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .header("Authorization", "Bearer " + spotifyToken)
+                .GET()
+                .build();
+        
+        // Send the request asynchronously
+        try {
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            JsonNode rootNode = objectMapper.readTree(response.body());
+            
+            displayTracks(rootNode.get("items"), 0);
+            url = rootNode.get("next").toString().replace("\"", "");
+        }
+        catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        
+        
+        HttpRequest nextRequest = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .header("Authorization", "Bearer " + spotifyToken)
+                .GET()
+                .build();
+        
+        try {
+            HttpResponse<String> response = httpClient.send(nextRequest, HttpResponse.BodyHandlers.ofString());
+            JsonNode rootNode = objectMapper.readTree(response.body());
+            
+            displayTracks(rootNode.get("items"), 100);
+        }
+        catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    // @Deprecated
+    private static void displayTracks(JsonNode items, int offset) {
+        for (var track: items) {
+            StringBuilder song = new StringBuilder();
+            song.append(" ").append(track.get("track").get("name")).append(" - ");
+            
+            for (var artist: track.get("track").get("artists")) {
+                song.append(artist.get("name")).append(", ");
+            }
+            song.setLength(song.length() - 2); //remove last `, `
+            String songStr = song.toString().replace("\"", ""); // remove quotes from json
+            
+            tracks.put(++offset, songStr);
             System.out.println(offset + " " + songStr);
         }
     }

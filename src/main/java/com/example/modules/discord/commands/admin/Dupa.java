@@ -1,6 +1,7 @@
 package com.example.modules.discord.commands.admin;
 
 import com.example.modules.discord.commands.ISlashCommand;
+import com.example.modules.spotify.Playlist;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +20,9 @@ public class Dupa implements ISlashCommand {
     
     @Override
     public void execute(SlashCommandInteractionEvent event) {
-        event.reply("dupa reply").queue();
+        int playlistLength = Playlist.getTracks().size();
+        int randomId = (int)(Math.random() * playlistLength) + 1;
+        event.reply("dupa random song: "+ playlistLength + Playlist.getTracks().get(randomId)).queue();
         LOGGER.info("used /dupa command in {}", event.getChannel().getName());
     }
 }

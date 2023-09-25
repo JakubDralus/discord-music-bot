@@ -45,7 +45,7 @@ public class SpotifyToken {
     }
     
     
-    // ------------ mine -----------
+    // @Deprecated
     public static String getToken() {
         // Define the Spotify API endpoint and request data
         String url = "https://accounts.spotify.com/api/token";

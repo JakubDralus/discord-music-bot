@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 
+
 public class TestCommands {
     public void addTestCommands(JDA jda, String TEST_SERVER) {
         while (jda.getGuildById(TEST_SERVER) == null) {
@@ -24,13 +25,14 @@ public class TestCommands {
             testServerCommands = testServer.updateCommands();
         }
         
-        
         if (testServerCommands != null) {
             testServerCommands.addCommands(
                     //admin commands
-                    Commands.slash("dupa", "test command lol"),
+                    Commands.slash("dupa", "random song from playlist"),
                     Commands.slash("echo", "echo test")
-                            .addOptions(new OptionData(OptionType.STRING, "message", "message to be echoed", true))
+                        .addOptions(new OptionData(OptionType.STRING, "message", "message to be echoed", true)),
+                    Commands.slash("info", "Info page for this music bot."),
+                    Commands.slash("twitter", "Info page for Twitter site.")
             ).queue();
         }
     }

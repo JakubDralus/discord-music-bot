@@ -1,8 +1,10 @@
 package com.example;
 
 import com.example.modules.discord.commands.CommandManager;
+import com.example.modules.discord.commands.GlobalCommands;
 import com.example.modules.discord.commands.Listener;
 import com.example.modules.discord.commands.TestCommands;
+import com.example.modules.spotify.Playlist;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
@@ -41,6 +43,7 @@ public class Application {
                 .setActivity(Activity.watching("waiting for a prompt"))
                 .build();
         new TestCommands().addTestCommands(jda, "598494742896181267");
+        new GlobalCommands().addGlobalCommands(jda);
     
         jda.getRestPing().queue(ping ->
                 // shows ping in milliseconds
@@ -52,7 +55,7 @@ public class Application {
         
         
         // Spotify
-        //Playlist.getPlaylistsItems_Async();
+        Playlist.getPlaylistsItems_Async();
         
     }
 }
