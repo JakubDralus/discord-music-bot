@@ -32,11 +32,6 @@ public class Listener extends ListenerAdapter {
             if (channel.getName().equals("bot-test"))
                 channel.sendMessage("Let's play some fucking bangers :sunglasses:").queue();
         }
-        
-        long RatPartyMixServerId = 598494742896181267L;
-//        Guild guild = jda.getGuildById(RatPartyMixServerId);
-//        assert guild != null;
-//        guild.upsertCommand("dupa", "test command").queue();
     }
     
     @Override

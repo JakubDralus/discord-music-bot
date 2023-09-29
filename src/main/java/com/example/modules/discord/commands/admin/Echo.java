@@ -13,6 +13,6 @@ public class Echo implements ISlashCommand {
     public void execute(SlashCommandInteractionEvent event) {
         String message = event.getOption("message").getAsString();
         event.reply(message).queue();
-        LOGGER.info("used /echo command in {}", event.getChannel().getName());
+        LOGGER.info("used /echo command in {} (message: {})", event.getChannel().getName(), message);
     }
 }
