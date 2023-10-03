@@ -31,10 +31,13 @@ public class Application {
                 // Enables MessageReactionAddEvent for guild
                 GatewayIntent.GUILD_MESSAGE_REACTIONS,
                 // Enables MessageReactionAddEvent for private channels
-                GatewayIntent.DIRECT_MESSAGE_REACTIONS
+                GatewayIntent.DIRECT_MESSAGE_REACTIONS,
+                
+                GatewayIntent.GUILD_VOICE_STATES
         );
         
         final String discordToken = args[0];
+        String RatPartyMixServerId = "598494742896181267";
         
         // start the bot
         JDA jda = JDABuilder.createDefault(discordToken, intents)
@@ -42,7 +45,7 @@ public class Application {
                 .addEventListeners(new Listener())
                 .setActivity(Activity.watching("waiting for a prompt"))
                 .build();
-        new TestCommands().addTestCommands(jda, "598494742896181267");
+        new TestCommands().addTestCommands(jda, RatPartyMixServerId);
         new GlobalCommands().addGlobalCommands(jda);
     
         jda.getRestPing().queue(ping ->
@@ -53,9 +56,7 @@ public class Application {
         // If you want to access the cache, you can use awaitReady() to block the main thread until the jda instance is fully loaded
         jda.awaitReady();
         
-        
         // Spotify
         Playlist.getPlaylistsItems_Async();
-        
     }
 }

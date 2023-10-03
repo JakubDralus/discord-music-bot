@@ -4,6 +4,7 @@ import com.example.modules.discord.commands.admin.Dupa;
 import com.example.modules.discord.commands.admin.Echo;
 import com.example.modules.discord.commands.admin.Info;
 import com.example.modules.discord.commands.admin.Twitter;
+import com.example.modules.discord.commands.music.Play;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -50,7 +51,7 @@ public class CommandManager extends ListenerAdapter {
         commandsMap.put("twitter", new Twitter());
         
         //Music Commands
-//        commandsMap.put("play", new PlayCommand(restService, playerManagerService, trackService));
+        commandsMap.put("play", new Play());
 //        commandsMap.put("skip", new SkipCommand(playerManagerService, musicCommandUtils));
 //        commandsMap.put("forward", new ForwardCommand(playerManagerService, musicCommandUtils));
 //        commandsMap.put("rewind", new RewindCommand(playerManagerService, musicCommandUtils));

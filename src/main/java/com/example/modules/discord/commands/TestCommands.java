@@ -32,7 +32,9 @@ public class TestCommands {
                     Commands.slash("echo", "echo test")
                         .addOptions(new OptionData(OptionType.STRING, "message", "message to be echoed", true)),
                     Commands.slash("info", "Info page for this music bot."),
-                    Commands.slash("twitter", "Info page for Twitter site.")
+                    Commands.slash("twitter", "Info page for Twitter site."),
+                    Commands.slash("play", "plays music track")
+                        .addOptions(new OptionData(OptionType.STRING, "trackURL", "track to be played", true))
             ).queue();
         }
     }
