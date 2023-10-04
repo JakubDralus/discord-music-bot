@@ -5,15 +5,12 @@ import com.example.modules.discord.commands.ISlashCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.channel.middleman.AudioChannel;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 import java.util.Objects;
 
 
-public class Play implements ISlashCommand {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Play.class);
+public class YeahBuddy implements ISlashCommand {
     
     @Override
     public void execute(SlashCommandInteractionEvent event) {
@@ -32,19 +29,13 @@ public class Play implements ISlashCommand {
             event.getGuild().getAudioManager().openAudioConnection(userChannel);
             botChannel = userChannel;
         }
-        
+    
         if (!Objects.equals(botChannel, userChannel)) {
             event.replyEmbeds(new EmbedBuilder().setDescription("Please be in the same voice channel as the bot.")
                     .setColor(Color.RED).build()).queue();
         }
-    
+        
         PlayerManager playerManager = PlayerManager.get();
-        
-        // set event for scheduler to make him display a current track being played
-        playerManager.getMusicManager(event.getGuild()).getScheduler().setEvent(event);
-        
-        playerManager.play(event.getGuild(), event.getOption("track").getAsString(), event);
-        
-        LOGGER.info("used /play command in {}", event.getChannel().getName());
+        playerManager.play(event.getGuild(), "C:\\Users\\kubad\\Downloads\\YeahBuddy.mp4", event);
     }
 }

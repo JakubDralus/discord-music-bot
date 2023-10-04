@@ -1,10 +1,12 @@
 package com.example;
 
+import com.example.modules.audioplayer.PlayerManager;
 import com.example.modules.discord.commands.CommandManager;
 import com.example.modules.discord.commands.GlobalCommands;
 import com.example.modules.discord.commands.Listener;
 import com.example.modules.discord.commands.TestCommands;
 import com.example.modules.spotify.Playlist;
+import lombok.RequiredArgsConstructor;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;

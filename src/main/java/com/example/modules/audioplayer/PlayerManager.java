@@ -15,16 +15,25 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
-// singleton?
+
+// singleton
 public class PlayerManager {
+    private static PlayerManager INSTANCE;
     private final Map<Long, GuildMusicManager> musicManagers;
     private final AudioPlayerManager audioPlayerManager;
     
-    public PlayerManager() {
+    private PlayerManager() {
         this.musicManagers = new HashMap<>();
         this.audioPlayerManager = new DefaultAudioPlayerManager();
         AudioSourceManagers.registerRemoteSources(this.audioPlayerManager);
         AudioSourceManagers.registerLocalSource(this.audioPlayerManager);
+    }
+    
+    public static PlayerManager get() {
+        if (INSTANCE == null) {
+            INSTANCE = new PlayerManager();
+        }
+        return INSTANCE;
     }
     
     public GuildMusicManager getMusicManager(Guild guild) {
@@ -40,13 +49,14 @@ public class PlayerManager {
     public void play(Guild guild, String trackURL, SlashCommandInteractionEvent event) {
         GuildMusicManager musicManager = getMusicManager(guild);
         EmbedBuilder embedBuilder = new EmbedBuilder();
+        
         audioPlayerManager.loadItemOrdered(musicManager, trackURL, new AudioLoadResultHandler() {
             @Override
             public void trackLoaded(AudioTrack track) {
                 embedBuilder.clear();
-                event.replyEmbeds(embedBuilder.setDescription("Song added to queue: " + track.getInfo().title
-                        + "\n in queue: " + (musicManager.getScheduler().getQueue().size() + 1)).setColor(Color.GREEN).build()).queue();
                 musicManager.getScheduler().queue(track);
+//                event.replyEmbeds(embedBuilder.setDescription("Song added to queue: " + track.getInfo().title
+//                        + "\n in queue: " + (musicManager.getScheduler().getQueue().size() + 1)).setColor(Color.GREEN).build()).queue();
             }
         
             @Override

@@ -33,8 +33,10 @@ public class TestCommands {
                         .addOptions(new OptionData(OptionType.STRING, "message", "message to be echoed", true)),
                     Commands.slash("info", "Info page for this music bot."),
                     Commands.slash("twitter", "Info page for Twitter site."),
+                    
+                    Commands.slash("yeahbuddy", "GO TO THE GYM!!!"),
                     Commands.slash("play", "plays music track")
-                        .addOptions(new OptionData(OptionType.STRING, "trackURL", "track to be played", true))
+                        .addOptions(new OptionData(OptionType.STRING, "track", "track to be played", true))
             ).queue();
         }
     }
