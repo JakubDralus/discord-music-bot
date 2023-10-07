@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.awt.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Objects;
 
 
@@ -43,7 +45,15 @@ public class Play implements ISlashCommand {
         // set event for scheduler to make him display a current track being played
         playerManager.getMusicManager(event.getGuild()).getScheduler().setEvent(event);
         
-        playerManager.play(event.getGuild(), event.getOption("track").getAsString(), event);
+        String trackName = event.getOption("track").getAsString();
+        try {
+            new URI(trackName);
+        }
+        catch (URISyntaxException e) {
+            trackName = "ytsearch: " + trackName;
+        }
+        
+        playerManager.play(event.getGuild(), trackName, true);
         
         LOGGER.info("used /play command in {}", event.getChannel().getName());
     }

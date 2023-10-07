@@ -29,15 +29,17 @@ public class TrackScheduler extends AudioEventAdapter {
         this.queue = new LinkedBlockingQueue<>();
     }
     
-    public void queue(AudioTrack track) {
+    public void queue(AudioTrack track, boolean reply) {
         if (!player.startTrack(track, true)) {
             queue.offer(track);
             
-            event.replyEmbeds(new EmbedBuilder()
-                    .setTitle("Added to queue: ")
-                    .setDescription(track.getInfo().title + "\n")
-                    .build()
-            ).queue();
+            if (reply && !event.isAcknowledged()) {
+                event.replyEmbeds(new EmbedBuilder()
+                        .setTitle("Added to queue: ")
+                        .setDescription(track.getInfo().title + "\n")
+                        .build()
+                ).queue();
+            }
         }
     }
     

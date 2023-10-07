@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import se.michaelthelin.spotify.SpotifyApi;
 import se.michaelthelin.spotify.model_objects.credentials.ClientCredentials;
 import se.michaelthelin.spotify.requests.authorization.client_credentials.ClientCredentialsRequest;
@@ -21,6 +23,8 @@ import java.util.concurrent.CompletionException;
 @Getter
 @RequiredArgsConstructor
 public class SpotifyToken {
+    private static final Logger LOGGER = LoggerFactory.getLogger(SpotifyToken.class);
+    
     
     // ------------------------------ from github example ----------------------------
     public static void clientCredentials_Async() {
@@ -35,6 +39,8 @@ public class SpotifyToken {
             
             // Set access token for further "spotifyApi" object usage
             spotifyApi.setAccessToken(clientCredentials.getAccessToken());
+            
+            LOGGER.info("Spotify token acquired");
         }
         catch (CompletionException e) {
             System.out.println("Error: " + e.getCause().getMessage());

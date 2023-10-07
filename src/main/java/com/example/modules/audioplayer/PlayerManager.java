@@ -9,7 +9,6 @@ import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,7 +44,7 @@ public class PlayerManager {
         });
     }
     
-    public void play(Guild guild, String trackURL, SlashCommandInteractionEvent event) {
+    public void play(Guild guild, String trackURL, boolean reply) {
         GuildMusicManager musicManager = getMusicManager(guild);
         EmbedBuilder embedBuilder = new EmbedBuilder();
         
@@ -53,18 +52,12 @@ public class PlayerManager {
             @Override
             public void trackLoaded(AudioTrack track) {
                 embedBuilder.clear();
-                musicManager.getScheduler().queue(track);
+                musicManager.getScheduler().queue(track, true);
             }
         
             @Override
             public void playlistLoaded(AudioPlaylist playlist) {
-//                List<AudioTrack> tracks = playlist.getTracks();
-//
-//                for (AudioTrack track : tracks) {
-//                    musicManager.getScheduler().queue(track);
-//                }
-//                event.replyEmbeds(new EmbedBuilder().setDescription(tracks.size() + " song added to queue.")
-//                        .setColor(Color.GREEN).build()).queue();
+                musicManager.getScheduler().queue(playlist.getTracks().get(0), reply);
             }
         
             @Override

@@ -41,7 +41,8 @@ public class TestCommands {
                     Commands.slash("stop", "stops current track"),
                     Commands.slash("resume", "resumes current track"),
                     Commands.slash("skip", "skips current track"),
-                    Commands.slash("leave", "bot leaves the channel")
+                    Commands.slash("leave", "bot leaves the channel"),
+                    Commands.slash("ratpartymix", "play the Rat Paty Mix 2023™ playlist")
             ).queue();
         }
     }

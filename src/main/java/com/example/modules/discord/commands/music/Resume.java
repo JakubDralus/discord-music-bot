@@ -7,19 +7,22 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.channel.middleman.AudioChannel;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 import java.util.Objects;
 
 
 public class Resume implements ISlashCommand {
+    private static final Logger LOGGER = LoggerFactory.getLogger(Resume.class);
     
     @Override
     public void execute(SlashCommandInteractionEvent event) {
         AudioChannel userChannel = Objects.requireNonNull(Objects
                 .requireNonNull(event.getMember()).getVoiceState()).getChannel();
-        AudioChannel botChannel = Objects.requireNonNull(Objects.
-                requireNonNull(event.getGuild()).getSelfMember().getVoiceState()).getChannel();
+        AudioChannel botChannel = Objects.requireNonNull(Objects
+                .requireNonNull(event.getGuild()).getSelfMember().getVoiceState()).getChannel();
     
         if (!event.getMember().getVoiceState().inAudioChannel()) {
             event.replyEmbeds(new EmbedBuilder().setDescription("Please join a voice channel.")
@@ -49,5 +52,7 @@ public class Resume implements ISlashCommand {
                 .setThumbnail("https://img.youtube.com/vi/" + playingTrack.getIdentifier() + "/hqdefault.jpg") // icon
                 .build()
         ).queue();
+    
+        LOGGER.info("used /skip command in {}", event.getChannel().getName());
     }
 }

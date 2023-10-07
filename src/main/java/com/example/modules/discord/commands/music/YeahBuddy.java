@@ -16,8 +16,8 @@ public class YeahBuddy implements ISlashCommand {
     public void execute(SlashCommandInteractionEvent event) {
         AudioChannel userChannel = Objects.requireNonNull(Objects
                 .requireNonNull(event.getMember()).getVoiceState()).getChannel();
-        AudioChannel botChannel = Objects.requireNonNull(Objects.
-                requireNonNull(event.getGuild()).getSelfMember().getVoiceState()).getChannel();
+        AudioChannel botChannel = Objects.requireNonNull(Objects
+                .requireNonNull(event.getGuild()).getSelfMember().getVoiceState()).getChannel();
     
         if (!event.getMember().getVoiceState().inAudioChannel()) {
             event.replyEmbeds(new EmbedBuilder().setDescription("Please join a voice channel.")
@@ -36,7 +36,7 @@ public class YeahBuddy implements ISlashCommand {
         }
         
         PlayerManager playerManager = PlayerManager.get();
-        playerManager.play(event.getGuild(), "C:\\Users\\kubad\\Downloads\\YeahBuddy.mp4", event);
+        playerManager.play(event.getGuild(), "C:\\Users\\kubad\\Downloads\\YeahBuddy.mp4", true);
     
         playerManager.getMusicManager(event.getGuild()).getScheduler().setEvent(event);
     }
