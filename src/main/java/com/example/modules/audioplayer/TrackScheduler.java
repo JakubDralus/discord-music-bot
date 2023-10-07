@@ -1,5 +1,6 @@
 package com.example.modules.audioplayer;
 
+import com.example.shared.Util;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
@@ -31,6 +32,25 @@ public class TrackScheduler extends AudioEventAdapter {
     public void queue(AudioTrack track) {
         if (!player.startTrack(track, true)) {
             queue.offer(track);
+            
+            event.replyEmbeds(new EmbedBuilder()
+                    .setTitle("Added to queue: ")
+                    .setDescription(track.getInfo().title + "\n")
+                    .build()
+            ).queue();
+        }
+    }
+    
+    @Override
+    public void onTrackStart(AudioPlayer player, AudioTrack track) {
+        if (!event.isAcknowledged()) {
+            event.replyEmbeds(new EmbedBuilder()
+                    .setTitle("Now playing: ")
+                    .setDescription(track.getInfo().title + "\n")
+                    .appendDescription(Util.durationFormat(track.getDuration()/1000))
+                    .setThumbnail("https://img.youtube.com/vi/" + track.getIdentifier() + "/hqdefault.jpg") // icon
+                    .build())
+            .queue();
         }
     }
     
@@ -42,21 +62,5 @@ public class TrackScheduler extends AudioEventAdapter {
         else {
             player.startTrack(queue.poll(), false);
         }
-    }
-    
-    @Override
-    public void onTrackStart(AudioPlayer player, AudioTrack track) {
-        event.replyEmbeds(new EmbedBuilder()
-                .setTitle("Now playing: ")
-                .setDescription(track.getInfo().title + "\n")
-                .appendDescription(timeFormat(track.getDuration()/1000))
-                .setThumbnail("https://img.youtube.com/vi/" + track.getIdentifier() + "/hqdefault.jpg") // icon
-                .build()).queue();
-    }
-    
-    private String timeFormat(long seconds) {
-        long minutes = seconds / 60;
-        long remainingSeconds = seconds % 60;
-        return minutes + ":" + remainingSeconds;
     }
 }

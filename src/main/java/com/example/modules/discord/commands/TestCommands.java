@@ -36,7 +36,12 @@ public class TestCommands {
                     
                     Commands.slash("yeahbuddy", "GO TO THE GYM!!!"),
                     Commands.slash("play", "plays music track")
-                        .addOptions(new OptionData(OptionType.STRING, "track", "track to be played", true))
+                        .addOptions(new OptionData(OptionType.STRING, "track", "track to be played", true)),
+                    Commands.slash("queue", "displays tracks in queue"),
+                    Commands.slash("stop", "stops current track"),
+                    Commands.slash("resume", "resumes current track"),
+                    Commands.slash("skip", "skips current track"),
+                    Commands.slash("leave", "bot leaves the channel")
             ).queue();
         }
     }

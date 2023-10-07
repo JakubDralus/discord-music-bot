@@ -10,8 +10,7 @@ import java.awt.*;
 import java.util.Objects;
 
 
-public class YeahBuddy implements ISlashCommand {
-    
+public class Stop implements ISlashCommand {
     @Override
     public void execute(SlashCommandInteractionEvent event) {
         AudioChannel userChannel = Objects.requireNonNull(Objects
@@ -34,10 +33,12 @@ public class YeahBuddy implements ISlashCommand {
             event.replyEmbeds(new EmbedBuilder().setDescription("Please be in the same voice channel as the bot.")
                     .setColor(Color.RED).build()).queue();
         }
-        
-        PlayerManager playerManager = PlayerManager.get();
-        playerManager.play(event.getGuild(), "C:\\Users\\kubad\\Downloads\\YeahBuddy.mp4", event);
     
-        playerManager.getMusicManager(event.getGuild()).getScheduler().setEvent(event);
+        PlayerManager playerManager = PlayerManager.get();
+    
+        playerManager.getMusicManager(event.getGuild()).getScheduler().getPlayer().setPaused(true);
+        event.reply("track paused").queue();
+        
+        //
     }
 }

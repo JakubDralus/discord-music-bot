@@ -4,8 +4,7 @@ import com.example.modules.discord.commands.admin.Dupa;
 import com.example.modules.discord.commands.admin.Echo;
 import com.example.modules.discord.commands.admin.Info;
 import com.example.modules.discord.commands.admin.Twitter;
-import com.example.modules.discord.commands.music.Play;
-import com.example.modules.discord.commands.music.YeahBuddy;
+import com.example.modules.discord.commands.music.*;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -53,19 +52,12 @@ public class CommandManager extends ListenerAdapter {
         
         //Music Commands
         commandsMap.put("play", new Play());
+        commandsMap.put("queue", new Queue());
+        commandsMap.put("skip", new Skip());
+        commandsMap.put("stop", new Stop());
+        commandsMap.put("resume", new Resume());
+        commandsMap.put("leave", new Leave());
+        commandsMap.put("ratpartymix", new RatPartyMix());
         commandsMap.put("yeahbuddy", new YeahBuddy());
-//        commandsMap.put("skip", new SkipCommand(playerManagerService, musicCommandUtils));
-//        commandsMap.put("forward", new ForwardCommand(playerManagerService, musicCommandUtils));
-//        commandsMap.put("rewind", new RewindCommand(playerManagerService, musicCommandUtils));
-//        commandsMap.put("pause", new PauseCommand(playerManagerService, musicCommandUtils));
-//        commandsMap.put("resume", new ResumeCommand(playerManagerService, musicCommandUtils));
-//        commandsMap.put("leave", new LeaveCommand(playerManagerService, musicCommandUtils));
-//        commandsMap.put("queue", new QueueCommand(playerManagerService));
-//        commandsMap.put("swap", new SwapCommand(playerManagerService, musicCommandUtils));
-//        commandsMap.put("shuffle", new ShuffleCommand(playerManagerService, musicCommandUtils));
-//        commandsMap.put("loop", new LoopCommand(playerManagerService, musicCommandUtils));
-//        commandsMap.put("remove", new RemoveCommand(playerManagerService, musicCommandUtils));
-//        commandsMap.put("nowplaying", new NowPlayingCommand(playerManagerService, musicCommandUtils));
-//        commandsMap.put("mhelp", new MusicHelpCommand(musicCommandUtils));
     }
 }

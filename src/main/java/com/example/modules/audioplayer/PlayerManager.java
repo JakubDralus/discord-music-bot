@@ -11,7 +11,6 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 
-import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,8 +54,6 @@ public class PlayerManager {
             public void trackLoaded(AudioTrack track) {
                 embedBuilder.clear();
                 musicManager.getScheduler().queue(track);
-//                event.replyEmbeds(embedBuilder.setDescription("Song added to queue: " + track.getInfo().title
-//                        + "\n in queue: " + (musicManager.getScheduler().getQueue().size() + 1)).setColor(Color.GREEN).build()).queue();
             }
         
             @Override
