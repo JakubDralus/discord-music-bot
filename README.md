@@ -1,5 +1,6 @@
 # discord-bot1
-discord bot for my playlist
+discord bot for my playlist: https://open.spotify.com/playlist/0RHhiQ6hGLKgjE7eqNdXzh?si=2e0e87d329dd4604
+
 
 # resources:
 https://github.com/discord-jda/JDA <br>
