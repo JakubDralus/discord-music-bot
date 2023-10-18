@@ -27,9 +27,14 @@ public class Listener extends ListenerAdapter {
         IntStream.range(0, jda.getGuilds().size())
                 .forEach(i -> System.out.println((i+1) + " " + jda.getGuilds().get(i).getName()));
         
-        System.out.println("channels: " + jda.getTextChannels());
+        System.out.print("\tchannels: ");
         for(var channel: jda.getTextChannels()) {
-            if (channel.getName().equals("bot-test"))
+            System.out.print(channel.getName() + ", ");
+        }
+        System.out.println();
+        
+        for(var channel: jda.getTextChannels()) {
+            if (channel.getName().equals("bot-test") && channel.getGuild().getName().equals("Rat Party Mix"))
                 channel.sendMessage("Let's play some fucking bangers :sunglasses:").queue();
         }
     }
@@ -76,10 +81,6 @@ public class Listener extends ListenerAdapter {
                 authorName,
                 nickname,
                 contentDisplay));
-        
-//        event.getAuthor().openPrivateChannel().queue(privateChannel ->
-//                privateChannel.sendMessage("siema").queue()
-//        );
     }
     
     @Override

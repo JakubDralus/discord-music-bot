@@ -2,8 +2,9 @@ package com.example.modules.discord.commands;
 
 import com.example.modules.discord.commands.admin.RandomSong;
 import com.example.modules.discord.commands.admin.Echo;
-import com.example.modules.discord.commands.admin.Info;
-import com.example.modules.discord.commands.admin.Twitter;
+import com.example.modules.discord.commands.other.Help;
+import com.example.modules.discord.commands.other.Info;
+import com.example.modules.discord.commands.other.Twitter;
 import com.example.modules.discord.commands.music.*;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
@@ -47,18 +48,24 @@ public class CommandManager extends ListenerAdapter {
         //Admin Commands
         commandsMap.put("random-song", new RandomSong());
         commandsMap.put("echo", new Echo());
+        
+        // other
         commandsMap.put("info", new Info());
         commandsMap.put("twitter", new Twitter());
+        commandsMap.put("help", new Help());
         
         //Music Commands
-        commandsMap.put("play-daily-song", new DailySong());
         commandsMap.put("play", new Play());
         commandsMap.put("queue", new Queue());
+        commandsMap.put("clear-queue", new ClearQueue());
         commandsMap.put("skip", new Skip());
-        commandsMap.put("stop", new Stop());
+        commandsMap.put("pause", new Pause());
         commandsMap.put("resume", new Resume());
         commandsMap.put("leave", new Leave());
+        commandsMap.put("now-playing", new NowPlaying());
+        commandsMap.put("shuffle-queue", new Shuffle());
         commandsMap.put("play-ratpartymix", new RatPartyMix());
+        commandsMap.put("play-daily-song", new DailySong());
         commandsMap.put("yeahbuddy", new YeahBuddy());
     }
 }

@@ -54,13 +54,14 @@ public class Skip implements ISlashCommand {
         
         AudioTrack playingTrack = playerManager.getMusicManager(event.getGuild()).getAudioPlayer().getPlayingTrack();
         if (playingTrack != null) {
-            event.replyEmbeds(new EmbedBuilder()
-                    .setTitle("Now playing: ")
-                    .setDescription(playingTrack.getInfo().title + "\n")
-                    .appendDescription(Util.durationFormat(playingTrack.getDuration() / 1000))
-                    .setThumbnail("https://img.youtube.com/vi/" + playingTrack.getIdentifier() + "/hqdefault.jpg") // icon
-                    .build()
-            ).queue();
+//            event.replyEmbeds(new EmbedBuilder()
+//                    .setTitle("Now playing: ")
+//                    .setDescription(playingTrack.getInfo().title + "\n")
+//                    .appendDescription(Util.durationFormat(playingTrack.getDuration() / 1000))
+//                    .setThumbnail("https://img.youtube.com/vi/" + playingTrack.getIdentifier() + "/hqdefault.jpg") // icon
+//                    .build()
+//            ).queue();
+            Util.displayCurrentPlayingTrackEmbed(event, false);
         }
         else {
             event.reply("skipped to empty queue").queue();

@@ -27,25 +27,30 @@ public class TestCommands {
         
         if (testServerCommands != null) {
             testServerCommands.addCommands(
-                    //admin commands
-                    Commands.slash("echo", "echo test")
-                        .addOptions(new OptionData(OptionType.STRING, "message", "message to be echoed", true)),
-                    Commands.slash("info", "Info page for this music bot."),
-                    Commands.slash("twitter", "Info page for Twitter site."),
-                    Commands.slash("random-song", "random song from playlist"),
-        
-                    // music
-                    Commands.slash("yeahbuddy", "GO TO THE GYM!!!"),
-                    Commands.slash("play", "plays music track")
-                        .addOptions(new OptionData(OptionType.STRING, "track", "track to be played", true)),
-                    Commands.slash("queue", "displays tracks in queue"),
-                    Commands.slash("stop", "stops current track"),
-                    Commands.slash("resume", "resumes current track"),
-                    Commands.slash("skip", "skips current track or a number of tracks")
-                        .addOptions(new OptionData(OptionType.STRING, "count", "amount of tracks to skip", false)),
-                    Commands.slash("leave", "bot leaves the channel"),
-                    Commands.slash("play-ratpartymix", "play the Rat Paty Mix 2023™ playlist"),
-                    Commands.slash("play-daily-song", "play today's daily song")
+                // admin commands
+                Commands.slash("random-song", "random song from playlist"),
+                Commands.slash("echo", "echo test")
+                    .addOptions(new OptionData(OptionType.STRING, "message", "message to be echoed", true)),
+                    
+                // other commands
+                Commands.slash("info", "Info page for this music bot."),
+                Commands.slash("twitter", "Info page for Twitter site."),
+                Commands.slash("help", "list of commands"),
+    
+                // music
+                Commands.slash("play", "plays music track")
+                    .addOptions(new OptionData(OptionType.STRING, "track", "track to be played", true)),
+                Commands.slash("queue", "displays tracks in queue"),
+                Commands.slash("pause", "stops playing current track"),
+                Commands.slash("resume", "resumes current track"),
+                Commands.slash("skip", "skips current track or a number of tracks")
+                    .addOptions(new OptionData(OptionType.STRING, "count", "amount of tracks to skip", false)),
+                Commands.slash("leave", "bot leaves the channel"),
+                //Commands.slash("now-playing", "display current playing track info"),
+                Commands.slash("play-ratpartymix", "play the Rat Paty Mix 2023™ playlist"),
+                Commands.slash("play-daily-song", "play today's daily song"),
+                Commands.slash("yeahbuddy", "GO TO THE GYM!!!"),
+                    Commands.slash("noshuffle-queue", "new Shuffle()")
             ).queue();
         }
     }

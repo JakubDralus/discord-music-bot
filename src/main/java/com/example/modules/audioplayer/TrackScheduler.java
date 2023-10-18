@@ -10,6 +10,9 @@ import lombok.Setter;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -29,7 +32,7 @@ public class TrackScheduler extends AudioEventAdapter {
         this.queue = new LinkedBlockingQueue<>();
     }
     
-    public void queue(AudioTrack track, boolean reply) {
+    public void queueTrack(AudioTrack track, boolean reply) {
         if (!player.startTrack(track, true)) {
             queue.offer(track);
             
@@ -43,16 +46,34 @@ public class TrackScheduler extends AudioEventAdapter {
         }
     }
     
+    public void fastQueueTrack(AudioTrack track) {
+        if (!player.startTrack(track, true)) {
+            queue.offer(track);
+        }
+    }
+    
+    public void clearQueue() {
+        queue.clear();
+    }
+    
+    public void shuffleQueue() {
+        List<AudioTrack> trackList = new ArrayList<>(queue);
+        Collections.shuffle(trackList);
+        queue.clear();
+        queue.addAll(trackList);
+    }
+    
     @Override
     public void onTrackStart(AudioPlayer player, AudioTrack track) {
         if (!event.isAcknowledged()) {
-            event.replyEmbeds(new EmbedBuilder()
-                    .setTitle("Now playing: ")
-                    .setDescription(track.getInfo().title + "\n")
-                    .appendDescription(Util.durationFormat(track.getDuration()/1000))
-                    .setThumbnail("https://img.youtube.com/vi/" + track.getIdentifier() + "/hqdefault.jpg") // icon
-                    .build())
-            .queue();
+//            event.replyEmbeds(new EmbedBuilder()
+//                    .setTitle("Now playing: ")
+//                    .setDescription(track.getInfo().title + "\n")
+//                    .appendDescription(Util.durationFormat(track.getDuration()/1000))
+//                    .setThumbnail("https://img.youtube.com/vi/" + track.getIdentifier() + "/hqdefault.jpg") // icon
+//                    .build())
+//            .queue();
+            Util.displayCurrentPlayingTrackEmbed(event, false);
         }
     }
     

@@ -2,6 +2,7 @@ package com.example.modules.discord.commands.music;
 
 import com.example.modules.audioplayer.PlayerManager;
 import com.example.modules.discord.commands.ISlashCommand;
+import com.example.shared.Util;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.channel.middleman.AudioChannel;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
@@ -12,8 +13,8 @@ import java.awt.*;
 import java.util.Objects;
 
 
-public class Stop implements ISlashCommand {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Stop.class);
+public class Pause implements ISlashCommand {
+    private static final Logger LOGGER = LoggerFactory.getLogger(Pause.class);
     
     @Override
     public void execute(SlashCommandInteractionEvent event) {
@@ -41,8 +42,9 @@ public class Stop implements ISlashCommand {
         PlayerManager playerManager = PlayerManager.get();
     
         playerManager.getMusicManager(event.getGuild()).getScheduler().getPlayer().setPaused(true);
+        Util.isSchedulerRunning = false;
         event.reply("track paused").queue();
     
-        LOGGER.info("used /stop command in {}", event.getChannel().getName());
+        LOGGER.info("used /pause command in {}", event.getChannel().getName());
     }
 }

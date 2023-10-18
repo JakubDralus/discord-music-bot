@@ -42,16 +42,9 @@ public class Resume implements ISlashCommand {
     
         PlayerManager playerManager = PlayerManager.get();
         playerManager.getMusicManager(event.getGuild()).getScheduler().getPlayer().setPaused(false);
-    
-        AudioTrack playingTrack = playerManager.getMusicManager(event.getGuild()).getAudioPlayer().getPlayingTrack();
+        Util.isSchedulerRunning = true;
         
-        event.replyEmbeds(new EmbedBuilder()
-                .setTitle("Now playing: ")
-                .setDescription(playingTrack.getInfo().title + "\n")
-                .appendDescription(Util.durationFormat(playingTrack.getDuration() / 1000))
-                .setThumbnail("https://img.youtube.com/vi/" + playingTrack.getIdentifier() + "/hqdefault.jpg") // icon
-                .build()
-        ).queue();
+        event.reply("track resumed").queue();
     
         LOGGER.info("used /skip command in {}", event.getChannel().getName());
     }

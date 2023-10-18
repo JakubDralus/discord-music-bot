@@ -47,7 +47,7 @@ public class Play implements ISlashCommand {
         
         String trackName = event.getOption("track").getAsString();
         try {
-            new URI(trackName);
+            new URI(trackName+ " audio");
         }
         catch (URISyntaxException e) {
             trackName = "ytsearch: " + trackName + " audio";

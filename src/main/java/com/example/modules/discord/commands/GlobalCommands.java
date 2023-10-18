@@ -12,26 +12,25 @@ public class GlobalCommands {
         CommandListUpdateAction globalCommands = jda.updateCommands();
         
         globalCommands.addCommands(
-                //Commands.slash("info", "Info page for this music bot.")
-//                Commands.slash("mhelp", "Info page for the music commands."),
-//
-//                //Music Commands
-//                Commands.slash("play", "Play a song on your voice channel.")
-//                        .addOptions(new OptionData(OptionType.STRING, "query", "Song url or name.")
-//                                .setRequired(true)),
-//                Commands.slash("skip", "Skip the current song."),
-//                Commands.slash("forward", "Forward the current song x seconds.")
-//                        .addOptions(new OptionData(OptionType.INTEGER, "sec", "seconds")
-//                                .setRequired(true)),
-//                Commands.slash("pause", "Pause the current song."),
-//                Commands.slash("resume", "Resume the paused song."),
-//                Commands.slash("leave", "Make bot leave the voice channel."),
-//                Commands.slash("queue", "List the song queue.")
-//                        .addOptions(new OptionData(OptionType.INTEGER, "page", "Displayed page of the queue.")
-//                                .setRequired(true)),
-//                Commands.slash("shuffle", "Shuffle the queue."),
-//                Commands.slash("loop", "Loop the current song."),
-//                Commands.slash("nowplaying", "Show the currently playing song.")
+            // other commands
+            Commands.slash("info", "Info page for this music bot."),
+            Commands.slash("twitter", "Info page for Twitter site."),
+            Commands.slash("help", "list of commands"),
+    
+            // music
+            Commands.slash("play", "plays music track")
+                .addOptions(new OptionData(OptionType.STRING, "track", "track to be played", true)),
+            Commands.slash("queue", "displays tracks in queue"),
+            Commands.slash("clear-queue", "clears the queue"),
+            Commands.slash("resume", "resumes current track"),
+            Commands.slash("skip", "skips current track or a number of tracks")
+                .addOptions(new OptionData(OptionType.STRING, "count", "amount of tracks to skip", false)),
+            Commands.slash("leave", "bot leaves the channel"),
+            Commands.slash("now-playing", "display current playing track info"),
+            Commands.slash("shuffle-queue", "shuffle the tracks in queue"),
+            Commands.slash("play-ratpartymix", "play the Rat Paty Mix 2023™ playlist"),
+            Commands.slash("play-daily-song", "play today's daily song"),
+            Commands.slash("yeahbuddy", "GO TO THE GYM!!!")
         ).queue();
     }
 }

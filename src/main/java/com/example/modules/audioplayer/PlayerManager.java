@@ -53,12 +53,12 @@ public class PlayerManager {
             @Override
             public void trackLoaded(AudioTrack track) {
                 embedBuilder.clear();
-                musicManager.getScheduler().queue(track, true);
+                musicManager.getScheduler().queueTrack(track, true);
             }
         
             @Override
             public void playlistLoaded(AudioPlaylist playlist) {
-                musicManager.getScheduler().queue(playlist.getTracks().get(0), reply);
+                musicManager.getScheduler().queueTrack(playlist.getTracks().get(0), reply);
             }
         
             @Override

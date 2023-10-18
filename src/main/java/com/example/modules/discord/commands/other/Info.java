@@ -1,4 +1,4 @@
-package com.example.modules.discord.commands.admin;
+package com.example.modules.discord.commands.other;
 
 import com.example.modules.discord.commands.ISlashCommand;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
