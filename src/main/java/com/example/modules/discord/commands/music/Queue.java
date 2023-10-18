@@ -25,7 +25,11 @@ public class Queue implements ISlashCommand {
         BlockingQueue<AudioTrack> queue = playerManager.getMusicManager(event.getGuild()).getScheduler().getQueue();
         StringBuilder tracks = new StringBuilder();
         AtomicInteger i = new AtomicInteger();
+        
         queue.forEach(track -> {
+            if (i.get() >= 10) {
+                return; // Break the loop if i is greater than or equal to 10
+            }
             i.getAndIncrement();
             tracks.append(i).append(" ").append(track.getInfo().title).append("\n");
         });
@@ -34,6 +38,7 @@ public class Queue implements ISlashCommand {
                 .setTitle("Queue:")
                 .setDescription("size: " + (queue.size()) + "\n")
                 .appendDescription(tracks.toString())
+                .appendDescription(queue.size() > 10 ? ("\n and " + (queue.size()-10) + " more...") : "")
                 .build()
         ).queue();
     

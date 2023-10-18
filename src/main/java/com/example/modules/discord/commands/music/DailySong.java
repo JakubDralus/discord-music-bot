@@ -2,22 +2,26 @@ package com.example.modules.discord.commands.music;
 
 import com.example.modules.audioplayer.PlayerManager;
 import com.example.modules.discord.commands.ISlashCommand;
+import com.example.modules.spotify.Playlist;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.channel.middleman.AudioChannel;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 
 import java.awt.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Objects;
 
 
-public class YeahBuddy implements ISlashCommand {
+public class DailySong implements ISlashCommand {
     
     @Override
     public void execute(SlashCommandInteractionEvent event) {
+    
         AudioChannel userChannel = Objects.requireNonNull(Objects
                 .requireNonNull(event.getMember()).getVoiceState()).getChannel();
-        AudioChannel botChannel = Objects.requireNonNull(Objects
-                .requireNonNull(event.getGuild()).getSelfMember().getVoiceState()).getChannel();
+        AudioChannel botChannel = Objects.requireNonNull(Objects.
+                requireNonNull(event.getGuild()).getSelfMember().getVoiceState()).getChannel();
     
         if (!event.getMember().getVoiceState().inAudioChannel()) {
             event.replyEmbeds(new EmbedBuilder().setDescription("Please join a voice channel.")
@@ -34,10 +38,21 @@ public class YeahBuddy implements ISlashCommand {
             event.replyEmbeds(new EmbedBuilder().setDescription("Please be in the same voice channel as the bot.")
                     .setColor(Color.RED).build()).queue();
         }
-        
-        PlayerManager playerManager = PlayerManager.get();
-        playerManager.play(event.getGuild(), "C:\\Users\\kubad\\Downloads\\YeahBuddy.mp4", true, event);
     
+        PlayerManager playerManager = PlayerManager.get();
+    
+        // set event for scheduler to make him display a current track being played
         playerManager.getMusicManager(event.getGuild()).getScheduler().setEvent(event);
+    
+        String trackName = Playlist.getDailySongName();
+        try {
+            assert trackName != null;
+            new URI(trackName);
+        }
+        catch (URISyntaxException e) {
+            trackName = "ytsearch: " + trackName;
+        }
+    
+        playerManager.play(event.getGuild(), trackName, true, event);
     }
 }

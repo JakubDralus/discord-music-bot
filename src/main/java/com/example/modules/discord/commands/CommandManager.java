@@ -1,6 +1,6 @@
 package com.example.modules.discord.commands;
 
-import com.example.modules.discord.commands.admin.Dupa;
+import com.example.modules.discord.commands.admin.RandomSong;
 import com.example.modules.discord.commands.admin.Echo;
 import com.example.modules.discord.commands.admin.Info;
 import com.example.modules.discord.commands.admin.Twitter;
@@ -45,19 +45,20 @@ public class CommandManager extends ListenerAdapter {
         commandsMap = new ConcurrentHashMap<>();
         
         //Admin Commands
-        commandsMap.put("dupa", new Dupa());
+        commandsMap.put("random-song", new RandomSong());
         commandsMap.put("echo", new Echo());
         commandsMap.put("info", new Info());
         commandsMap.put("twitter", new Twitter());
         
         //Music Commands
+        commandsMap.put("play-daily-song", new DailySong());
         commandsMap.put("play", new Play());
         commandsMap.put("queue", new Queue());
         commandsMap.put("skip", new Skip());
         commandsMap.put("stop", new Stop());
         commandsMap.put("resume", new Resume());
         commandsMap.put("leave", new Leave());
-        commandsMap.put("ratpartymix", new RatPartyMix());
+        commandsMap.put("play-ratpartymix", new RatPartyMix());
         commandsMap.put("yeahbuddy", new YeahBuddy());
     }
 }

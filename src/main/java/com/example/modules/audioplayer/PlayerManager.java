@@ -9,6 +9,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,7 +45,7 @@ public class PlayerManager {
         });
     }
     
-    public void play(Guild guild, String trackURL, boolean reply) {
+    public void play(Guild guild, String trackURL, boolean reply, SlashCommandInteractionEvent event) {
         GuildMusicManager musicManager = getMusicManager(guild);
         EmbedBuilder embedBuilder = new EmbedBuilder();
         
@@ -63,6 +64,7 @@ public class PlayerManager {
             @Override
             public void noMatches() {
                 System.out.println("No match found");
+                event.reply("no match found, try again").queue();
             }
         
             @Override

@@ -7,6 +7,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.channel.middleman.AudioChannel;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,7 +42,15 @@ public class Skip implements ISlashCommand {
         }
     
         PlayerManager playerManager = PlayerManager.get();
-        playerManager.getMusicManager(event.getGuild()).getScheduler().getPlayer().stopTrack();
+        
+        int count = 1;
+        OptionMapping message = event.getOption("count");
+        if (message != null ) {
+            count = Integer.parseInt(event.getOption("count").getAsString());
+        }
+        for (int i = 0; i < count; i++){
+            playerManager.getMusicManager(event.getGuild()).getScheduler().getPlayer().stopTrack();
+        }
         
         AudioTrack playingTrack = playerManager.getMusicManager(event.getGuild()).getAudioPlayer().getPlayingTrack();
         if (playingTrack != null) {

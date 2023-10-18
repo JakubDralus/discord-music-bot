@@ -16,11 +16,11 @@ public class CustomPlaylistSettings {
     
         switch (id) {
             case 2 -> {
-                playerManager.play(event.getGuild(), "https://www.youtube.com/watch?v=v4tFZzBrI20", false);
+                playerManager.play(event.getGuild(), "https://www.youtube.com/watch?v=v4tFZzBrI20", false, event);
                 return true;
             }
             case 3 -> {
-                playerManager.play(event.getGuild(), "https://www.youtube.com/watch?v=oujZpIr5id8", false);
+                playerManager.play(event.getGuild(), "https://www.youtube.com/watch?v=oujZpIr5id8", false, event);
                 return true;
             }
         }

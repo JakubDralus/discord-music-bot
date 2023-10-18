@@ -3,7 +3,11 @@ package com.example.modules.spotify;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
-import se.michaelthelin.spotify.model_objects.specification.*;
+import se.michaelthelin.spotify.SpotifyApi;
+import se.michaelthelin.spotify.model_objects.specification.Paging;
+import se.michaelthelin.spotify.model_objects.specification.PlaylistTrack;
+import se.michaelthelin.spotify.model_objects.specification.Track;
+import se.michaelthelin.spotify.requests.data.tracks.GetTrackRequest;
 
 import java.io.IOException;
 import java.net.URI;
@@ -31,10 +35,8 @@ public class Playlist {
         return tracks;
     }
     
-    // todo: make this when endpoint in RatPartyMixTracker is done
-    public String getDailySongId() {
-        String url = "";
-        String dailySongId = "";
+    private static String getDailySongId() {
+        String url = "http://130.162.243.45:8443/ratpartymix/dailysong";
     
         // Create an HTTP request
         HttpRequest request = HttpRequest.newBuilder()
@@ -48,10 +50,39 @@ public class Playlist {
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode rootNode = objectMapper.readTree(response.body());
     
-            return rootNode.get("id").toString();
+            System.out.println("id: " + rootNode.get("SpotifyID").toString());
+            return rootNode.get("SpotifyID").toString().replace("\"", ""); // remove quotes from json;
         }
         catch (IOException | InterruptedException e) {
             e.printStackTrace();
+        }
+        return null;
+    }
+    
+    public static String getDailySongName() {
+        SpotifyToken.clientCredentials_Async();
+        SpotifyApi spotifyApi = SpotifyApiInstance.getSpotifyApi();
+        final GetTrackRequest getTrackRequest = spotifyApi.getTrack(getDailySongId()).build();
+        
+        try {
+            final CompletableFuture<Track> trackFuture = getTrackRequest.executeAsync();
+            final Track track = trackFuture.join();
+            
+            StringBuilder trackName = new StringBuilder();
+            trackName.append(track.getName()).append(" - ");
+            for (var artist: track.getArtists()) {
+                trackName.append(artist.getName()).append(", ");
+            }
+            trackName.setLength(trackName.length() - 2); //remove last `, `
+            
+            System.out.println(trackName);
+            return trackName.toString();
+        }
+        catch (CompletionException e) {
+            System.out.println("Error: " + e.getCause().getMessage());
+        }
+        catch (CancellationException e) {
+            System.out.println("Async operation cancelled.");
         }
         return null;
     }
@@ -104,69 +135,6 @@ public class Playlist {
             Playlist.tracks.put(++offset, songStr);
             
             //System.out.println(offset + " " + songStr);
-        }
-    }
-    
-    // ---------------------------------------------
-    
-    // @Deprecated
-    public static void getPlaylistItems() {
-        String spotifyToken = SpotifyToken.getToken();
-        String url = "https://api.spotify.com/v1/playlists/" + ratPartyMix2023id + "/tracks";
-        HttpClient httpClient = HttpClient.newHttpClient();
-        ObjectMapper objectMapper = new ObjectMapper();
-        
-        // Create an HTTP request
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .header("Authorization", "Bearer " + spotifyToken)
-                .GET()
-                .build();
-        
-        // Send the request asynchronously
-        try {
-            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-            JsonNode rootNode = objectMapper.readTree(response.body());
-            
-            displayTracks(rootNode.get("items"), 0);
-            url = rootNode.get("next").toString().replace("\"", "");
-        }
-        catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-        }
-        
-        
-        HttpRequest nextRequest = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .header("Authorization", "Bearer " + spotifyToken)
-                .GET()
-                .build();
-        
-        try {
-            HttpResponse<String> response = httpClient.send(nextRequest, HttpResponse.BodyHandlers.ofString());
-            JsonNode rootNode = objectMapper.readTree(response.body());
-            
-            displayTracks(rootNode.get("items"), 100);
-        }
-        catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-    
-    // @Deprecated
-    private static void displayTracks(JsonNode items, int offset) {
-        for (var track: items) {
-            StringBuilder song = new StringBuilder();
-            song.append(" ").append(track.get("track").get("name")).append(" - ");
-            
-            for (var artist: track.get("track").get("artists")) {
-                song.append(artist.get("name")).append(", ");
-            }
-            song.setLength(song.length() - 2); //remove last `, `
-            String songStr = song.toString().replace("\"", ""); // remove quotes from json
-            
-            tracks.put(++offset, songStr);
-            System.out.println(offset + " " + songStr);
         }
     }
 }

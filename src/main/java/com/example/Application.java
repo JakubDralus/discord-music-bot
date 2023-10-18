@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 import java.util.EnumSet;
 
 
-// todo make this shitty class cleaner
+// todo make this class cleaner
 public class Application {
     private static final Logger LOGGER = LoggerFactory.getLogger(Application.class);
     

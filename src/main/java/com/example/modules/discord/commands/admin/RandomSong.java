@@ -8,28 +8,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-public class Dupa implements ISlashCommand {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Dupa.class);
-    
-//    @Override
-//    public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
-//        if (event.getName().equals("dupa")) {
-//            event.reply("dupa").queue();
-//        }
-//        LOGGER.info("used /dupa command in {}", event.getChannel().getName());
-//    }
+public class RandomSong implements ISlashCommand {
+    private static final Logger LOGGER = LoggerFactory.getLogger(RandomSong.class);
     
     @Override
     public void execute(SlashCommandInteractionEvent event) {
+        Playlist.getPlaylistsItems_Async();
+        
         int playlistLength = Playlist.getTracks().size();
         int randomId = (int)(Math.random() * playlistLength) + 1;
-        //event.reply("dupa random song: "+ randomId + Playlist.getTracks().get(randomId)).queue();
     
         EmbedBuilder embedBuilder = new EmbedBuilder();
-        embedBuilder.setTitle("dupa random song: ");
+        embedBuilder.setTitle("random song: ");
         embedBuilder.appendDescription(randomId + " - " + Playlist.getTracks().get(randomId));
         event.replyEmbeds(embedBuilder.build()).queue();
         
-        LOGGER.info("used /dupa command in {}", event.getChannel().getName());
+        LOGGER.info("used /random-song command in {}", event.getChannel().getName());
     }
 }

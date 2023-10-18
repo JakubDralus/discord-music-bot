@@ -49,7 +49,7 @@ public class RatPartyMix implements ISlashCommand {
         for (var trackName: Playlist.getTracks().values()) {
             ++i;
             if (!CustomPlaylistSettings.adjustSong(i, event)) {
-                playerManager.play(event.getGuild(), "ytsearch: " + trackName, false);
+                playerManager.play(event.getGuild(), "ytsearch: " + trackName, false, event);
             }
         }
     
