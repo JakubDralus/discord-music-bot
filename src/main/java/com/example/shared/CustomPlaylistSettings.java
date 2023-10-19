@@ -9,9 +9,6 @@ public class CustomPlaylistSettings {
     
     //looks for the song in playlist by id (order in Spotify UI)
     public static boolean adjustSong(int id, SlashCommandInteractionEvent event) {
-//        for (var trackID: Playlist.getTracks().keySet()) {
-//
-//        }
         PlayerManager playerManager = PlayerManager.get();
     
         switch (id) {

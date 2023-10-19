@@ -20,7 +20,7 @@ public class Leave implements ISlashCommand {
             AudioManager audioManager = event.getGuild().getAudioManager();
             musicManager.getScheduler().getPlayer().setPaused(false);
             musicManager.getScheduler().getPlayer().stopTrack();
-            musicManager.getScheduler().getQueue().clear();
+            musicManager.getScheduler().clearQueue();
             audioManager.closeAudioConnection();
             event.replyEmbeds(new EmbedBuilder().setDescription("Party is over").build()).queue();
     

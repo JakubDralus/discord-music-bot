@@ -4,6 +4,7 @@ import com.example.modules.discord.commands.CommandManager;
 import com.example.modules.discord.commands.GlobalCommands;
 import com.example.modules.discord.commands.Listener;
 import com.example.modules.discord.commands.TestCommands;
+import com.example.modules.spotify.SpotifyApiInstance;
 import com.example.modules.spotify.SpotifyToken;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -18,7 +19,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 
-// todo make this class cleaner
 public class Application {
     private static final Logger LOGGER = LoggerFactory.getLogger(Application.class);
     
@@ -37,6 +37,7 @@ public class Application {
         );
         
         final String discordToken = args[0];
+        SpotifyApiInstance.initSpotifyApi(args[1]);//6fb6b1879ea64a9480e1730903f3a924
         String RatPartyMixServerId = "598494742896181267";
         
         // start the bot

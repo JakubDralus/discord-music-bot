@@ -27,7 +27,7 @@ public class Queue implements ISlashCommand {
         AtomicInteger i = new AtomicInteger();
         
         queue.forEach(track -> {
-            if (i.get() >= 10) {
+            if (i.get() >= 15) {
                 return; // Break the loop if i is greater than or equal to 10
             }
             i.getAndIncrement();
@@ -36,7 +36,6 @@ public class Queue implements ISlashCommand {
         
         event.replyEmbeds(new EmbedBuilder()
                 .setTitle("Queue:")
-                .setDescription("size: " + (queue.size()) + "\n")
                 .appendDescription(tracks.toString())
                 .appendDescription(queue.size() > 10 ? ("\n and " + (queue.size()-10) + " more...") : "")
                 .build()

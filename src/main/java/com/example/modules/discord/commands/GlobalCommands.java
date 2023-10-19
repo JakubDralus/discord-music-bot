@@ -29,7 +29,7 @@ public class GlobalCommands {
             Commands.slash("now-playing", "display current playing track info"),
             Commands.slash("shuffle-queue", "shuffle the tracks in queue"),
             Commands.slash("play-ratpartymix", "play the Rat Paty Mix 2023™ playlist"),
-            Commands.slash("play-daily-song", "play today's daily song"),
+            //Commands.slash("play-daily-song", "play today's daily song"), // unavailable until tracker is repaired
             Commands.slash("yeahbuddy", "GO TO THE GYM!!!")
         ).queue();
     }

@@ -1,22 +1,16 @@
 package com.example.shared;
 
-
 import com.example.modules.audioplayer.PlayerManager;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
-import lombok.Getter;
-import lombok.Setter;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 
-import java.awt.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
 
-@Getter
-@Setter
 public class Util {
     
     public static String durationFormat(long seconds) {
@@ -53,7 +47,7 @@ public class Util {
             ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
             scheduler.scheduleAtFixedRate(() -> {
                 if (!isSchedulerRunning || lateCall) {
-                    message.editOriginalEmbeds(embedBuilder.setColor(Color.RED).build()).queue();
+                    //message.editOriginalEmbeds(embedBuilder.setColor(Color.RED).build()).queue();
                     return; // Don't update if scheduler is paused
                 }
                 
