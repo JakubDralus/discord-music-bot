@@ -6,6 +6,8 @@ import com.example.modules.spotify.Playlist;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.channel.middleman.AudioChannel;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 import java.net.URI;
@@ -14,6 +16,7 @@ import java.util.Objects;
 
 
 public class DailySong implements ISlashCommand {
+    private static final Logger LOGGER = LoggerFactory.getLogger(DailySong.class);
     
     @Override
     public void execute(SlashCommandInteractionEvent event) {
@@ -54,5 +57,7 @@ public class DailySong implements ISlashCommand {
         }
     
         playerManager.play(event.getGuild(), trackName, true, event);
+    
+        LOGGER.info("used /play-daily-song command in {}", event.getChannel().getName());
     }
 }
