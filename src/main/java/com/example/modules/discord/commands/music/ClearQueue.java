@@ -15,11 +15,11 @@ public class ClearQueue implements ISlashCommand {
         PlayerManager playerManager = PlayerManager.get();
         if (!playerManager.getMusicManager(event.getGuild()).getScheduler().getQueue().isEmpty()){
             playerManager.getMusicManager(event.getGuild()).getScheduler().clearQueue();
+            event.reply("queue cleared").queue();
         }
         else {
             event.reply("the queue is empty").queue();
         }
-        event.reply("queue cleared").queue();
     
         LOGGER.info("used /clear-queue command in {}", event.getChannel().getName());
     }
