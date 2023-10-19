@@ -18,7 +18,6 @@ public class Listener extends ListenerAdapter {
     
     @Override
     public void onReady(@NotNull ReadyEvent event) {
-        LOGGER.info("I am ready to go!");
         JDA jda = event.getJDA();
     
         // Now we can access the fully loaded cache and print out list of all servers where bot is running
@@ -36,6 +35,8 @@ public class Listener extends ListenerAdapter {
             if (channel.getName().equals("bot-test") && channel.getGuild().getName().equals("Rat Party Mix"))
                 channel.sendMessage("Let's play some fucking bangers :sunglasses:").queue();
         }
+        
+        LOGGER.info("I am ready to go!");
     }
     
     @Override
