@@ -1,4 +1,4 @@
-# discord-bot1
+# Rat Party Mix discord bot
 discord bot for my playlist: https://open.spotify.com/playlist/0RHhiQ6hGLKgjE7eqNdXzh?si=2e0e87d329dd4604
 
 # RatPartMix links
