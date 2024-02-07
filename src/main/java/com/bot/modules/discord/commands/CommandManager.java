@@ -62,7 +62,6 @@ public class CommandManager extends ListenerAdapter {
         commandsMap.put("pause", new Pause());
         commandsMap.put("resume", new Resume());
         commandsMap.put("leave", new Leave());
-        commandsMap.put("now-playing", new NowPlaying());
         commandsMap.put("shuffle-queue", new Shuffle());
         commandsMap.put("play-ratpartymix", new RatPartyMix());
         commandsMap.put("play-daily-song", new DailySong());

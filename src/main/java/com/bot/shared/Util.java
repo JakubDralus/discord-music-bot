@@ -1,7 +1,9 @@
 package com.bot.shared;
 
 import com.bot.modules.audioplayer.PlayerManager;
+import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
+import com.sedmelluq.discord.lavaplayer.track.AudioTrackState;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 
@@ -27,36 +29,71 @@ public class Util {
     
     public static boolean isSchedulerRunning = true;
     
-    public static void displayCurrentPlayingTrackEmbed(SlashCommandInteractionEvent event, boolean lateCall) {
+    public static void displayCurrentPlayingTrackEmbed(SlashCommandInteractionEvent event, AudioPlayer player) {
         PlayerManager playerManager = PlayerManager.get();
-        AudioTrack playingTrack = playerManager.getMusicManager(event.getGuild()).getAudioPlayer().getPlayingTrack();
+        AudioTrack track = playerManager.getMusicManager(event.getGuild()).getAudioPlayer().getPlayingTrack();
         playerManager.getMusicManager(event.getGuild()).getScheduler().setEvent(event);
-    
-        String trackTitle = playingTrack.getInfo().title;
-        AtomicLong trackDurationInSeconds = new AtomicLong(playingTrack.getDuration()/1000);
-        String trackThumbnailUrl = "https://img.youtube.com/vi/" + playingTrack.getIdentifier() + "/hqdefault.jpg";
-    
+        
+        String trackTitle = track.getInfo().title;
+        AtomicLong trackDurationInSeconds = new AtomicLong((track.getDuration()/1000));
+        String trackThumbnailUrl = "https://img.youtube.com/vi/" + track.getIdentifier() + "/hqdefault.jpg";
+        
         EmbedBuilder embedBuilder = new EmbedBuilder()
                 .setTitle("Now playing: ")
                 .appendDescription(trackTitle)
                 .addField("Duration", getDynamicDuration(trackDurationInSeconds.get()), false)
-                .setThumbnail(trackThumbnailUrl); // icon
-                //.setColor(Color.GREEN);
+                .setThumbnail(trackThumbnailUrl);
         
+
+        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         event.replyEmbeds(embedBuilder.build()).queue(message -> {
-            ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
             scheduler.scheduleAtFixedRate(() -> {
-                if (!isSchedulerRunning || lateCall) {
-                    //message.editOriginalEmbeds(embedBuilder.setColor(Color.RED).build()).queue();
+                if (!isSchedulerRunning) {
+                    return; // Don't update if scheduler is paused
+                }
+
+                String updatedDuration = getDynamicDuration(trackDurationInSeconds.getAndDecrement());
+                embedBuilder.clearFields().addField("Duration", updatedDuration, false);
+                message.editOriginalEmbeds(embedBuilder.build()).submit();
+                if (player.getPlayingTrack().getState().equals(AudioTrackState.FINISHED)
+                        || trackDurationInSeconds.get() == 0) {
+                    message.deleteOriginal().submit();
+                    scheduler.shutdown();
+                }
+            }, 0, 1, TimeUnit.SECONDS);
+        });
+    }
+    
+    public static void displayCurrentPlayingTrackEmbedAck(SlashCommandInteractionEvent event, AudioPlayer player) {
+        PlayerManager playerManager = PlayerManager.get();
+        AudioTrack track = playerManager.getMusicManager(event.getGuild()).getAudioPlayer().getPlayingTrack();
+        playerManager.getMusicManager(event.getGuild()).getScheduler().setEvent(event);
+        
+        String trackTitle = track.getInfo().title;
+        AtomicLong trackDurationInSeconds = new AtomicLong((track.getDuration()/1000));
+        String trackThumbnailUrl = "https://img.youtube.com/vi/" + track.getIdentifier() + "/hqdefault.jpg";
+        
+        EmbedBuilder embedBuilder = new EmbedBuilder()
+                .setTitle("Now playing: ")
+                .appendDescription(trackTitle)
+                .addField("Duration", getDynamicDuration(trackDurationInSeconds.get()), false)
+                .setThumbnail(trackThumbnailUrl);
+        
+        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+        event.getChannel().sendMessageEmbeds(embedBuilder.build()).queue(message -> {
+            scheduler.scheduleAtFixedRate(() -> {
+                if (!isSchedulerRunning) {
                     return; // Don't update if scheduler is paused
                 }
                 
                 String updatedDuration = getDynamicDuration(trackDurationInSeconds.getAndDecrement());
                 embedBuilder.clearFields().addField("Duration", updatedDuration, false);
-                message.editOriginalEmbeds(embedBuilder.build()).queue(); //todo: naprawic rest action error
+                message.editMessageEmbeds(embedBuilder.build()).submit();
                 
-                if (trackDurationInSeconds.get() <= 1) {
-                    message.editOriginalEmbeds(embedBuilder.clear().build()).queue();
+                if (player.getPlayingTrack().getState().equals(AudioTrackState.FINISHED)
+                        || player.getPlayingTrack().getState().equals(AudioTrackState.STOPPING)) {
+                    message.delete().submit();
+                    scheduler.shutdown();
                 }
             }, 0, 1, TimeUnit.SECONDS);
         });

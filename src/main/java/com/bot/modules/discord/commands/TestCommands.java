@@ -46,11 +46,10 @@ public class TestCommands {
                 Commands.slash("skip", "skips current track or a number of tracks")
                     .addOptions(new OptionData(OptionType.STRING, "count", "amount of tracks to skip", false)),
                 Commands.slash("leave", "bot leaves the channel"),
-                //Commands.slash("now-playing", "display current playing track info"),
                 Commands.slash("play-ratpartymix", "play the Rat Paty Mix 2023™ playlist"),
                 Commands.slash("play-daily-song", "play today's daily song"),
                 Commands.slash("yeahbuddy", "GO TO THE GYM!!!"),
-                Commands.slash("shuffle-queue", "new Shuffle()")
+                Commands.slash("shuffle-queue", "shuffle the queue content")
             ).queue();
         }
     }

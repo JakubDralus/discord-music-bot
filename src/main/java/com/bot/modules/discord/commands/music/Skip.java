@@ -45,23 +45,16 @@ public class Skip implements ISlashCommand {
         
         int count = 1;
         OptionMapping message = event.getOption("count");
-        if (message != null ) {
+        if (message != null) {
             count = Integer.parseInt(event.getOption("count").getAsString());
         }
-        for (int i = 0; i < count; i++){
+        for (int i = 0; i < count; i++) {
             playerManager.getMusicManager(event.getGuild()).getScheduler().getPlayer().stopTrack();
         }
         
         AudioTrack playingTrack = playerManager.getMusicManager(event.getGuild()).getAudioPlayer().getPlayingTrack();
         if (playingTrack != null) {
-//            event.replyEmbeds(new EmbedBuilder()
-//                    .setTitle("Now playing: ")
-//                    .setDescription(playingTrack.getInfo().title + "\n")
-//                    .appendDescription(Util.durationFormat(playingTrack.getDuration() / 1000))
-//                    .setThumbnail("https://img.youtube.com/vi/" + playingTrack.getIdentifier() + "/hqdefault.jpg") // icon
-//                    .build()
-//            ).queue();
-            Util.displayCurrentPlayingTrackEmbed(event, false);
+            Util.displayCurrentPlayingTrackEmbed(event, playerManager.getMusicManager(event.getGuild()).getAudioPlayer());
         }
         else {
             event.reply("skipped to empty queue").queue();

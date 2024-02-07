@@ -26,9 +26,10 @@ public class Queue implements ISlashCommand {
         StringBuilder tracks = new StringBuilder();
         AtomicInteger i = new AtomicInteger();
         
+        // show top 15 tracks
         queue.forEach(track -> {
             if (i.get() >= 15) {
-                return; // Break the loop if i is greater than or equal to 10
+                return;
             }
             i.getAndIncrement();
             tracks.append(i).append(" ").append(track.getInfo().title).append("\n");

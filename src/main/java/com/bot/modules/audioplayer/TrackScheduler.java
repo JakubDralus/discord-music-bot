@@ -23,7 +23,6 @@ public class TrackScheduler extends AudioEventAdapter {
     private final AudioPlayer player;
     private final BlockingQueue<AudioTrack> queue;
     private boolean isRepeat = false;
-    
     protected SlashCommandInteractionEvent event;
     
     public TrackScheduler(AudioPlayer player) {
@@ -45,12 +44,6 @@ public class TrackScheduler extends AudioEventAdapter {
         }
     }
     
-    public void fastQueueTrack(AudioTrack track) {
-        if (!player.startTrack(track, true)) {
-            queue.offer(track);
-        }
-    }
-    
     public void clearQueue() {
         queue.clear();
     }
@@ -64,31 +57,26 @@ public class TrackScheduler extends AudioEventAdapter {
     
     @Override
     public void onTrackStart(AudioPlayer player, AudioTrack track) {
+        System.out.println("on track start");
         if (!event.isAcknowledged()) {
-//            event.replyEmbeds(new EmbedBuilder()
-//                    .setTitle("Now playing: ")
-//                    .setDescription(track.getInfo().title + "\n")
-//                    .appendDescription(Util.durationFormat(track.getDuration()/1000))
-//                    .setThumbnail("https://img.youtube.com/vi/" + track.getIdentifier() + "/hqdefault.jpg") // icon
-//                    .build())
-//            .queue();
-            Util.displayCurrentPlayingTrackEmbed(event, false);
+            Util.displayCurrentPlayingTrackEmbed(event, player);
         }
     }
-    public static boolean isSchedulerRunning = true;
+    
     @Override
     public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
+        AudioTrack nexttrack = null;
         if (isRepeat) {
             player.startTrack(track.makeClone(), false);
         }
         else {
-            player.startTrack(queue.poll(), false);
+            nexttrack = queue.poll();
+            player.startTrack(nexttrack, false);
+            
+            // show another track after prev finished
+            if (endReason == AudioTrackEndReason.FINISHED && !queue.isEmpty()){
+                Util.displayCurrentPlayingTrackEmbedAck(event, player);
+            }
         }
-    }
-    
-    private static String getDynamicDuration(long durationInSeconds) {
-        long minutes = durationInSeconds / 60;
-        long seconds = durationInSeconds % 60;
-        return String.format("%02d:%02d", minutes, seconds);
     }
 }

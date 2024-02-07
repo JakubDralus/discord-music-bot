@@ -29,14 +29,11 @@ public class Playlist {
     // https://open.spotify.com/playlist/0RHhiQ6hGLKgjE7eqNdXzh?si=203a1096f9b64e27
     
     private static final String ratPartyMix2023id = "0RHhiQ6hGLKgjE7eqNdXzh";
+    @Getter
     private static final Map<Integer, String> tracks = new HashMap<>();
     
-    public static Map<Integer, String> getTracks() {
-        return tracks;
-    }
-    
     private static String getDailySongId() {
-        String url = "http://130.162.243.45:8443/ratpartymix/dailysong";
+        String url = "http://130.61.63.141:8888/ratpartymix/dailysong";
     
         // Create an HTTP request
         HttpRequest request = HttpRequest.newBuilder()
@@ -50,8 +47,8 @@ public class Playlist {
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode rootNode = objectMapper.readTree(response.body());
     
-            System.out.println("id: " + rootNode.get("SpotifyID").toString());
-            return rootNode.get("SpotifyID").toString().replace("\"", ""); // remove quotes from json;
+            System.out.println("id: " + rootNode.get("spotify_id").toString());
+            return rootNode.get("spotify_id").toString().replace("\"", ""); // remove quotes from json;
         }
         catch (IOException | InterruptedException e) {
             e.printStackTrace();
@@ -133,7 +130,6 @@ public class Playlist {
             String songStr = song.toString().replace("\"", ""); // remove quotes from json
 
             Playlist.tracks.put(++offset, songStr);
-            
             //System.out.println(offset + " " + songStr);
         }
     }

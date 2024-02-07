@@ -45,11 +45,13 @@ public class RatPartyMix implements ISlashCommand {
         PlayerManager playerManager = PlayerManager.get();
         playerManager.getMusicManager(event.getGuild()).getScheduler().setEvent(event);
         
+        event.reply("playing first track").queue();
         int i = 0;
         for (var trackName: Playlist.getTracks().values()) {
             ++i;
+//            System.out.println(trackName);
             if (!CustomPlaylistSettings.adjustSong(i, event)) {
-                playerManager.play(event.getGuild(), "ytsearch: " + trackName, false, event);
+                playerManager.play(event.getGuild(), "ytsearch: " + trackName + " audio", false, event);
             }
         }
     
