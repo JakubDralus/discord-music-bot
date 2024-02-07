@@ -13,8 +13,7 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.*;
 
 
 @Getter
@@ -76,7 +75,7 @@ public class TrackScheduler extends AudioEventAdapter {
             Util.displayCurrentPlayingTrackEmbed(event, false);
         }
     }
-    
+    public static boolean isSchedulerRunning = true;
     @Override
     public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
         if (isRepeat) {
@@ -85,5 +84,11 @@ public class TrackScheduler extends AudioEventAdapter {
         else {
             player.startTrack(queue.poll(), false);
         }
+    }
+    
+    private static String getDynamicDuration(long durationInSeconds) {
+        long minutes = durationInSeconds / 60;
+        long seconds = durationInSeconds % 60;
+        return String.format("%02d:%02d", minutes, seconds);
     }
 }

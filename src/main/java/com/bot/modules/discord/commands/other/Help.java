@@ -13,7 +13,7 @@ public class Help implements ISlashCommand {
     public void execute(SlashCommandInteractionEvent event) {
         event.reply("""
                 **Music Commands:**
-                - `/play` `[track]`: Play a specific music track.
+                - `/play` `[track]`: Play a specific music track (paste url or provide a youtube search prompt).
                   - Option: `track` (String): The track to be played.
                 - `/queue`: Display the tracks in the queue.
                 - `/pause`: Stop playing the current track.

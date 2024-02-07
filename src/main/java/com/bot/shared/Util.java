@@ -53,7 +53,7 @@ public class Util {
                 
                 String updatedDuration = getDynamicDuration(trackDurationInSeconds.getAndDecrement());
                 embedBuilder.clearFields().addField("Duration", updatedDuration, false);
-                message.editOriginalEmbeds(embedBuilder.build()).queue();
+                message.editOriginalEmbeds(embedBuilder.build()).queue(); //todo: naprawic rest action error
                 
                 if (trackDurationInSeconds.get() <= 1) {
                     message.editOriginalEmbeds(embedBuilder.clear().build()).queue();

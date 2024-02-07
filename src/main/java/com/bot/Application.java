@@ -37,7 +37,7 @@ public class Application {
         );
         
         final String discordToken = args[0];
-        SpotifyApiInstance.initSpotifyApi(args[1]);//6fb6b1879ea64a9480e1730903f3a924
+        SpotifyApiInstance.initSpotifyApi(args[1]);
         String RatPartyMixServerId = "598494742896181267";
         
         // start the bot
