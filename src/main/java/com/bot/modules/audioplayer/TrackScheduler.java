@@ -73,6 +73,7 @@ public class TrackScheduler extends AudioEventAdapter {
             nexttrack = queue.poll();
             player.startTrack(nexttrack, false);
             
+            System.out.println("end reason:" + endReason.toString());
             // show another track after prev finished
             if (endReason == AudioTrackEndReason.FINISHED && !queue.isEmpty()){
                 Util.displayCurrentPlayingTrackEmbedAck(event, player);

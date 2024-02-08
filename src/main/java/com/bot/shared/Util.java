@@ -3,23 +3,11 @@ package com.bot.shared;
 import com.bot.modules.audioplayer.PlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
-import com.sedmelluq.discord.lavaplayer.track.AudioTrackState;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicLong;
-
 
 public class Util {
-    
-    public static String durationFormat(long seconds) {
-        long minutes = seconds / 60;
-        long remainingSeconds = seconds % 60;
-        return minutes + ":" + ((remainingSeconds < 10) ? "0" + remainingSeconds : remainingSeconds);
-    }
     
     private static String getDynamicDuration(long durationInSeconds) {
         long minutes = durationInSeconds / 60;
@@ -35,32 +23,46 @@ public class Util {
         playerManager.getMusicManager(event.getGuild()).getScheduler().setEvent(event);
         
         String trackTitle = track.getInfo().title;
-        AtomicLong trackDurationInSeconds = new AtomicLong((track.getDuration()/1000));
+        long trackDurationInSeconds = track.getDuration()/1000;
         String trackThumbnailUrl = "https://img.youtube.com/vi/" + track.getIdentifier() + "/hqdefault.jpg";
         
         EmbedBuilder embedBuilder = new EmbedBuilder()
                 .setTitle("Now playing: ")
                 .appendDescription(trackTitle)
-                .addField("Duration", getDynamicDuration(trackDurationInSeconds.get()), false)
-                .setThumbnail(trackThumbnailUrl);
+                .addField("Duration", getDynamicDuration(trackDurationInSeconds), false)
+                .setThumbnail(trackThumbnailUrl)
+                .setUrl(track.getInfo().uri);
         
-
-        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-        event.replyEmbeds(embedBuilder.build()).queue(message -> {
-            scheduler.scheduleAtFixedRate(() -> {
-                if (!isSchedulerRunning) {
-                    return; // Don't update if scheduler is paused
+        event.replyEmbeds(embedBuilder.build()).queue(originalMessage -> {
+            new Thread(() -> {
+                try {
+                    while (player.getPlayingTrack() != null && player.getPlayingTrack().equals(track)) {
+                        // Calculate the current position of the track
+                        long currentPosition = track.getPosition() / 1000;
+                        
+                        // Update the duration field of the embed with the current track time
+                        String updatedDuration = getDynamicDuration(trackDurationInSeconds - currentPosition);
+                        embedBuilder.clearFields().addField("Duration", updatedDuration, false);
+                        
+                        // Edit the original message with the updated embed
+                        originalMessage.editOriginalEmbeds(embedBuilder.build()).queue();
+                        
+                        
+                        Thread.sleep(1000);
+                        
+                        // Check if the track is still playing every second
+                        System.out.println(track);
+                        System.out.println(player.getPlayingTrack());
+                        
+                        System.out.println(getDynamicDuration((track.getPosition())/1000));
+                    }
+                    
+                    // If the track is not playing anymore or has been skipped, delete the original response
+                    originalMessage.deleteOriginal().queue();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-
-                String updatedDuration = getDynamicDuration(trackDurationInSeconds.getAndDecrement());
-                embedBuilder.clearFields().addField("Duration", updatedDuration, false);
-                message.editOriginalEmbeds(embedBuilder.build()).submit();
-                if (player.getPlayingTrack().getState().equals(AudioTrackState.FINISHED)
-                        || trackDurationInSeconds.get() == 0) {
-                    message.deleteOriginal().submit();
-                    scheduler.shutdown();
-                }
-            }, 0, 1, TimeUnit.SECONDS);
+            }).start();
         });
     }
     
@@ -70,32 +72,48 @@ public class Util {
         playerManager.getMusicManager(event.getGuild()).getScheduler().setEvent(event);
         
         String trackTitle = track.getInfo().title;
-        AtomicLong trackDurationInSeconds = new AtomicLong((track.getDuration()/1000));
+        long trackDurationInSeconds = track.getDuration()/1000;
         String trackThumbnailUrl = "https://img.youtube.com/vi/" + track.getIdentifier() + "/hqdefault.jpg";
         
         EmbedBuilder embedBuilder = new EmbedBuilder()
                 .setTitle("Now playing: ")
                 .appendDescription(trackTitle)
-                .addField("Duration", getDynamicDuration(trackDurationInSeconds.get()), false)
-                .setThumbnail(trackThumbnailUrl);
+                .addField("Duration", getDynamicDuration(trackDurationInSeconds), false)
+                .setThumbnail(trackThumbnailUrl)
+                .setUrl(track.getInfo().uri);
         
-        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-        event.getChannel().sendMessageEmbeds(embedBuilder.build()).queue(message -> {
-            scheduler.scheduleAtFixedRate(() -> {
-                if (!isSchedulerRunning) {
-                    return; // Don't update if scheduler is paused
+        event.getChannel().sendMessageEmbeds(embedBuilder.build()).queue(originalMessage -> {
+            new Thread(() -> {
+                try {
+                    while (player.getPlayingTrack() != null && player.getPlayingTrack().equals(track)) {
+                        long currentPosition = track.getPosition() / 1000;
+                        
+                        String updatedDuration = getDynamicDuration(trackDurationInSeconds - currentPosition);
+                        embedBuilder.clearFields().addField("Duration", updatedDuration, false);
+                        
+                        originalMessage.editMessageEmbeds(embedBuilder.build()).queue();
+//                        try {
+//                            originalMessage.editMessageEmbeds(embedBuilder.build()).queue();
+//
+//                        } catch (Exception e) {
+//                            event.deferReply().queue();
+//                        }
+                        //todo catch errors when playing from rat-party-mix command
+                        
+                        Thread.sleep(1000);
+                        // Check if the track is still playing every second
+//                        System.out.println(track);
+//                        System.out.println(player.getPlayingTrack());
+                        
+                        System.out.println(getDynamicDuration((track.getPosition())/1000));
+                    }
+                    
+                    // If the track is not playing anymore or has been skipped, delete the original response
+                    originalMessage.delete().queue();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-                
-                String updatedDuration = getDynamicDuration(trackDurationInSeconds.getAndDecrement());
-                embedBuilder.clearFields().addField("Duration", updatedDuration, false);
-                message.editMessageEmbeds(embedBuilder.build()).submit();
-                
-                if (player.getPlayingTrack().getState().equals(AudioTrackState.FINISHED)
-                        || player.getPlayingTrack().getState().equals(AudioTrackState.STOPPING)) {
-                    message.delete().submit();
-                    scheduler.shutdown();
-                }
-            }, 0, 1, TimeUnit.SECONDS);
+            }).start();
         });
     }
     

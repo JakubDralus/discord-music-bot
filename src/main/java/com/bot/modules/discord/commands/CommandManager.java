@@ -66,5 +66,6 @@ public class CommandManager extends ListenerAdapter {
         commandsMap.put("play-ratpartymix", new RatPartyMix());
         commandsMap.put("play-daily-song", new DailySong());
         commandsMap.put("yeahbuddy", new YeahBuddy());
+        commandsMap.put("forward", new Forward());
     }
 }

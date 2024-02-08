@@ -59,9 +59,9 @@ public class Playlist {
     public static String getDailySongName() {
         SpotifyToken.clientCredentials_Async();
         SpotifyApi spotifyApi = SpotifyApiInstance.getSpotifyApi();
-        final GetTrackRequest getTrackRequest = spotifyApi.getTrack(getDailySongId()).build();
         
         try {
+            final GetTrackRequest getTrackRequest = spotifyApi.getTrack(getDailySongId()).build();
             final CompletableFuture<Track> trackFuture = getTrackRequest.executeAsync();
             final Track track = trackFuture.join();
             

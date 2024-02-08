@@ -45,6 +45,8 @@ public class TestCommands {
                 Commands.slash("resume", "resumes current track"),
                 Commands.slash("skip", "skips current track or a number of tracks")
                     .addOptions(new OptionData(OptionType.STRING, "count", "amount of tracks to skip", false)),
+                Commands.slash("forward", "forward the track (seconds)")
+                    .addOptions(new OptionData(OptionType.STRING, "seconds", "amount of seconds to skip", true)),
                 Commands.slash("leave", "bot leaves the channel"),
                 Commands.slash("play-ratpartymix", "play the Rat Paty Mix 2023™ playlist"),
                 Commands.slash("play-daily-song", "play today's daily song"),

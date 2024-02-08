@@ -18,17 +18,18 @@ public class Help implements ISlashCommand {
                 - `/queue`: Display the tracks in the queue.
                 - `/pause`: Stop playing the current track.
                 - `/resume`: Resume the current track.
+                - `/forward` `[seconds]`: forwards the song by amount if seconds provided.
+                  - Option: `seconds` (String): seconds to be skipped/forwarded in current playing track.
                 - `/skip` `[count]`: Skip the current track or a specified number of tracks.
                   - Option: `count` (String): The number of tracks to skip (optional).
                 - `/leave`: Make the bot leave the channel.
-                - `/now-playing`: Display information about the current playing track.
                 - `/play-ratpartymix`: Play the Rat Party Mix 2023™ playlist.
                 - `/play-daily-song`: Play today's daily song.
                 - `/yeahbuddy`: Get pumped up for the gym!
                 
                 **Other Commands:**
                 - `/help`: Display command list.
-                - `/info`: Get information about this music bot.
+                - `/info`: Get information about this music bot and link to the playlist.
                 - `/twitter`: Get information about the Twitter site.
                 """).queue();
     
