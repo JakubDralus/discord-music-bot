@@ -1,5 +1,8 @@
 # Rat Party Mix discord bot
 Discord music bot for my [playlist](https://open.spotify.com/playlist/0RHhiQ6hGLKgjE7eqNdXzh) on Spotify.
+  
+![image](https://github.com/JakubDralus/Rat-Party-Mix-discord-bot/assets/129612952/9e5837e6-0a5b-4e4e-b777-3b45372a4d31)
+
 
 # RatPartMix links
 
