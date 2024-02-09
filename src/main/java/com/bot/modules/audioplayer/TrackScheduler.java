@@ -1,6 +1,6 @@
 package com.bot.modules.audioplayer;
 
-import com.bot.shared.Util;
+import com.bot.shared.NowPlayingUtil;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
@@ -59,24 +59,24 @@ public class TrackScheduler extends AudioEventAdapter {
     public void onTrackStart(AudioPlayer player, AudioTrack track) {
         System.out.println("on track start");
         if (!event.isAcknowledged()) {
-            Util.displayCurrentPlayingTrackEmbed(event, player);
+            NowPlayingUtil.displayCurrentPlayingTrackEmbedReply(event, player);
         }
     }
     
     @Override
     public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
-        AudioTrack nexttrack = null;
         if (isRepeat) {
             player.startTrack(track.makeClone(), false);
         }
         else {
-            nexttrack = queue.poll();
-            player.startTrack(nexttrack, false);
+            player.startTrack(queue.poll(), false);
             
-            System.out.println("end reason:" + endReason.toString());
+            //todo check why some end reasons cleanups appear
+//            System.out.println("end reason:" + endReason.toString());
+            
             // show another track after prev finished
             if (endReason == AudioTrackEndReason.FINISHED && !queue.isEmpty()){
-                Util.displayCurrentPlayingTrackEmbedAck(event, player);
+                NowPlayingUtil.displayCurrentPlayingTrackEmbedNoReply(event, player);
             }
         }
     }

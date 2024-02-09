@@ -32,11 +32,11 @@ public class Queue implements ISlashCommand {
                 return;
             }
             i.getAndIncrement();
-            tracks.append(i).append(" ").append(track.getInfo().title).append("\n");
+            tracks.append(i).append(". ").append(track.getInfo().title).append("\n");
         });
         
         event.replyEmbeds(new EmbedBuilder()
-                .setTitle("Queue:")
+                .setTitle("Tracks in queue:")
                 .appendDescription(tracks.toString())
                 .appendDescription(queue.size() > 10 ? ("\n and " + (queue.size()-10) + " more...") : "")
                 .build()

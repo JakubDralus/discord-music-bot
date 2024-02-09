@@ -2,7 +2,7 @@ package com.bot.modules.discord.commands.music;
 
 import com.bot.modules.audioplayer.PlayerManager;
 import com.bot.modules.discord.commands.ISlashCommand;
-import com.bot.shared.Util;
+import com.bot.shared.NowPlayingUtil;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.channel.middleman.AudioChannel;
@@ -46,7 +46,7 @@ public class Skip implements ISlashCommand {
         int count = 1;
         OptionMapping message = event.getOption("count");
         if (message != null) {
-            count = Integer.parseInt(event.getOption("count").getAsString());
+            count = Integer.parseInt(Objects.requireNonNull(event.getOption("count")).getAsString());
         }
         for (int i = 0; i < count; i++) {
             playerManager.getMusicManager(event.getGuild()).getScheduler().getPlayer().stopTrack();
@@ -54,7 +54,7 @@ public class Skip implements ISlashCommand {
         
         AudioTrack playingTrack = playerManager.getMusicManager(event.getGuild()).getAudioPlayer().getPlayingTrack();
         if (playingTrack != null) {
-            Util.displayCurrentPlayingTrackEmbed(event, playerManager.getMusicManager(event.getGuild()).getAudioPlayer());
+            NowPlayingUtil.displayCurrentPlayingTrackEmbedReply(event, playerManager.getMusicManager(event.getGuild()).getAudioPlayer());
         }
         else {
             event.reply("skipped to empty queue").queue();

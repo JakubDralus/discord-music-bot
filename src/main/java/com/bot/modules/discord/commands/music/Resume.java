@@ -2,7 +2,6 @@ package com.bot.modules.discord.commands.music;
 
 import com.bot.modules.audioplayer.PlayerManager;
 import com.bot.modules.discord.commands.ISlashCommand;
-import com.bot.shared.Util;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.channel.middleman.AudioChannel;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
@@ -41,7 +40,6 @@ public class Resume implements ISlashCommand {
     
         PlayerManager playerManager = PlayerManager.get();
         playerManager.getMusicManager(event.getGuild()).getScheduler().getPlayer().setPaused(false);
-        Util.isSchedulerRunning = true;
         
         event.reply("track resumed").queue();
     
