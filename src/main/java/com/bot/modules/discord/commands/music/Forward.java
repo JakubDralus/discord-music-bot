@@ -45,7 +45,8 @@ public class Forward implements ISlashCommand {
         
         var seconds = option.getAsLong();
         track.setPosition(track.getPosition() + (seconds * 1000));
-        event.replyEmbeds(new EmbedBuilder().setDescription("Song forwarded by " + seconds + " seconds.")
-                .setColor(Color.GREEN).build()).queue();
+        event.replyEmbeds(new EmbedBuilder()
+                .setDescription("Song forwarded by " + seconds + " seconds.")
+                .build()).queue();
     }
 }

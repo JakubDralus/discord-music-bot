@@ -50,7 +50,7 @@ public class Play implements ISlashCommand {
             new URI(trackName);
         }
         catch (URISyntaxException e) {
-            trackName = "ytsearch: " + trackName + " audio";
+            trackName = "ytsearch: " + trackName;
         }
         
         playerManager.play(event.getGuild(), trackName, true, event);

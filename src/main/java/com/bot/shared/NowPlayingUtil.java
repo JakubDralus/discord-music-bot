@@ -13,6 +13,8 @@ import java.awt.*;
 
 public class NowPlayingUtil {
     
+    public static EmbedBuilder nowPlayingMessage;
+    
     private static String getDynamicDuration(long durationInSeconds) {
         long minutes = durationInSeconds / 60;
         long seconds = durationInSeconds % 60;
@@ -43,10 +45,11 @@ public class NowPlayingUtil {
         AudioTrack track = playerManager.getMusicManager(event.getGuild()).getAudioPlayer().getPlayingTrack();
         playerManager.getMusicManager(event.getGuild()).getScheduler().setEvent(event);
         
-        EmbedBuilder embedBuilder = makeTrackEmbed(track);
+        EmbedBuilder nowPlayingEmbed = makeTrackEmbed(track);
         event.deferReply().queue(); // wait a bit for the embed to initialize
         
-        event.getChannel().sendMessageEmbeds(embedBuilder.build())
+//        nowPlayingMessage = nowPlayingEmbed;
+        event.getHook().editOriginalEmbeds(nowPlayingEmbed.build())
                 .queue(originalMessage -> embedThread(player, originalMessage, track));
     }
     

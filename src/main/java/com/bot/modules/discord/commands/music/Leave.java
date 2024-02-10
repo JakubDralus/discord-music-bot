@@ -15,14 +15,14 @@ public class Leave implements ISlashCommand {
     
     @Override
     public void execute(SlashCommandInteractionEvent event) {
-        GuildMusicManager musicManager = PlayerManager.get().getMusicManager(event.getGuild());
         if (event.getGuild() != null) {
+            GuildMusicManager musicManager = PlayerManager.get().getMusicManager(event.getGuild());
             AudioManager audioManager = event.getGuild().getAudioManager();
             musicManager.getScheduler().getPlayer().setPaused(false);
             musicManager.getScheduler().getPlayer().stopTrack();
             musicManager.getScheduler().clearQueue();
             audioManager.closeAudioConnection();
-            event.replyEmbeds(new EmbedBuilder().setDescription("Party is over").build()).queue();
+            event.replyEmbeds(new EmbedBuilder().setDescription("goodbye").build()).queue();
     
             LOGGER.info("used /leave command in {}", event.getChannel().getName());
         }

@@ -14,14 +14,16 @@ public class Help implements ISlashCommand {
         event.reply("""
                 **Music Commands:**
                 - `/play` `[track]`: Play a specific music track (paste url or provide a youtube search prompt).
-                  - Option: `track` (String): The track to be played.
+                  - arg: `track` (String): The track to be played.
                 - `/queue`: Display the tracks in the queue.
+                - `/clear-queue`: Removes all tracks from the queue.
+                - `/shuffle`: Shuffles all tracks in the queue.
                 - `/pause`: Stop playing the current track.
                 - `/resume`: Resume the current track.
                 - `/forward` `[seconds]`: forwards the song by amount if seconds provided.
-                  - Option: `seconds` (String): seconds to be skipped/forwarded in current playing track.
+                  - arg: `seconds` (String): seconds to be skipped/forwarded in current playing track.
                 - `/skip` `[count]`: Skip the current track or a specified number of tracks.
-                  - Option: `count` (String): The number of tracks to skip (optional).
+                  - arg (optional): `count` (String): The number of tracks to skip (optional).
                 - `/leave`: Make the bot leave the channel.
                 - `/play-ratpartymix`: Play the Rat Party Mix 2023™ playlist.
                 - `/play-daily-song`: Play today's daily song.

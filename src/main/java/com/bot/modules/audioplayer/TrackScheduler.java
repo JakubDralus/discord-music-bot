@@ -23,7 +23,7 @@ public class TrackScheduler extends AudioEventAdapter {
     private final AudioPlayer player;
     private final BlockingQueue<AudioTrack> queue;
     private boolean isRepeat = false;
-    protected SlashCommandInteractionEvent event;
+    private SlashCommandInteractionEvent event;
     
     public TrackScheduler(AudioPlayer player) {
         this.player = player;
@@ -69,13 +69,14 @@ public class TrackScheduler extends AudioEventAdapter {
             player.startTrack(track.makeClone(), false);
         }
         else {
-            player.startTrack(queue.poll(), false);
+            var nextTrack = queue.poll();
+            player.startTrack(nextTrack, false);
             
             //todo check why some end reasons cleanups appear
 //            System.out.println("end reason:" + endReason.toString());
             
             // show another track after prev finished
-            if (endReason == AudioTrackEndReason.FINISHED && !queue.isEmpty()){
+            if (endReason == AudioTrackEndReason.FINISHED && nextTrack != null) {
                 NowPlayingUtil.displayCurrentPlayingTrackEmbedNoReply(event, player);
             }
         }
