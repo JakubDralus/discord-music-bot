@@ -36,14 +36,12 @@ public class NowPlayingUtil {
                          trackDuration,
                         false)
                 .setThumbnail(trackThumbnailUrl)
-//                .setUrl(trackLink)
                 .setColor(new Color(50, 205, 50));
     }
     
     public static void displayCurrentPlayingTrackEmbedReply(SlashCommandInteractionEvent event, AudioPlayer player) {
         PlayerManager playerManager = PlayerManager.get();
         AudioTrack track = playerManager.getMusicManager(event.getGuild()).getAudioPlayer().getPlayingTrack();
-        playerManager.getMusicManager(event.getGuild()).getScheduler().setEvent(event);
         
         EmbedBuilder nowPlayingEmbed = makeTrackEmbed(track);
         event.deferReply().queue(); // wait a bit for the embed to initialize
@@ -56,7 +54,6 @@ public class NowPlayingUtil {
     public static void displayCurrentPlayingTrackEmbedNoReply(SlashCommandInteractionEvent event, AudioPlayer player) {
         PlayerManager playerManager = PlayerManager.get();
         AudioTrack track = playerManager.getMusicManager(event.getGuild()).getAudioPlayer().getPlayingTrack();
-        playerManager.getMusicManager(event.getGuild()).getScheduler().setEvent(event);
         
         EmbedBuilder embedBuilder = makeTrackEmbed(track);
         

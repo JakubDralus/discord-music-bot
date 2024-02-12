@@ -5,11 +5,15 @@ import com.bot.modules.discord.commands.ISlashCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.channel.middleman.AudioChannel;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 import java.util.Objects;
 
 public class Forward implements ISlashCommand {
+    
+    private static final Logger LOGGER = LoggerFactory.getLogger(Forward.class);
     
     @Override
     public void execute(SlashCommandInteractionEvent event) {
@@ -48,5 +52,7 @@ public class Forward implements ISlashCommand {
         event.replyEmbeds(new EmbedBuilder()
                 .setDescription("Song forwarded by " + seconds + " seconds.")
                 .build()).queue();
+        
+        LOGGER.info("used /forward command in {}", event.getChannel().getName());
     }
 }

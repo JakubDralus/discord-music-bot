@@ -31,6 +31,7 @@ public class TrackScheduler extends AudioEventAdapter {
     }
     
     public void queueTrack(AudioTrack track, boolean reply) {
+//        System.out.println("queue track: "+ track.getInfo().title);
         if (!player.startTrack(track, true)) {
             queue.offer(track);
             
@@ -57,7 +58,7 @@ public class TrackScheduler extends AudioEventAdapter {
     
     @Override
     public void onTrackStart(AudioPlayer player, AudioTrack track) {
-        System.out.println("on track start");
+//        System.out.println("on track start");
         if (!event.isAcknowledged()) {
             NowPlayingUtil.displayCurrentPlayingTrackEmbedReply(event, player);
         }
