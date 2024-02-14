@@ -38,4 +38,6 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
 /src/test/
+/.mvn/wrapper/maven-wrapper.jar
