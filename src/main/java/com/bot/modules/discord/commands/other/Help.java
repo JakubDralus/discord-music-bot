@@ -15,6 +15,7 @@ public class Help implements ISlashCommand {
                 **Music Commands:**
                 - `/play` `[track]`: Play a specific music track (paste url or provide a youtube search prompt).
                   - arg: `track` (String): The track to be played.
+                - `/now-playing`: display the current playing track info (this embed does not disappear after track stops playing).
                 - `/queue`: Display the tracks in the queue.
                 - `/clear-queue`: Removes all tracks from the queue.
                 - `/shuffle`: Shuffles all tracks in the queue.

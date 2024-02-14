@@ -40,6 +40,7 @@ public class TestCommands {
                 // music
                 Commands.slash("play", "plays music track")
                     .addOptions(new OptionData(OptionType.STRING, "track", "track to be played", true)),
+                Commands.slash("now-playing", "display the current playing track info"),
                 Commands.slash("queue", "displays tracks in queue"),
                 Commands.slash("pause", "stops playing current track"),
                 Commands.slash("resume", "resumes current track"),

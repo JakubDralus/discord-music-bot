@@ -56,6 +56,7 @@ public class CommandManager extends ListenerAdapter {
         
         //Music Commands
         commandsMap.put("play", new Play());
+        commandsMap.put("now-playing", new NowPlaying());
         commandsMap.put("queue", new Queue());
         commandsMap.put("clear-queue", new ClearQueue());
         commandsMap.put("skip", new Skip());

@@ -29,6 +29,7 @@ public class NowPlayingUtil {
         long trackDurationInSeconds = track.getDuration()/1000;
         String trackDuration = getDynamicDuration(trackDurationInSeconds);
         
+        
         return new EmbedBuilder()
                 .setTitle("Now playing :musical_note:")
                 .setDescription("[" + trackTitle + "](" + trackLink + ")")
@@ -46,8 +47,8 @@ public class NowPlayingUtil {
         EmbedBuilder nowPlayingEmbed = makeTrackEmbed(track);
         event.deferReply().queue(); // wait a bit for the embed to initialize
         
-//        nowPlayingMessage = nowPlayingEmbed;
-        event.getHook().editOriginalEmbeds(nowPlayingEmbed.build())
+        nowPlayingMessage = nowPlayingEmbed;
+        event.getHook().sendMessageEmbeds(nowPlayingEmbed.build())
                 .queue(originalMessage -> embedThread(player, originalMessage, track));
     }
     
