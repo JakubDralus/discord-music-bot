@@ -48,7 +48,7 @@ public class NowPlayingUtil {
         nowPlayingEmbedMsg = nowPlayingEmbed;
         nowPlayingTrack = track;
         
-        event.deferReply().queue(); // wait a bit for the external apis to get resources
+        event.deferReply().submit(); // wait a bit for the external apis to get resources
         event.getHook().sendMessageEmbeds(nowPlayingEmbed.build())
                 .queue(originalMessage -> embedThread(player, originalMessage, track));
     }

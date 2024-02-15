@@ -2,16 +2,15 @@ package com.bot.modules.discord.commands.music;
 
 import com.bot.modules.audioplayer.PlayerManager;
 import com.bot.modules.discord.commands.ISlashCommand;
+import com.bot.shared.CommandUtil;
 import com.bot.shared.NowPlayingUtil;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.channel.middleman.AudioChannel;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.*;
 import java.util.Objects;
 
 
@@ -20,25 +19,22 @@ public class Skip implements ISlashCommand {
     
     @Override
     public void execute(SlashCommandInteractionEvent event) {
-        AudioChannel userChannel = Objects.requireNonNull(Objects
-                .requireNonNull(event.getMember()).getVoiceState()).getChannel();
-        AudioChannel botChannel = Objects.requireNonNull(Objects
-                .requireNonNull(event.getGuild()).getSelfMember().getVoiceState()).getChannel();
-    
-        if (!event.getMember().getVoiceState().inAudioChannel()) {
-            event.replyEmbeds(new EmbedBuilder().setDescription("Please join a voice channel.")
-                    .setColor(Color.RED).build()).queue();
+        AudioChannel userChannel = CommandUtil.getUserVoiceChannel(event);
+        AudioChannel botChannel = CommandUtil.getBotVoiceChannel(event);
+        
+        if (userChannel == null) {
+            CommandUtil.replyEmbedErr(event, "Please join a voice channel.");
             return;
         }
-    
-        if (!event.getGuild().getSelfMember().getVoiceState().inAudioChannel()) {
-            event.getGuild().getAudioManager().openAudioConnection(userChannel);
+        
+        if (botChannel == null) {
+            CommandUtil.connectToUserChannel(event, userChannel);
             botChannel = userChannel;
         }
-    
+        
         if (!Objects.equals(botChannel, userChannel)) {
-            event.replyEmbeds(new EmbedBuilder().setDescription("Please be in the same voice channel as the bot.")
-                    .setColor(Color.RED).build()).queue();
+            CommandUtil.replyEmbedErr(event, "Please be in the same voice channel as the bot.");
+            return;
         }
     
         PlayerManager playerManager = PlayerManager.get();
@@ -46,7 +42,7 @@ public class Skip implements ISlashCommand {
         int count = 1;
         OptionMapping message = event.getOption("count");
         if (message != null) {
-            count = Integer.parseInt(Objects.requireNonNull(event.getOption("count")).getAsString());
+            count = Integer.parseInt(String.valueOf(event.getOption("count")));
         }
         for (int i = 0; i < count; i++) {
             playerManager.getMusicManager(event.getGuild()).getScheduler().getPlayer().stopTrack();

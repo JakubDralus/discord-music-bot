@@ -22,7 +22,6 @@ public class NowPlaying implements ISlashCommand {
         AudioTrack track = NowPlayingUtil.nowPlayingTrack;
         
         if (playerManager.getMusicManager(event.getGuild()).getScheduler().getPlayer().getPlayingTrack() != null) {
-//            event.deferReply().queue(); // reply first so originalMessage type is Message not InteractionHook
             event.replyEmbeds(embed.build())
                     .queue(originalMessage -> NowPlayingUtil.embedThreadInteractionHook(player, originalMessage, track));
         }

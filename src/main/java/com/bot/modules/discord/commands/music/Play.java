@@ -2,13 +2,12 @@ package com.bot.modules.discord.commands.music;
 
 import com.bot.modules.audioplayer.PlayerManager;
 import com.bot.modules.discord.commands.ISlashCommand;
-import net.dv8tion.jda.api.EmbedBuilder;
+import com.bot.shared.CommandUtil;
 import net.dv8tion.jda.api.entities.channel.middleman.AudioChannel;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Objects;
@@ -19,25 +18,22 @@ public class Play implements ISlashCommand {
     
     @Override
     public void execute(SlashCommandInteractionEvent event) {
-        AudioChannel userChannel = Objects.requireNonNull(Objects
-                .requireNonNull(event.getMember()).getVoiceState()).getChannel();
-        AudioChannel botChannel = Objects.requireNonNull(Objects.
-                requireNonNull(event.getGuild()).getSelfMember().getVoiceState()).getChannel();
-    
-        if (!event.getMember().getVoiceState().inAudioChannel()) {
-            event.replyEmbeds(new EmbedBuilder().setDescription("Please join a voice channel.")
-                    .setColor(Color.RED).build()).queue();
+        AudioChannel userChannel = CommandUtil.getUserVoiceChannel(event);
+        AudioChannel botChannel = CommandUtil.getBotVoiceChannel(event);
+        
+        if (userChannel == null) {
+            CommandUtil.replyEmbedErr(event, "Please join a voice channel.");
             return;
         }
-    
-        if (!event.getGuild().getSelfMember().getVoiceState().inAudioChannel()) {
-            event.getGuild().getAudioManager().openAudioConnection(userChannel);
+        
+        if (botChannel == null) {
+            CommandUtil.connectToUserChannel(event, userChannel);
             botChannel = userChannel;
         }
         
         if (!Objects.equals(botChannel, userChannel)) {
-            event.replyEmbeds(new EmbedBuilder().setDescription("Please be in the same voice channel as the bot.")
-                    .setColor(Color.RED).build()).queue();
+            CommandUtil.replyEmbedErr(event, "Please be in the same voice channel as the bot.");
+            return;
         }
     
         PlayerManager playerManager = PlayerManager.get();
@@ -45,7 +41,7 @@ public class Play implements ISlashCommand {
         // set event for scheduler to make him display a current track being played
         playerManager.getMusicManager(event.getGuild()).getScheduler().setEvent(event);
         
-        String trackName = event.getOption("track").getAsString();
+        String trackName = String.valueOf(event.getOption("track"));
         try {
             new URI(trackName);
         }
