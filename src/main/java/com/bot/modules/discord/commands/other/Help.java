@@ -21,7 +21,7 @@ public class Help implements ISlashCommand {
                 - `/shuffle`: Shuffles all tracks in the queue.
                 - `/pause`: Stop playing the current track.
                 - `/resume`: Resume the current track.
-                - `/forward` `[seconds]`: forwards the song by amount if seconds provided.
+                - `/forward` `[seconds]`: forwards the song by amount of seconds provided.
                   - arg: `seconds` (String): seconds to be skipped/forwarded in current playing track.
                 - `/skip` `[count]`: Skip the current track or a specified number of tracks.
                   - arg (optional): `count` (String): The number of tracks to skip (optional).

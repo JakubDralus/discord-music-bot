@@ -82,6 +82,12 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>com.github.walkyst</groupId>
+            <artifactId>lavaplayer-fork</artifactId>
+            <version>1.4.3</version>
+        </dependency>
+
 <!--         logger stuff -->
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -97,13 +103,6 @@
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
-        </dependency>
-
-
-        <dependency>
-            <groupId>com.github.walkyst</groupId>
-            <artifactId>lavaplayer-fork</artifactId>
-            <version>1.4.3</version>
         </dependency>
     </dependencies>
 
