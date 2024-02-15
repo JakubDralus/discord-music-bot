@@ -6,14 +6,15 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.interactions.InteractionHook;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 
 
 public class NowPlayingUtil {
-    
-    public static EmbedBuilder nowPlayingMessage;
+    public static EmbedBuilder nowPlayingEmbedMsg;
+    public static AudioTrack nowPlayingTrack;
     
     private static String getDynamicDuration(long durationInSeconds) {
         long minutes = durationInSeconds / 60;
@@ -22,13 +23,12 @@ public class NowPlayingUtil {
     }
     
     @NotNull
-    private static EmbedBuilder makeTrackEmbed(AudioTrack track) {
+    public static EmbedBuilder makeTrackEmbed(AudioTrack track) {
         String trackThumbnailUrl = "https://img.youtube.com/vi/" + track.getIdentifier() + "/hqdefault.jpg";
         String trackTitle = track.getInfo().title;
         String trackLink = track.getInfo().uri;
         long trackDurationInSeconds = track.getDuration()/1000;
         String trackDuration = getDynamicDuration(trackDurationInSeconds);
-        
         
         return new EmbedBuilder()
                 .setTitle("Now playing :musical_note:")
@@ -45,9 +45,10 @@ public class NowPlayingUtil {
         AudioTrack track = playerManager.getMusicManager(event.getGuild()).getAudioPlayer().getPlayingTrack();
         
         EmbedBuilder nowPlayingEmbed = makeTrackEmbed(track);
-        event.deferReply().queue(); // wait a bit for the embed to initialize
+        nowPlayingEmbedMsg = nowPlayingEmbed;
+        nowPlayingTrack = track;
         
-        nowPlayingMessage = nowPlayingEmbed;
+        event.deferReply().queue(); // wait a bit for the external apis to get resources
         event.getHook().sendMessageEmbeds(nowPlayingEmbed.build())
                 .queue(originalMessage -> embedThread(player, originalMessage, track));
     }
@@ -56,14 +57,16 @@ public class NowPlayingUtil {
         PlayerManager playerManager = PlayerManager.get();
         AudioTrack track = playerManager.getMusicManager(event.getGuild()).getAudioPlayer().getPlayingTrack();
         
-        EmbedBuilder embedBuilder = makeTrackEmbed(track);
+        EmbedBuilder nowPlayingEmbed = makeTrackEmbed(track);
+        nowPlayingEmbedMsg = nowPlayingEmbed;
+        nowPlayingTrack = track;
         
-        event.getChannel().sendMessageEmbeds(embedBuilder.build())
+        event.getChannel().sendMessageEmbeds(nowPlayingEmbed.build())
                 .queue(originalMessage -> embedThread(player, originalMessage, track));
     }
     
     // deletes track embed when the track is not playing anymore
-    private static void embedThread(AudioPlayer player, Message originalMessage, AudioTrack track) {
+    public static void embedThread(AudioPlayer player, Message originalMessage, AudioTrack track) {
         new Thread(() -> {
             try {
                 while (player.getPlayingTrack() != null && player.getPlayingTrack().equals(track)) {
@@ -79,41 +82,19 @@ public class NowPlayingUtil {
         }).start();
     }
     
-    
-    // this is probably too music requests for discord api so dont'use it
-    @Deprecated
-    private static void embedUpdateThread(AudioPlayer player, Message originalMessage, AudioTrack track, EmbedBuilder embedBuilder) {
-        final long trackDurationInSeconds = track.getDuration()/1000;
-        final String trackDuration = getDynamicDuration(trackDurationInSeconds);
-        
-        
+    public static void embedThreadInteractionHook(AudioPlayer player, InteractionHook originalMessage, AudioTrack track) {
         new Thread(() -> {
             try {
                 while (player.getPlayingTrack() != null && player.getPlayingTrack().equals(track)) {
-                    long currentPosition = track.getPosition() / 1000;
-
-                    // Update the duration field of the embed with the current track time
-                    // note: the currentTimestamp is not paused when the track is paused (i don't need to fix it)
-                    String currentTimestamp = getDynamicDuration(trackDurationInSeconds - currentPosition);
-                    embedBuilder
-                            .clearFields()
-                            .addField("Duration",
-                                    currentTimestamp + " / " + trackDuration,
-                                    false);
-                    originalMessage.editMessageEmbeds(embedBuilder.build()).queue();
-                    
                     Thread.sleep(1000);
                 }
                 
                 // If the track is not playing anymore or has been skipped, delete the original response
-                originalMessage.delete().queue();
+                originalMessage.deleteOriginal().queue();
             }
             catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }).start();
     }
-    
-    
-    //todo: checking in commands here
 }

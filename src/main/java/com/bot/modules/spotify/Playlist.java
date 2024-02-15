@@ -33,21 +33,22 @@ public class Playlist {
     private static final Map<Integer, String> tracks = new HashMap<>();
     
     private static String getDailySongId() {
-        String url = "http://130.61.63.141:8888/ratpartymix/dailysong";
+        String ratPartyMixApiUrl = "http://130.61.63.141:8888/ratpartymix/dailysong";
     
         // Create an HTTP request
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
+                .uri(URI.create(ratPartyMixApiUrl))
                 .GET()
                 .build();
         try {
             HttpClient httpClient = HttpClient.newHttpClient();
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+//            System.out.println("response body: " + response.body());
             
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode rootNode = objectMapper.readTree(response.body());
     
-            System.out.println("id: " + rootNode.get("spotify_id").toString());
+//            System.out.println("id: " + rootNode.get("spotify_id").toString());
             return rootNode.get("spotify_id").toString().replace("\"", ""); // remove quotes from json;
         }
         catch (IOException | InterruptedException e) {
