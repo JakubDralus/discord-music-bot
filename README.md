@@ -1,20 +1,69 @@
-# Rat Party Mix discord bot
-Discord music bot for my [playlist](https://open.spotify.com/playlist/0RHhiQ6hGLKgjE7eqNdXzh) on Spotify.
-  
+# Rat Party Mix Discord Music Bot
+Discord music bot for my [playlist on Spotify](https://open.spotify.com/playlist/0RHhiQ6hGLKgjE7eqNdXzh) that has couple of specific commands just for this specific playlist using Spotify API. 
+Bot can of course play anything (just like other bots) using YouTube API, but its branded with the name of the playlist just for fun. 
+
+## About the playlist
+The playlist was created back when I was in high school. I recommended it as a ready-to-go playlist for parties if someone didn't have one already. 
+And I acted like it's some real brand (I still do) and it's kinda fun. Which led to combining this idea with my programming skills and creation of this bot at the end. <br>
+
+A friend of mine also got hooked to this idea and created a tracker for this playlist which sends a tweet every time a song is added or deleted. And most importantly it posts a song of the day
+which is just a random song and it's also available in the [RatPartMix API](http://130.61.63.141:8888/docs) (it's not fully done but it works).
+
 [![image](https://github.com/JakubDralus/Rat-Party-Mix-discord-bot/assets/129612952/9e5837e6-0a5b-4e4e-b777-3b45372a4d31)](https://open.spotify.com/playlist/0RHhiQ6hGLKgjE7eqNdXzh)
 
+# Commands
+**Music Commands:**
+- `/play` `[track]`: Play a specific music track (paste url or provide a youtube search prompt).
+  - arg: `track` (String): The track to be played.
+- `/now-playing`: display the current playing track info (this embed does not disappear after track stops playing).
+- `/queue`: Display the tracks in the queue.
+- `/clear-queue`: Removes all tracks from the queue.
+- `/shuffle`: Shuffles all tracks in the queue.
+- `/pause`: Stop playing the current track.
+- `/resume`: Resume the current track.
+- `/forward` `[seconds]`: forwards the song by amount of seconds provided.
+  - arg: `seconds` (String): seconds to be skipped/forwarded in current playing track.
+- `/skip` `[count]`: Skip the current track or a specified number of tracks.
+  - arg (optional): `count` (String): The number of tracks to skip (optional).
+- `/leave`: Make the bot leave the channel.
+- `/play-ratpartymix`: Play the Rat Party Mix 2023™ playlist.
+- `/play-daily-song`: Play today's daily song.
+- `/yeahbuddy`: Get pumped up for the gym!
 
-# RatPartMix links
+**Other Commands:**
+- `/help`: Display command list.
+- `/info`: Get information about this music bot and link to the playlist.
+- `/twitter`: Get information about the Twitter site.
 
-1. [RatPartMix - Spotify](https://open.spotify.com/playlist/0RHhiQ6hGLKgjE7eqNdXzh)
-2. [RatPartyMix - Twitter](https://twitter.com/RatPartyMix)
-3. [RatPartMix - Tracker](https://github.com/zawislakm/RatPartyMixTracker) (Github repo)
-4. [RatPartMix - API](http://130.61.63.141:8888/docs)
 
-# resources:
-- https://github.com/discord-jda/JDA <br>
-- https://github.com/spotify-web-api-java/spotify-web-api-java <br>
-- https://github.com/relaxingleg/Tutorial-Bot <br>
-- https://github.com/Walkyst/lavaplayer-fork <br>
-- https://github.com/Glaxier0/discord-music-bot  <br>
+# Rat Part Mix links
+- [Spotify playlist](https://open.spotify.com/playlist/0RHhiQ6hGLKgjE7eqNdXzh)
+- [Twitter/X](https://twitter.com/RatPartyMix) bot tracker for daily songs and changes
+- [GitHub repository](https://github.com/JakubDralus/Rat-Party-Mix-discord-music-bot) of this bot
+- [RatPartMix - API](http://130.61.63.141:8888/docs)
+- (website coming soon)
+
+# Specification
+- Java 19 (it think it can also work on java 17)
+- Maven 3.9.6
+
+# Dependencies
+You can also find them in pom.xml
+- com.github.discord-jda:JDA - v5.0.0-beta.12]
+- net.dv8tion:JDA - 5.0.0-beta.13
+- se.michaelthelin.spotify:spotify-web-api-java - 8.0.0
+- org.projectlombok:lombok - 1.18.28
+- com.github.walkyst:lavaplayer-fork - 1.4.3
+- org.slf4j:slf4j-api - 2.0.5
+- org.slf4j:slf4j-log4j12 - 2.0.5
+- log4j:log4j - 1.2.17
+
+# Resources:
+- https://github.com/discord-jda/JDA
+- https://github.com/spotify-web-api-java/spotify-web-api-java
+- https://github.com/Walkyst/lavaplayer-fork
+<br>
+
+- https://github.com/Glaxier0/discord-music-bot
+- https://github.com/relaxingleg/Tutorial-Bot
 - https://www.youtube.com/watch?v=FvAkzKi9w5s&list=PLMDWhd7MfizXOJXn905x8UqkWtMJ6tl-b
