@@ -3,10 +3,11 @@ Discord music bot for my [playlist on Spotify](https://open.spotify.com/playlist
 Bot can of course play anything (just like other bots) using YouTube API, but its branded with the name of the playlist just for fun. 
 
 ## About the playlist
-The playlist was created back when I was in high school. I recommended it as a ready-to-go playlist for parties if someone didn't have one already. 
+The playlist was created back when I was in high school. It features party hits mainly from years late 2000s and early 2010s (I love 'white girls' music) mixed with some recent popular tracks.
+I recommended it as a ready-to-go playlist for parties if someone didn't have one already. 
 And I acted like it's some real brand (I still do) and it's kinda fun. Which led to combining this idea with my programming skills and creation of this bot at the end. <br>
 
-A friend of mine also got hooked to this idea and created a tracker for this playlist which sends a tweet every time a song is added or deleted. And most importantly it posts a song of the day
+A friend of mine also got hooked to this idea and created a bot 'tracker' ([Github](https://github.com/zawislakm/RatPartyMixTracker)) for this playlist which sends a tweet every time a song is added or deleted. And most importantly it posts a song of the day
 which is just a random song and it's also available in the [RatPartMix API](http://130.61.63.141:8888/docs) (it's not fully done but it works).
 
 [![image](https://github.com/JakubDralus/Rat-Party-Mix-discord-bot/assets/129612952/9e5837e6-0a5b-4e4e-b777-3b45372a4d31)](https://open.spotify.com/playlist/0RHhiQ6hGLKgjE7eqNdXzh)
@@ -39,9 +40,8 @@ which is just a random song and it's also available in the [RatPartMix API](http
 
 # Rat Part Mix links
 - [Spotify playlist](https://open.spotify.com/playlist/0RHhiQ6hGLKgjE7eqNdXzh)
-- [Twitter/X](https://twitter.com/RatPartyMix) bot tracker for daily songs and changes
-- [GitHub repository](https://github.com/JakubDralus/Rat-Party-Mix-discord-music-bot) of this bot
-- [RatPartMix - API](http://130.61.63.141:8888/docs)
+- [Twitter bot](https://twitter.com/RatPartyMix) 'tracker' ([GitHub](https://github.com/zawislakm/RatPartyMixTracker))
+- [RatPartMix API](http://130.61.63.141:8888/docs)
 - (website coming soon)
 
 # Specification
@@ -50,11 +50,11 @@ which is just a random song and it's also available in the [RatPartMix API](http
 
 # Dependencies
 You can also find them in pom.xml
-- com.github.discord-jda:JDA - v5.0.0-beta.12]
+- com.github.discord-jda:JDA - v5.0.0-beta.12
 - net.dv8tion:JDA - 5.0.0-beta.13
 - se.michaelthelin.spotify:spotify-web-api-java - 8.0.0
-- org.projectlombok:lombok - 1.18.28
 - com.github.walkyst:lavaplayer-fork - 1.4.3
+- org.projectlombok:lombok - 1.18.28
 - org.slf4j:slf4j-api - 2.0.5
 - org.slf4j:slf4j-log4j12 - 2.0.5
 - log4j:log4j - 1.2.17
