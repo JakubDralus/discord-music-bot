@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.events.interaction.component.StringSelectInteractionEvent;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,7 +24,8 @@ public class TrackScheduler extends AudioEventAdapter {
     private final AudioPlayer player;
     private final BlockingQueue<AudioTrack> queue;
     private boolean isRepeat = false;
-    private SlashCommandInteractionEvent event;
+    private SlashCommandInteractionEvent commandEvent;
+    private StringSelectInteractionEvent menuEvent;
     
     public TrackScheduler(AudioPlayer player) {
         this.player = player;
@@ -35,8 +37,16 @@ public class TrackScheduler extends AudioEventAdapter {
         if (!player.startTrack(track, true)) {
             queue.offer(track);
             
-            if (reply && !event.isAcknowledged()) {
-                event.replyEmbeds(new EmbedBuilder()
+            if (reply && !commandEvent.isAcknowledged()) {
+                commandEvent.replyEmbeds(new EmbedBuilder()
+                        .setTitle("Added to queue: ")
+                        .setDescription(track.getInfo().title + "\n")
+                        .build()
+                ).queue();
+            }
+            
+            if (reply && !menuEvent.isAcknowledged()) {
+                menuEvent.replyEmbeds(new EmbedBuilder()
                         .setTitle("Added to queue: ")
                         .setDescription(track.getInfo().title + "\n")
                         .build()
@@ -59,8 +69,11 @@ public class TrackScheduler extends AudioEventAdapter {
     @Override
     public void onTrackStart(AudioPlayer player, AudioTrack track) {
 //        System.out.println("on track start");
-        if (!event.isAcknowledged()) {
-            NowPlayingUtil.displayCurrentPlayingTrackEmbedReply(event, player);
+        if (!commandEvent.isAcknowledged()) {
+            NowPlayingUtil.displayCurrentPlayingTrackEmbedReply(commandEvent, player);
+        }
+        if (!menuEvent.isAcknowledged()){
+            NowPlayingUtil.displayCurrentPlayingTrackEmbedReply(menuEvent,player);
         }
     }
     
@@ -78,7 +91,7 @@ public class TrackScheduler extends AudioEventAdapter {
             
             // show another track after prev finished
             if (endReason == AudioTrackEndReason.FINISHED && nextTrack != null) {
-                NowPlayingUtil.displayCurrentPlayingTrackEmbedNoReply(event, player);
+                NowPlayingUtil.displayCurrentPlayingTrackEmbedNoReply(commandEvent, player);
             }
         }
     }

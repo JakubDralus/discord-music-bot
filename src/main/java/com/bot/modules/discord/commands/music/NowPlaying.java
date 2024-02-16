@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 
 public class NowPlaying implements ISlashCommand {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Leave.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(NowPlaying.class);
     
     @Override
     public void execute(SlashCommandInteractionEvent event) {

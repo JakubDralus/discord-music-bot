@@ -38,8 +38,8 @@ public class Play implements ISlashCommand {
     
         PlayerManager playerManager = PlayerManager.get();
         
-        // set event for scheduler to make him display a current track being played
-        playerManager.getMusicManager(event.getGuild()).getScheduler().setEvent(event);
+        // set commandEvent for scheduler to make him display a current track being played
+        playerManager.getMusicManager(event.getGuild()).getScheduler().setCommandEvent(event);
         
         String trackName = String.valueOf(event.getOption("track"));
         try {

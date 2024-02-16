@@ -38,7 +38,7 @@ public class DailySong implements ISlashCommand {
         }
     
         PlayerManager playerManager = PlayerManager.get();
-        playerManager.getMusicManager(event.getGuild()).getScheduler().setEvent(event);
+        playerManager.getMusicManager(event.getGuild()).getScheduler().setCommandEvent(event);
     
         String trackName = Playlist.getDailySongName();
         try {

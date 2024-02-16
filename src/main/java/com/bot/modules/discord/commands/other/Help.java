@@ -28,6 +28,7 @@ public class Help implements ISlashCommand {
                 - `/leave`: Make the bot leave the channel.
                 - `/play-ratpartymix`: Play the Rat Party Mix 2023™ playlist.
                 - `/play-daily-song`: Play today's daily song.
+                - `/play-youtube-banger`: play a song from #youtube-only-bangers channel using a selection menu.
                 - `/yeahbuddy`: Get pumped up for the gym!
                 
                 **Other Commands:**

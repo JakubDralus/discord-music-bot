@@ -42,6 +42,7 @@ public class TestCommands {
                         .addOptions(new OptionData(OptionType.STRING, "track", "track to be played (test command)", true)),
                 Commands.slash("now-playing", "display the current playing track info (test command)"),
                 Commands.slash("queue", "displays tracks in queue (test command)"),
+                Commands.slash("shuffle-queue", "shuffle the queue content (test command)"),
                 Commands.slash("pause", "stops playing current track (test command)"),
                 Commands.slash("resume", "resumes current track (test command)"),
                 Commands.slash("skip", "skips current track or a number of tracks (test command)")
@@ -51,11 +52,9 @@ public class TestCommands {
                 Commands.slash("leave", "bot leaves the channel (test command)"),
                 Commands.slash("play-ratpartymix", "play the Rat Paty Mix 2023™ playlist (test command)"),
                 Commands.slash("play-daily-song", "play today's daily song (test command)"),
-                Commands.slash("yeahbuddy", "GO TO THE GYM!!! (test command)"),
-                Commands.slash("shuffle-queue", "shuffle the queue content (test command)")
+                Commands.slash("play-youtube-banger", "play a song from #youtube-only-bangers (test command)"),
+                Commands.slash("yeahbuddy", "GO TO THE GYM!!! (test command)")
             ).queue();
-            
-            //todo add a command to play songs form #youtube-only-bangers channel
         }
     }
 }

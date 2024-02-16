@@ -1,5 +1,6 @@
 package com.bot.modules.discord.commands;
 
+import com.bot.modules.audioplayer.PlayerManager;
 import com.bot.modules.discord.commands.admin.RandomSong;
 import com.bot.modules.discord.commands.admin.Echo;
 import com.bot.modules.discord.commands.other.Help;
@@ -7,12 +8,15 @@ import com.bot.modules.discord.commands.other.Info;
 import com.bot.modules.discord.commands.other.Twitter;
 import com.bot.modules.discord.commands.music.*;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.events.interaction.component.StringSelectInteractionEvent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -66,7 +70,27 @@ public class CommandManager extends ListenerAdapter {
         commandsMap.put("shuffle-queue", new Shuffle());
         commandsMap.put("play-ratpartymix", new RatPartyMix());
         commandsMap.put("play-daily-song", new DailySong());
+        commandsMap.put("play-youtube-banger", new PlayYoutubeBanger());
         commandsMap.put("yeahbuddy", new YeahBuddy());
         commandsMap.put("forward", new Forward());
+    }
+    
+    @Override
+    public void onStringSelectInteraction(StringSelectInteractionEvent event) {
+        if (event.getComponentId().equals("youtube-only-bangers-select")) {
+            PlayerManager playerManager = PlayerManager.get();
+            playerManager.getMusicManager(event.getGuild()).getScheduler().setMenuEvent(event);
+            
+            String trackName = event.getValues().get(0);
+            try {
+                new URI(trackName);
+            }
+            catch (URISyntaxException e) {
+                trackName = "ytsearch: " + trackName;
+            }
+            
+            playerManager.play(event.getGuild(), trackName, true, playerManager.getMusicManager(event.getGuild()).getScheduler().getCommandEvent());
+//            commandEvent.getMessage().delete().queue(); // i guess you can leave it but you cant queue the same track twice
+        }
     }
 }

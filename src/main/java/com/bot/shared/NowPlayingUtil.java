@@ -6,6 +6,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.events.interaction.component.StringSelectInteractionEvent;
 import net.dv8tion.jda.api.interactions.InteractionHook;
 import org.jetbrains.annotations.NotNull;
 
@@ -43,12 +44,26 @@ public class NowPlayingUtil {
     public static void displayCurrentPlayingTrackEmbedReply(SlashCommandInteractionEvent event, AudioPlayer player) {
         PlayerManager playerManager = PlayerManager.get();
         AudioTrack track = playerManager.getMusicManager(event.getGuild()).getAudioPlayer().getPlayingTrack();
+        event.deferReply().submit(); // wait a bit for the external apis to get resources
         
         EmbedBuilder nowPlayingEmbed = makeTrackEmbed(track);
         nowPlayingEmbedMsg = nowPlayingEmbed;
         nowPlayingTrack = track;
         
+        event.getHook().sendMessageEmbeds(nowPlayingEmbed.build())
+                .queue(originalMessage -> embedThread(player, originalMessage, track));
+    }
+    
+    // this one is for menu selection event from /play-youtube-banger dropdown
+    public static void displayCurrentPlayingTrackEmbedReply(StringSelectInteractionEvent event, AudioPlayer player) {
+        PlayerManager playerManager = PlayerManager.get();
+        AudioTrack track = playerManager.getMusicManager(event.getGuild()).getAudioPlayer().getPlayingTrack();
         event.deferReply().submit(); // wait a bit for the external apis to get resources
+        
+        EmbedBuilder nowPlayingEmbed = makeTrackEmbed(track);
+        nowPlayingEmbedMsg = nowPlayingEmbed;
+        nowPlayingTrack = track;
+        
         event.getHook().sendMessageEmbeds(nowPlayingEmbed.build())
                 .queue(originalMessage -> embedThread(player, originalMessage, track));
     }

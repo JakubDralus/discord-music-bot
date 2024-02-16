@@ -11,8 +11,9 @@ public class Echo implements ISlashCommand {
     
     @Override
     public void execute(SlashCommandInteractionEvent event) {
-        String message = event.getOption("message").getAsString();
+        String message = String.valueOf(event.getOption("message"));
         event.reply(message).queue();
+        
         LOGGER.info("used /echo command in {} (message: {})", event.getChannel().getName(), message);
     }
 }

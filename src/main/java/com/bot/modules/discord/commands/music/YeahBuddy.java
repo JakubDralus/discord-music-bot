@@ -34,6 +34,6 @@ public class YeahBuddy implements ISlashCommand {
         PlayerManager playerManager = PlayerManager.get();
         playerManager.play(event.getGuild(), "C:\\Users\\kubad\\Downloads\\YeahBuddy.mp4", true, event);
     
-        playerManager.getMusicManager(event.getGuild()).getScheduler().setEvent(event);
+        playerManager.getMusicManager(event.getGuild()).getScheduler().setCommandEvent(event);
     }
 }

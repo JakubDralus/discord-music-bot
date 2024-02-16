@@ -30,7 +30,8 @@ public class GlobalCommands {
             Commands.slash("leave", "bot leaves the channel"),
             Commands.slash("shuffle-queue", "shuffle the tracks in queue"),
             Commands.slash("play-ratpartymix", "play the Rat Paty Mix 2023™ playlist"),
-            //Commands.slash("play-daily-song", "play today's daily song"), // unavailable until tracker is repaired
+            Commands.slash("play-daily-song", "play today's daily song"),
+            Commands.slash("play-youtube-banger", "play a song from #youtube-only-bangers channel."),
             Commands.slash("yeahbuddy", "GO TO THE GYM!!!")
         ).queue();
     }
