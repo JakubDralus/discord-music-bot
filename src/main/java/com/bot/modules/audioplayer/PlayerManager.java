@@ -72,7 +72,8 @@ public class PlayerManager {
         
             @Override
             public void loadFailed(FriendlyException exception) {
-                exception.printStackTrace();
+//                exception.printStackTrace();
+                System.out.println(exception.severity);
             }
         });
     }
