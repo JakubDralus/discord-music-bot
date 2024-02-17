@@ -41,12 +41,12 @@ public class Play implements ISlashCommand {
         // set commandEvent for scheduler to make him display a current track being played
         playerManager.getMusicManager(event.getGuild()).getScheduler().setCommandEvent(event);
         
-        String trackName = String.valueOf(event.getOption("track"));
+        String trackName = event.getOption("track").getAsString();
         try {
             new URI(trackName);
         }
         catch (URISyntaxException e) {
-            trackName = "ytsearch: " + trackName;
+            trackName = "ytsearch: " + trackName ;
         }
         
         playerManager.play(event.getGuild(), trackName, true, event);

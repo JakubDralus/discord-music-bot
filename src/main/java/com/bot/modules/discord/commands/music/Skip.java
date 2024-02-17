@@ -36,13 +36,13 @@ public class Skip implements ISlashCommand {
             CommandUtil.replyEmbedErr(event, "Please be in the same voice channel as the bot.");
             return;
         }
-    
+        
         PlayerManager playerManager = PlayerManager.get();
         
         int count = 1;
         OptionMapping message = event.getOption("count");
         if (message != null) {
-            count = Integer.parseInt(String.valueOf(event.getOption("count")));
+            count = event.getOption("count").getAsInt();
         }
         for (int i = 0; i < count; i++) {
             playerManager.getMusicManager(event.getGuild()).getScheduler().getPlayer().stopTrack();

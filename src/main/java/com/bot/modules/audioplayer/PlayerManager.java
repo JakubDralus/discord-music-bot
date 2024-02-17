@@ -40,25 +40,28 @@ public class PlayerManager {
             final GuildMusicManager guildMusicManager = new GuildMusicManager(audioPlayerManager);
             
             guild.getAudioManager().setSendingHandler(guildMusicManager.getSendHandler());
-            
             return guildMusicManager;
         });
     }
     
     public void play(Guild guild, String trackURL, boolean reply, SlashCommandInteractionEvent event) {
         GuildMusicManager musicManager = getMusicManager(guild);
-        EmbedBuilder embedBuilder = new EmbedBuilder();
+//        System.out.println("trackname: " + trackURL);
         
-        audioPlayerManager.loadItemOrdered(musicManager, trackURL, new AudioLoadResultHandler() {
+        audioPlayerManager.loadItemOrdered(musicManager.getAudioPlayer(), trackURL, new AudioLoadResultHandler() {
             @Override
             public void trackLoaded(AudioTrack track) {
-                embedBuilder.clear();
+                System.out.println("tarck " + track.getInfo().title);
                 musicManager.getScheduler().queueTrack(track, true);
             }
         
             @Override
             public void playlistLoaded(AudioPlaylist playlist) {
+//                System.out.println("playlist " + playlist.getTracks().get(0).getInfo().title);
                 musicManager.getScheduler().queueTrack(playlist.getTracks().get(0), reply);
+//                for (var track: playlist.getTracks()) {
+//                    System.out.println(track.getInfo().title);
+//                }
             }
         
             @Override

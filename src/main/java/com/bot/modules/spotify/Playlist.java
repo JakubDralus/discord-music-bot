@@ -1,5 +1,6 @@
 package com.bot.modules.spotify;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
@@ -50,6 +51,11 @@ public class Playlist {
     
 //            System.out.println("id: " + rootNode.get("spotify_id").toString());
             return rootNode.get("spotify_id").toString().replace("\"", ""); // remove quotes from json;
+        }
+        catch (JsonParseException e) {
+            // todo try this tomorrow
+            System.out.printf("recurence");
+            getDailySongId();
         }
         catch (IOException | InterruptedException e) {
             e.printStackTrace();

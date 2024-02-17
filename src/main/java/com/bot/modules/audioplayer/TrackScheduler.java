@@ -45,7 +45,7 @@ public class TrackScheduler extends AudioEventAdapter {
                 ).queue();
             }
             
-            if (reply && !menuEvent.isAcknowledged()) {
+            if (menuEvent != null && reply && !menuEvent.isAcknowledged()) {
                 menuEvent.replyEmbeds(new EmbedBuilder()
                         .setTitle("Added to queue: ")
                         .setDescription(track.getInfo().title + "\n")
@@ -72,7 +72,7 @@ public class TrackScheduler extends AudioEventAdapter {
         if (!commandEvent.isAcknowledged()) {
             NowPlayingUtil.displayCurrentPlayingTrackEmbedReply(commandEvent, player);
         }
-        if (!menuEvent.isAcknowledged()){
+        if (menuEvent != null && !menuEvent.isAcknowledged() ){
             NowPlayingUtil.displayCurrentPlayingTrackEmbedReply(menuEvent,player);
         }
     }

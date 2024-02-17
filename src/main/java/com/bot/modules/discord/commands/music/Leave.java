@@ -18,6 +18,7 @@ public class Leave implements ISlashCommand {
         if (event.getGuild() != null) {
             GuildMusicManager musicManager = PlayerManager.get().getMusicManager(event.getGuild());
             AudioManager audioManager = event.getGuild().getAudioManager();
+            musicManager.getScheduler().getPlayer().stopTrack();
             musicManager.getScheduler().getPlayer().setPaused(false);
             musicManager.getScheduler().getPlayer().destroy();
             musicManager.getScheduler().clearQueue();
