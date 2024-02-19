@@ -46,7 +46,8 @@ public class Play implements ISlashCommand {
             new URI(trackName);
         }
         catch (URISyntaxException e) {
-            trackName = "ytsearch: " + trackName ;
+            trackName = "ytsearch: " + trackName;
+            System.out.println("trackname " + trackName);
         }
         
         playerManager.play(event.getGuild(), trackName, true, event);

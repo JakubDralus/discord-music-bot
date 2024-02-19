@@ -16,6 +16,8 @@ public class Leave implements ISlashCommand {
     @Override
     public void execute(SlashCommandInteractionEvent event) {
         if (event.getGuild() != null) {
+            event.replyEmbeds(new EmbedBuilder().setDescription("leaving channel").build()).queue();
+            
             GuildMusicManager musicManager = PlayerManager.get().getMusicManager(event.getGuild());
             AudioManager audioManager = event.getGuild().getAudioManager();
             musicManager.getScheduler().getPlayer().stopTrack();
@@ -23,7 +25,6 @@ public class Leave implements ISlashCommand {
             musicManager.getScheduler().getPlayer().destroy();
             musicManager.getScheduler().clearQueue();
             audioManager.closeAudioConnection();
-            event.replyEmbeds(new EmbedBuilder().setDescription("leaving channel").build()).queue();
     
             LOGGER.info("used /leave command in {}", event.getChannel().getName());
         }
