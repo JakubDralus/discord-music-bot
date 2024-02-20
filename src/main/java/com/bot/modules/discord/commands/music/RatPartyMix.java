@@ -13,6 +13,13 @@ import org.slf4j.LoggerFactory;
 import java.util.Objects;
 
 
+/**
+ *  This command is not very effective (<b>high chance some tracks will not be loaded</b>)
+ *  probably due to YouTube API limitations (exact cause is not known).
+ *  Because it is trying to load all tracks from playlist which means a lot of querying of the YT API is happening.
+ *  The number of tracks not being loaded may vary, usually it's 1 to 7.
+ *  <b>Do not spam this command!</b>
+ */
 public class RatPartyMix implements ISlashCommand {
     private static final Logger LOGGER = LoggerFactory.getLogger(RatPartyMix.class);
     

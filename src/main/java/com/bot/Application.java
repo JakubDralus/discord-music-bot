@@ -23,28 +23,23 @@ public class Application {
     private static final Logger LOGGER = LoggerFactory.getLogger(Application.class);
     
     public static void main(String[] args) throws InterruptedException {
+        SpotifyApiInstance.initSpotifyApi(args[1]);
         
-        EnumSet<GatewayIntent> intents = EnumSet.of(
-            // Enables MessageReceivedEvent for guild (also known as servers)
-            GatewayIntent.GUILD_MESSAGES,
-            // Enables the event for private channels (also known as direct messages)
+        final EnumSet<GatewayIntent> intents = EnumSet.of(
+            GatewayIntent.GUILD_MESSAGES, // Enables MessageReceivedEvent for guild (also known as servers)
             GatewayIntent.DIRECT_MESSAGES,
-            // Enables access to message.getContentRaw()
-            GatewayIntent.MESSAGE_CONTENT,
-            // Enables MessageReactionAddEvent for guild
-            GatewayIntent.GUILD_MESSAGE_REACTIONS,
+            GatewayIntent.MESSAGE_CONTENT,  // Enables access to message.getContentRaw()
+            GatewayIntent.GUILD_MESSAGE_REACTIONS, // Enables MessageReactionAddEvent for guild
             GatewayIntent.GUILD_VOICE_STATES
         );
-        
         final String discordToken = args[0];
-        SpotifyApiInstance.initSpotifyApi(args[1]);
-        String RatPartyMixServerId = "598494742896181267";
+        final String RatPartyMixServerId = "598494742896181267";
         
         // start the bot
         JDA jda = JDABuilder.createDefault(discordToken, intents)
                 .addEventListeners(new CommandManager())
                 .addEventListeners(new Listener())
-                .setActivity(Activity.playing("/help"))
+                .setActivity(Activity.listening("/help"))
                 .build();
         new TestCommands().addTestCommands(jda, RatPartyMixServerId);
         new GlobalCommands().addGlobalCommands(jda);
@@ -53,7 +48,7 @@ public class Application {
         jda.getRestPing().queue(ping ->
             LOGGER.info("Logged in with ping: " + ping)
         );
-    
+        
         // If you want to access the cache, you can use awaitReady() to block the main thread until the jda instance is fully loaded
         jda.awaitReady();
     

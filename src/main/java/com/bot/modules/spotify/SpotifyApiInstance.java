@@ -7,7 +7,7 @@ public class SpotifyApiInstance {
     private static final String CLIENT_ID = "2b6c5d4d81a642078c86ca9d49f2f574";
     private static SpotifyApi SPOTIFY_API;
     
-    public static SpotifyApi getSpotifyApi() {
+    public static SpotifyApi get() {
         return SPOTIFY_API;
     }
     

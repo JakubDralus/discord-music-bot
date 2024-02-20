@@ -89,8 +89,8 @@ public class CommandManager extends ListenerAdapter {
                 trackName = "ytsearch: " + trackName;
             }
             
-            playerManager.play(event.getGuild(), trackName, true, playerManager.getMusicManager(event.getGuild()).getScheduler().getCommandEvent());
-//            commandEvent.getMessage().delete().queue(); // i guess you can leave it but you cant queue the same track twice
+            playerManager.play(event.getGuild(), trackName, true,
+                    playerManager.getMusicManager(event.getGuild()).getScheduler().getCommandEvent());
         }
     }
 }

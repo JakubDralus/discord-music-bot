@@ -45,7 +45,7 @@ public class PlayerManager {
     
     public void play(Guild guild, String trackURL, boolean reply, SlashCommandInteractionEvent event) {
         GuildMusicManager musicManager = getMusicManager(guild);
-//        System.out.println("trackname: " + trackURL);
+        System.out.println("trackname: " + trackURL);
         
         audioPlayerManager.loadItemOrdered(musicManager.getAudioPlayer(), trackURL, new AudioLoadResultHandler() {
             @Override
@@ -56,8 +56,8 @@ public class PlayerManager {
         
             @Override
             public void playlistLoaded(AudioPlaylist playlist) {
-//                System.out.println("playlist " + playlist.getTracks().get(0).getInfo().title);
                 musicManager.getScheduler().queueTrack(playlist.getTracks().get(0), reply);
+//                System.out.println("playlist " + playlist.getTracks().get(0).getInfo().title);
 //                for (var track: playlist.getTracks()) {
 //                    System.out.println(track.getInfo().title);
 //                }
@@ -66,12 +66,16 @@ public class PlayerManager {
             @Override
             public void noMatches() {
                 System.out.println("No match found");
-                event.reply("no match found, try again").queue();
+                if (event.isAcknowledged()) {
+                    event.getChannel().sendMessage("no match found, try again").queue();
+                }
+                else {
+                    event.reply("no match found, try again").queue();
+                }
             }
         
             @Override
             public void loadFailed(FriendlyException exception) {
-//                exception.printStackTrace();
                 System.out.println(exception.severity);
             }
         });

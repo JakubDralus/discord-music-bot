@@ -26,14 +26,14 @@ public class Playlist {
     // Rat Party mix 2023
     // uri and url:
     // spotify:playlist:0RHhiQ6hGLKgjE7eqNdXzh
-    // https://open.spotify.com/playlist/0RHhiQ6hGLKgjE7eqNdXzh?si=203a1096f9b64e27
+    // https://open.spotify.com/playlist/0RHhiQ6hGLKgjE7eqNdXzh
     
     private static final String ratPartyMix2023id = "0RHhiQ6hGLKgjE7eqNdXzh";
     @Getter
     private static final Map<Integer, String> tracks = new HashMap<>();
     
     private static String getDailySongId() {
-        String ratPartyMixApiUrl = "http://130.61.63.141:8888/ratpartymix/dailysong";
+        final String ratPartyMixApiUrl = "http://130.61.63.141:8888/ratpartymix/dailysong";
     
         // Create an HTTP request
         HttpRequest request = HttpRequest.newBuilder()
@@ -44,6 +44,7 @@ public class Playlist {
             HttpClient httpClient = HttpClient.newHttpClient();
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 //            System.out.println("response body: " + response.body());
+//            System.out.println("response body2: " + response);
             
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode rootNode = objectMapper.readTree(response.body());
@@ -59,7 +60,7 @@ public class Playlist {
     
     public static String getDailySongName() {
         SpotifyToken.clientCredentials_Async();
-        SpotifyApi spotifyApi = SpotifyApiInstance.getSpotifyApi();
+        SpotifyApi spotifyApi = SpotifyApiInstance.get();
         
         try {
             final GetTrackRequest getTrackRequest = spotifyApi.getTrack(getDailySongId()).build();
@@ -73,7 +74,7 @@ public class Playlist {
             }
             trackName.setLength(trackName.length() - 2); //remove last `, `
             
-            System.out.println(trackName);
+            System.out.println("daily song: " + trackName);
             return trackName.toString();
         }
         catch (CompletionException e) {
@@ -94,7 +95,7 @@ public class Playlist {
             boolean morePages = true;
             
             while (morePages) {
-                final CompletableFuture<Paging<PlaylistTrack>> pagingFuture = SpotifyApiInstance.getSpotifyApi()
+                final CompletableFuture<Paging<PlaylistTrack>> pagingFuture = SpotifyApiInstance.get()
                         .getPlaylistsItems(ratPartyMix2023id)
                         .limit(100)
                         .offset(offset)
@@ -131,7 +132,6 @@ public class Playlist {
             String songStr = song.toString().replace("\"", ""); // remove quotes from json
 
             Playlist.tracks.put(++offset, songStr);
-            //System.out.println(offset + " " + songStr);
         }
     }
 }

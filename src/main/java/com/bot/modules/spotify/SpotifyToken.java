@@ -19,20 +19,16 @@ public class SpotifyToken {
     private static final Logger LOGGER = LoggerFactory.getLogger(SpotifyToken.class);
     
     public static void clientCredentials_Async() {
-        
-        SpotifyApi spotifyApi = SpotifyApiInstance.getSpotifyApi();
+        SpotifyApi spotifyApi = SpotifyApiInstance.get();
         ClientCredentialsRequest clientCredentialsRequest = spotifyApi.clientCredentials().build();
         
         try {
             final CompletableFuture<ClientCredentials> clientCredentialsFuture = clientCredentialsRequest.executeAsync();
-            
             // Example Only. Never block in production code.
             final ClientCredentials clientCredentials = clientCredentialsFuture.join();
-            
-            // Set access token for further "spotifyApi" object usage
             spotifyApi.setAccessToken(clientCredentials.getAccessToken());
             
-            LOGGER.info("Spotify token acquired");
+            LOGGER.info("Spotify token set.");
         }
         catch (CompletionException e) {
             System.out.println("Error: " + e.getCause().getMessage());
