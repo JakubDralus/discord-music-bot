@@ -57,6 +57,6 @@ public class RatPartyMix implements ISlashCommand {
             }
         }
     
-        LOGGER.info("used /ratpartymix command in {}", event.getChannel().getName());
+        LOGGER.info("used /play-ratpartymix command in {}", event.getChannel().getName());
     }
 }

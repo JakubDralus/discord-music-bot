@@ -45,7 +45,7 @@ public class PlayerManager {
     
     public void play(Guild guild, String trackURL, boolean reply, SlashCommandInteractionEvent event) {
         GuildMusicManager musicManager = getMusicManager(guild);
-        System.out.println("trackname: " + trackURL);
+//        System.out.println("trackname: " + trackURL);
         
         audioPlayerManager.loadItemOrdered(musicManager.getAudioPlayer(), trackURL, new AudioLoadResultHandler() {
             @Override
