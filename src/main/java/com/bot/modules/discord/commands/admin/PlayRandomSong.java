@@ -1,4 +1,4 @@
-package com.bot.modules.discord.commands.music;
+package com.bot.modules.discord.commands.admin;
 
 import com.bot.modules.audioplayer.PlayerManager;
 import com.bot.modules.discord.commands.ISlashCommand;
@@ -9,16 +9,15 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.Objects;
 
 
-public class DailySong implements ISlashCommand {
-    private static final Logger LOGGER = LoggerFactory.getLogger(DailySong.class);
+public class PlayRandomSong implements ISlashCommand {
+    private static final Logger LOGGER = LoggerFactory.getLogger(PlayRandomSong.class);
     
     @Override
     public void execute(SlashCommandInteractionEvent event) {
+        Playlist.getPlaylistsItems_Async();
         AudioChannel userChannel = CommandUtil.getUserVoiceChannel(event);
         AudioChannel botChannel = CommandUtil.getBotVoiceChannel(event);
         
@@ -36,21 +35,19 @@ public class DailySong implements ISlashCommand {
             CommandUtil.replyEmbedErr(event, "Please be in the same voice channel as the bot.");
             return;
         }
-    
+        
         PlayerManager playerManager = PlayerManager.get();
+        
+        // set commandEvent for scheduler to make him display a current track being played
         playerManager.getMusicManager(event.getGuild()).getScheduler().setCommandEvent(event);
-    
-        String trackName = Playlist.getDailySongName();
-        try {
-            assert trackName != null;
-            new URI(trackName);
-        }
-        catch (URISyntaxException e) {
-            trackName = "ytsearch: " + trackName;
-        }
-    
-        playerManager.play(event.getGuild(), trackName, true, event);
-    
-        LOGGER.info("used /play-daily-song command in {}", event.getChannel().getName());
+        
+        int playlistLength = Playlist.getTracks().size();
+        int randomId = (int)(Math.random() * playlistLength) + 1;
+        String randomTrack = "ytsearch: " + Playlist.getTracks().get(randomId);
+        System.out.println("track name " + randomTrack);
+        
+        playerManager.play(event.getGuild(), randomTrack, true, event);
+        
+        LOGGER.info("used /random-song command in {}", event.getChannel().getName());
     }
 }

@@ -1,6 +1,7 @@
 package com.bot.modules.discord.commands;
 
 import com.bot.modules.audioplayer.PlayerManager;
+import com.bot.modules.discord.commands.admin.PlayRandomSong;
 import com.bot.modules.discord.commands.admin.RandomSong;
 import com.bot.modules.discord.commands.admin.Echo;
 import com.bot.modules.discord.commands.other.Help;
@@ -51,6 +52,7 @@ public class CommandManager extends ListenerAdapter {
         
         //Admin Commands
         commandsMap.put("random-song", new RandomSong());
+        commandsMap.put("play-random-song", new PlayRandomSong());
         commandsMap.put("echo", new Echo());
         
         // other
@@ -70,7 +72,7 @@ public class CommandManager extends ListenerAdapter {
         commandsMap.put("leave", new Leave());
         commandsMap.put("shuffle-queue", new Shuffle());
         commandsMap.put("play-ratpartymix", new RatPartyMix());
-        commandsMap.put("play-daily-song", new DailySong());
+        commandsMap.put("play-daily-song", new PlayDailySong());
         commandsMap.put("play-youtube-banger", new PlayYoutubeBanger());
         commandsMap.put("yeahbuddy", new YeahBuddy());
         commandsMap.put("forward", new Forward());

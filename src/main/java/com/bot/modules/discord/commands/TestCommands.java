@@ -29,6 +29,7 @@ public class TestCommands {
             testServerCommands.addCommands(
                 // admin commands
                 Commands.slash("random-song", "random song from playlist (test command)"),
+                Commands.slash("play-random-song", "play random song from playlist (test command)"),
                 Commands.slash("echo", "echo test (test command)")
                         .addOptions(new OptionData(OptionType.STRING, "message", "message to be echoed (test command)", true)),
                 
