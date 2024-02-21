@@ -8,11 +8,15 @@ I recommended it as a ready-to-go playlist for parties if someone didn't have on
 And I acted like it's some real brand (I still do) and it's kinda fun. Which led to combining this idea with my programming skills and creation of this bot at the end. <br>
 
 A friend of mine also got hooked to this idea and created a bot 'tracker' ([Github](https://github.com/zawislakm/RatPartyMixTracker)) for this playlist which sends a tweet every time a song is added or deleted. And most importantly it posts a song of the day
-which is just a random song and it's also available in the [RatPartMix API](http://130.61.63.141:8888/docs) (it's not fully done but it works).
+which is just a random song, and it's also available in the [RatPartMix API](http://130.61.63.141:8888/docs) (it's not fully done but it works).
+
+And another friend aka Zuzanna top G - is making thumbnails every year for the playlist using her Photoshop skills. (they kinda fire🔥) 
 
 [![image](https://github.com/JakubDralus/Rat-Party-Mix-discord-bot/assets/129612952/9e5837e6-0a5b-4e4e-b777-3b45372a4d31)](https://open.spotify.com/playlist/0RHhiQ6hGLKgjE7eqNdXzh)
 
 # Commands
+Exact text from `/help` command:
+
 **Music Commands:**
 - `/play` `[track]`: Play a specific music track (paste url or provide a youtube search prompt).
   - arg: `track` (String): The track to be played.
@@ -22,10 +26,11 @@ which is just a random song and it's also available in the [RatPartMix API](http
 - `/shuffle`: Shuffles all tracks in the queue.
 - `/pause`: Stop playing the current track.
 - `/resume`: Resume the current track.
+- `/repeat`: Sets current track to repeat/no-repeat (toggle).
 - `/forward` `[seconds]`: forwards the song by amount of seconds provided.
   - arg: `seconds` (String): seconds to be skipped/forwarded in current playing track.
 - `/skip` `[count]`: Skip the current track or a specified number of tracks.
-  - arg (optional): `count` (String): The number of tracks to skip (optional).
+  - arg (optional): `count` (String): The number of tracks to skip.
 - `/leave`: Make the bot leave the channel.
 - `/play-ratpartymix`: Play the Rat Party Mix 2023™ playlist.
 - `/play-daily-song`: Play today's daily song.
