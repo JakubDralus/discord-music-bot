@@ -23,6 +23,7 @@ public class GlobalCommands {
             Commands.slash("queue", "displays tracks in queue"),
             Commands.slash("clear-queue", "clears the queue"),
             Commands.slash("resume", "resumes current track"),
+            Commands.slash("repeat", "set current track to repeat/no repeat (toggle)"),
             Commands.slash("skip", "skips current track or a number of tracks")
                 .addOptions(new OptionData(OptionType.INTEGER, "count", "amount of tracks to skip", false)),
             Commands.slash("forward", "forward the track (seconds)")

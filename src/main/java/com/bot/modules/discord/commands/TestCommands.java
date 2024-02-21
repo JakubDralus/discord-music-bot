@@ -45,6 +45,7 @@ public class TestCommands {
                 Commands.slash("shuffle-queue", "shuffle the queue content (test command)"),
                 Commands.slash("pause", "stops playing current track (test command)"),
                 Commands.slash("resume", "resumes current track (test command)"),
+                Commands.slash("repeat", "set current track to repeat/no repeat (toggle) (test command)"),
                 Commands.slash("skip", "skips current track or a number of tracks (test command)")
                         .addOptions(new OptionData(OptionType.INTEGER, "count", "amount of tracks to skip (test command)", false)),
                 Commands.slash("forward", "forward the track (seconds) (test command)")
