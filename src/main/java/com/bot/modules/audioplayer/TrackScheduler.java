@@ -32,29 +32,6 @@ public class TrackScheduler extends AudioEventAdapter {
         this.queue = new LinkedBlockingQueue<>();
     }
     
-    public void queueTrack(AudioTrack track, boolean reply) {
-//        System.out.println("queue track: "+ track.getInfo().title);
-        if (!player.startTrack(track, true)) {
-            queue.offer(track);
-            
-            if (reply && !commandEvent.isAcknowledged()) {
-                commandEvent.replyEmbeds(new EmbedBuilder()
-                        .setTitle("Added to queue: ")
-                        .setDescription(track.getInfo().title + "\n")
-                        .build()
-                ).queue();
-            }
-            
-            if (menuEvent != null && reply && !menuEvent.isAcknowledged()) {
-                menuEvent.replyEmbeds(new EmbedBuilder()
-                        .setTitle("Added to queue: ")
-                        .setDescription(track.getInfo().title + "\n")
-                        .build()
-                ).queue();
-            }
-        }
-    }
-    
     public void clearQueue() {
         queue.clear();
     }
@@ -64,6 +41,26 @@ public class TrackScheduler extends AudioEventAdapter {
         Collections.shuffle(trackList);
         queue.clear();
         queue.addAll(trackList);
+    }
+    
+    public void queueTrack(AudioTrack track, boolean reply) {
+//        System.out.println("queue track: "+ track.getInfo().title);
+        if (!player.startTrack(track, true)) {
+            queue.offer(track);
+            
+            if (commandEvent != null && reply && !commandEvent.isAcknowledged()) {
+                commandEvent.replyEmbeds(new EmbedBuilder()
+                        .setTitle("Added to queue :white_check_mark:")
+                        .setDescription(track.getInfo().title)
+                        .build()).queue();
+            }
+            if (menuEvent != null && reply && !menuEvent.isAcknowledged()) {
+                menuEvent.replyEmbeds(new EmbedBuilder()
+                        .setTitle("Added to queue :white_check_mark:")
+                        .setDescription(track.getInfo().title)
+                        .build()).queue();
+            }
+        }
     }
     
     @Override
@@ -85,8 +82,6 @@ public class TrackScheduler extends AudioEventAdapter {
         else {
             var nextTrack = queue.poll();
             player.startTrack(nextTrack, false);
-            
-            //todo check why some end reasons cleanups appear
 //            System.out.println("end reason:" + endReason.toString());
             
             // show another track after prev finished

@@ -25,20 +25,18 @@ public class NowPlayingUtil {
     
     @NotNull
     public static EmbedBuilder makeTrackEmbed(AudioTrack track) {
-        String trackThumbnailUrl = "https://img.youtube.com/vi/" + track.getIdentifier() + "/hqdefault.jpg";
         String trackTitle = track.getInfo().title;
         String trackLink = track.getInfo().uri;
+        String thumbnail = track.getInfo().artworkUrl;
         long trackDurationInSeconds = track.getDuration()/1000;
         String trackDuration = getDynamicDuration(trackDurationInSeconds);
         
         return new EmbedBuilder()
                 .setTitle("Now playing :musical_note:")
                 .setDescription("[" + trackTitle + "](" + trackLink + ")")
-                .addField("Duration",
-                         trackDuration,
-                        false)
-                .setThumbnail(trackThumbnailUrl)
-                .setColor(new Color(50, 205, 50));
+                .addField("Duration", trackDuration, false)
+                .setThumbnail(thumbnail)
+                .setColor(new Color(30, 215, 96)); //spotify green
     }
     
     public static void displayCurrentPlayingTrackEmbedReply(SlashCommandInteractionEvent event, AudioPlayer player) {
