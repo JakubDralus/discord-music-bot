@@ -1,23 +1,26 @@
 # Rat Party Mix Discord Music Bot
-Discord music bot for my [playlist on Spotify](https://open.spotify.com/playlist/0RHhiQ6hGLKgjE7eqNdXzh) that has couple of specific commands just for this specific playlist using Spotify API. 
-Bot can of course play anything (just like other bots) using YouTube API, but its branded with the name of the playlist just for fun. 
+
+Discord music bot for my [playlist on Spotify](https://open.spotify.com/playlist/0RHhiQ6hGLKgjE7eqNdXzh) that has couple of specific commands just for this specific playlist using Spotify API.
+Bot can of course play anything (just like other bots) using YouTube API, but its branded with the name of the playlist just for fun.
 
 ## About the playlist
+
 The playlist was created back when I was in high school. It features party hits mainly from years late 2000s and early 2010s (I love 'white girls' music) mixed with some recent popular tracks.
-I recommended it as a ready-to-go playlist for parties if someone didn't have one already. 
+I recommended it as a ready-to-go playlist for parties if someone didn't have one already.
 And I acted like it's some real brand (I still do) and it's kinda fun. Which led to combining this idea with my programming skills and creation of this bot at the end. <br>
 
-A friend of mine also got hooked to this idea and created a bot 'tracker' ([Github](https://github.com/zawislakm/RatPartyMixTracker)) for this playlist which sends a tweet every time a song is added or deleted. And most importantly it posts a song of the day
-which is just a random song, and it's also available in the [RatPartMix API](http://130.61.63.141:8888/docs) (it's not fully done but it works).
+A friend of mine also got hooked to this idea and created a bot 'tracker' ([Github](https://github.com/zawislakm/RatPartyMixTracker)) for this playlist. This bot notifies followers whenever the tracklist is updated and shares a specially chosen daily song at 12PM (CET) via Twitter everyday. Additionally, it is also possible to fetch daily song directly from [RatPartMix API](http://130.61.63.141:8888/docs).
 
-And another friend aka Zuzanna top G - is making thumbnails every year for the playlist using her Photoshop skills. (they kinda fire🔥) 
+And another friend aka Zuzanna top G - is making thumbnails every year for the playlist using her Photoshop skills. (they kinda fire🔥)
 
 [![image](https://github.com/JakubDralus/Rat-Party-Mix-discord-bot/assets/129612952/9e5837e6-0a5b-4e4e-b777-3b45372a4d31)](https://open.spotify.com/playlist/0RHhiQ6hGLKgjE7eqNdXzh)
 
 # Commands
+
 Exact text from `/help` command:
 
 **Music Commands:**
+
 - `/play` `[track]`: Play a specific music track (paste url or provide a youtube search prompt).
   - arg: `track` (String): The track to be played.
 - `/now-playing`: display the current playing track info (this embed does not disappear after track stops playing).
@@ -38,23 +41,27 @@ Exact text from `/help` command:
 - `/yeahbuddy`: Get pumped up for the gym!
 
 **Other Commands:**
+
 - `/help`: Display command list.
 - `/info`: Get information about this music bot and link to the playlist.
 - `/twitter`: Get information about the Twitter site.
 
-
 # Rat Part Mix links
+
 - [Spotify playlist](https://open.spotify.com/playlist/0RHhiQ6hGLKgjE7eqNdXzh)
 - [Twitter bot](https://twitter.com/RatPartyMix) 'tracker' ([GitHub](https://github.com/zawislakm/RatPartyMixTracker))
 - [RatPartMix API](http://130.61.63.141:8888/docs)
 - (website coming soon)
 
 # Specification
+
 - Java 19 (it think it can also work on java 17)
 - Maven 3.9.6
 
 # Dependencies
+
 You can also find them in pom.xml
+
 - com.github.discord-jda:JDA - v5.0.0-beta.12
 - net.dv8tion:JDA - 5.0.0-beta.13
 - se.michaelthelin.spotify:spotify-web-api-java - 8.0.0
@@ -65,11 +72,12 @@ You can also find them in pom.xml
 - log4j:log4j - 1.2.17
 
 # Resources:
+
 - https://github.com/discord-jda/JDA
 - https://github.com/spotify-web-api-java/spotify-web-api-java
 - https://github.com/Walkyst/lavaplayer-fork
 - https://github.com/lavalink-devs/lavaplayer (current)
-<br>
+  <br>
 
 - https://github.com/Glaxier0/discord-music-bot
 - https://github.com/relaxingleg/Tutorial-Bot
