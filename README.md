@@ -12,7 +12,7 @@ which is just a random song, and it's also available in the [RatPartMix API](htt
 
 And another friend aka Zuzanna top G - is making thumbnails every year for the playlist using her Photoshop skills. (they kinda fire🔥) 
 
-[![image](https://github.com/JakubDralus/Rat-Party-Mix-discord-bot/assets/129612952/9e5837e6-0a5b-4e4e-b777-3b45372a4d31)](https://open.spotify.com/playlist/0RHhiQ6hGLKgjE7eqNdXzh)
+[![image](https://github.com/JakubDralus/Rat-Party-Mix-discord-music-bot/assets/129612952/2992073c-5616-48bd-bf07-d50f61ede836)](https://open.spotify.com/playlist/0RHhiQ6hGLKgjE7eqNdXzh)
 
 # Commands
 Exact text from `/help` command:
