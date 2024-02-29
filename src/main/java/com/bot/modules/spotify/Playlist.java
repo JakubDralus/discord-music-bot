@@ -28,23 +28,26 @@ public class Playlist {
     // spotify:playlist:0RHhiQ6hGLKgjE7eqNdXzh
     // https://open.spotify.com/playlist/0RHhiQ6hGLKgjE7eqNdXzh
     
+    private static final String ratPartyMixApiUrl = "http://130.61.63.141:8888/api/v1/dailysong/get";
     private static final String ratPartyMix2023id = "0RHhiQ6hGLKgjE7eqNdXzh";
+    
     @Getter
     private static final Map<Integer, String> tracks = new HashMap<>();
     
     private static String getDailySongId() {
-        final String ratPartyMixApiUrl = "http://130.61.63.141:8888/ratpartymix/dailysong";
+        final String authToken = DailySongToken.getToken();
     
         // Create an HTTP request
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(ratPartyMixApiUrl))
+                .header("Authorization", "Bearer " + authToken)
                 .GET()
                 .build();
+        
         try {
             HttpClient httpClient = HttpClient.newHttpClient();
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 //            System.out.println("response body: " + response.body());
-//            System.out.println("response body2: " + response);
             
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode rootNode = objectMapper.readTree(response.body());
@@ -103,7 +106,6 @@ public class Playlist {
                         .executeAsync();
                 
                 Paging<PlaylistTrack> playlistTrackPaging = pagingFuture.join();
-                
                 loadTracks(playlistTrackPaging.getItems(), offset);
                 
                 // Check if there are more pages

@@ -28,7 +28,7 @@ public class SpotifyToken {
             final ClientCredentials clientCredentials = clientCredentialsFuture.join();
             spotifyApi.setAccessToken(clientCredentials.getAccessToken());
             
-            LOGGER.info("Spotify token set.");
+            LOGGER.info("Spotify token get.");
         }
         catch (CompletionException e) {
             System.out.println("Error: " + e.getCause().getMessage());

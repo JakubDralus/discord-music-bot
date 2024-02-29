@@ -4,6 +4,7 @@ import com.bot.modules.discord.commands.CommandManager;
 import com.bot.modules.discord.commands.GlobalCommands;
 import com.bot.modules.discord.commands.Listener;
 import com.bot.modules.discord.commands.TestCommands;
+import com.bot.modules.spotify.DailySongToken;
 import com.bot.modules.spotify.SpotifyApiInstance;
 import com.bot.modules.spotify.SpotifyToken;
 import net.dv8tion.jda.api.JDA;
@@ -23,8 +24,6 @@ public class Application {
     private static final Logger LOGGER = LoggerFactory.getLogger(Application.class);
     
     public static void main(String[] args) throws InterruptedException {
-        SpotifyApiInstance.initSpotifyApi(args[1]);
-        
         final EnumSet<GatewayIntent> intents = EnumSet.of(
             GatewayIntent.GUILD_MESSAGES, // Enables MessageReceivedEvent for guild (also known as servers)
             GatewayIntent.DIRECT_MESSAGES,
@@ -33,7 +32,12 @@ public class Application {
             GatewayIntent.GUILD_VOICE_STATES
         );
         final String discordToken = args[0];
+        final String spotifyToken = args[1];
+        final String xApiKey = args[2];
         final String RatPartyMixServerId = "598494742896181267";
+        
+        SpotifyApiInstance.initSpotifyApi(spotifyToken);
+        DailySongToken.setXApiKey(xApiKey);
         
         // start the bot
         JDA jda = JDABuilder.createDefault(discordToken, intents)
@@ -54,6 +58,6 @@ public class Application {
     
         // scheduler that refreshes the Spotify token every hour
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-        scheduler.scheduleAtFixedRate(SpotifyToken::clientCredentials_Async, 0, 1, TimeUnit.HOURS);
+        scheduler.scheduleAtFixedRate(SpotifyToken::clientCredentials_Async, 1, 1, TimeUnit.HOURS);
     }
 }
