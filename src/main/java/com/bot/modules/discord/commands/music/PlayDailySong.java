@@ -45,6 +45,7 @@ public class PlayDailySong implements ISlashCommand {
         String trackName = Playlist.getDailySongName();
         if (trackName == null) {
             event.replyEmbeds(new EmbedBuilder().setDescription("error while getting the daily song form API").build()).queue();
+            return;
         }
         
         try {
