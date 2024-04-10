@@ -1,0 +1,28 @@
+name: Build and Run Discord Bot
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-run-bot:
+    runs-on: ubuntu-latest
+
+    env:
+      DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+      SPOTIFY_SECRET: ${{ secrets.SPOTIFY_SECRET }}
+      RPM_API_XKEY: ${{ secrets.RPM_API_XKEY }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Update code
+        run: git pull
+
+      - name: Build with Maven
+        run: ./mvnw package
+
+      - name: Run bot in background
+        run: nohup java -jar target/discord-bot1-2.0.0-shaded.jar $DISCORD_TOKEN $SPOTIFY_SECRET $RPM_API_XKEY > my.log 2>&1 &
