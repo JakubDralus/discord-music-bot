@@ -45,22 +45,16 @@ public class PlayerManager {
     
     public void play(Guild guild, String trackURL, boolean reply, SlashCommandInteractionEvent event) {
         GuildMusicManager musicManager = getMusicManager(guild);
-//        System.out.println("trackname: " + trackURL);
         
         audioPlayerManager.loadItemOrdered(musicManager.getAudioPlayer(), trackURL, new AudioLoadResultHandler() {
             @Override
             public void trackLoaded(AudioTrack track) {
-                System.out.println("tarck " + track.getInfo().title);
                 musicManager.getScheduler().queueTrack(track, true);
             }
         
             @Override
             public void playlistLoaded(AudioPlaylist playlist) {
                 musicManager.getScheduler().queueTrack(playlist.getTracks().get(0), reply);
-//                System.out.println("playlist " + playlist.getTracks().get(0).getInfo().title);
-//                for (var track: playlist.getTracks()) {
-//                    System.out.println(track.getInfo().title);
-//                }
             }
         
             @Override

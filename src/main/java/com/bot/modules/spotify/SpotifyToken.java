@@ -1,7 +1,5 @@
 package com.bot.modules.spotify;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import se.michaelthelin.spotify.SpotifyApi;
@@ -13,8 +11,6 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 
 
-@Getter
-@RequiredArgsConstructor
 public class SpotifyToken {
     private static final Logger LOGGER = LoggerFactory.getLogger(SpotifyToken.class);
     

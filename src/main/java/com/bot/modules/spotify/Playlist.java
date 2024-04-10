@@ -3,7 +3,9 @@ package com.bot.modules.spotify;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
+import org.apache.hc.core5.http.ParseException;
 import se.michaelthelin.spotify.SpotifyApi;
+import se.michaelthelin.spotify.exceptions.SpotifyWebApiException;
 import se.michaelthelin.spotify.model_objects.specification.Paging;
 import se.michaelthelin.spotify.model_objects.specification.PlaylistTrack;
 import se.michaelthelin.spotify.model_objects.specification.Track;
@@ -34,10 +36,9 @@ public class Playlist {
     @Getter
     private static final Map<Integer, String> tracks = new HashMap<>();
     
-    private static String getDailySongId() {
+    public static String getDailySongId() {
         final String authToken = DailySongToken.getToken();
-    
-        // Create an HTTP request
+        
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(ratPartyMixApiUrl))
                 .header("Authorization", "Bearer " + authToken)
@@ -55,7 +56,7 @@ public class Playlist {
 //            System.out.println("id: " + rootNode.get("spotify_id").toString());
             return rootNode.get("spotify_id").toString().replace("\"", ""); // remove quotes from json;
         }
-        catch (IOException | InterruptedException e) {
+        catch (InterruptedException | IOException e) {
             e.printStackTrace();
         }
         return null;
@@ -135,5 +136,19 @@ public class Playlist {
 
             Playlist.tracks.put(++offset, songStr);
         }
+    }
+    
+    public static String getTrackImage_Sync(String id) {
+        SpotifyApi spotifyApi = SpotifyApiInstance.get();
+        GetTrackRequest getTrackRequest = spotifyApi.getTrack(id).build();
+        
+        try {
+            final Track track = getTrackRequest.execute();
+            return track.getAlbum().getImages()[0].getUrl();
+        }
+        catch (IOException | SpotifyWebApiException | ParseException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return "";
     }
 }

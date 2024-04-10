@@ -20,7 +20,7 @@ public class DailySongToken {
     public static String getToken() {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(ratPartyMixApiUrl))
-                .POST(HttpRequest.BodyPublishers.noBody())
+                .GET()
                 .header("x-api-key", xApiKey)
                 .build();
         
@@ -38,4 +38,6 @@ public class DailySongToken {
         }
         return null;
     }
+    
+    
 }
