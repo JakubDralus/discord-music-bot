@@ -1,11 +1,12 @@
 # Rat Party Mix Discord Music Bot
 
 Discord music bot for my [playlist on Spotify](https://open.spotify.com/playlist/0RHhiQ6hGLKgjE7eqNdXzh) that has couple of specific commands just for this specific playlist using Spotify API.
-Bot can of course play anything (just like other bots) using YouTube API, but its branded with the name of the playlist just for fun.
+This bot can of course play any other music tracks using [Lavaplayer](https://github.com/lavalink-devs/lavaplayer) together with YouTube client for streaming. 
+It's branded with the name of the playlist just for fun.
 
 ## About the playlist
 
-The playlist was created back when I was in high school. It features party hits mainly from years late 2000s and early 2010s (I love 'white girls' music) mixed with some recent popular tracks.
+The playlist was created back when I was in high school. It features party hits mainly from years late 2000s and early 2010s (I love 'white girls' music btw) mixed with some recent popular tracks.
 I recommended it as a ready-to-go playlist for parties if someone didn't have one already.
 And I acted like it's some real brand (I still do) and it's kinda fun. Which led to combining this idea with my programming skills and creation of this bot at the end. <br>
 
