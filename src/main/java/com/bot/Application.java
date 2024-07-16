@@ -7,21 +7,23 @@ import com.bot.modules.discord.commands.TestCommands;
 import com.bot.modules.spotify.DailySongToken;
 import com.bot.modules.spotify.SpotifyApiInstance;
 import com.bot.modules.spotify.SpotifyToken;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.EnumSet;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-
+@Slf4j
 public class Application {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Application.class);
+    
+    @Getter
+    private static final String ratPartyMixServerId = "598494742896181267";
     
     public static void main(String[] args) throws InterruptedException {
         final EnumSet<GatewayIntent> intents = EnumSet.of(
@@ -33,8 +35,7 @@ public class Application {
         );
         final String discordToken = args[0];
         final String spotifyToken = args[1];
-        final String xApiKey = args[2];
-        final String RatPartyMixServerId = "598494742896181267";
+        final String xApiKey      = args[2]; // daily song API key
         
         SpotifyApiInstance.initSpotifyApi(spotifyToken);
         DailySongToken.setXApiKey(xApiKey);
@@ -45,12 +46,13 @@ public class Application {
                 .addEventListeners(new Listener())
                 .setActivity(Activity.listening("/help"))
                 .build();
-        new TestCommands().addTestCommands(jda, RatPartyMixServerId);
-        new GlobalCommands().addGlobalCommands(jda);
+        
+        TestCommands.addTestCommands(jda, ratPartyMixServerId);
+        GlobalCommands.addGlobalCommands(jda);
     
         // shows ping in milliseconds
         jda.getRestPing().queue(ping ->
-            LOGGER.info("Logged in with ping: " + ping)
+            log.info("Logged in with ping: " + ping)
         );
         
         // If you want to access the cache, you can use awaitReady() to block the main thread until the jda instance is fully loaded

@@ -1,5 +1,6 @@
 package com.bot.modules.discord.commands;
 
+import com.bot.Application;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.events.message.MessageDeleteEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -32,7 +33,7 @@ public class Listener extends ListenerAdapter {
         System.out.println();
         
         for(var channel: jda.getTextChannels()) {
-            if (channel.getName().equals("bot-test") && channel.getGuild().getName().equals("Rat Party Mix"))
+            if (channel.getName().equals("bot-test") && channel.getGuild().getId().equals(Application.getRatPartyMixServerId()))
                 channel.sendMessage("Let's play some fucking bangers :sunglasses:").queue();
         }
         

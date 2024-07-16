@@ -8,7 +8,7 @@ import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 
 
 public class GlobalCommands {
-    public void addGlobalCommands(JDA jda) {
+    public static void addGlobalCommands(JDA jda) {
         CommandListUpdateAction globalCommands = jda.updateCommands();
         
         globalCommands.addCommands(

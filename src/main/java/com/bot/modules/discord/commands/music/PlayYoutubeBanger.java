@@ -1,8 +1,10 @@
 package com.bot.modules.discord.commands.music;
 
+import com.bot.Application;
 import com.bot.modules.audioplayer.PlayerManager;
 import com.bot.modules.discord.commands.ISlashCommand;
 import com.bot.shared.CommandUtil;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.entities.channel.middleman.AudioChannel;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
@@ -40,9 +42,10 @@ public class PlayYoutubeBanger implements ISlashCommand {
         playerManager.getMusicManager(event.getGuild()).getScheduler().setCommandEvent(event);
         
         String ytOnlyBangersChannelId = "1192806142502518865";
-        TextChannel ytOnlyBangersChannel = event.getGuild().getTextChannelById(ytOnlyBangersChannelId);
-        
-        assert ytOnlyBangersChannel != null;
+        String ratPartyMixServerId = Application.getRatPartyMixServerId();
+        Guild testServer = event.getJDA().getGuildById(ratPartyMixServerId);
+        TextChannel ytOnlyBangersChannel = testServer.getTextChannelById(ytOnlyBangersChannelId);
+
         ytOnlyBangersChannel.getHistoryFromBeginning(25).queue(history -> {
             List<SelectOption> youtubeBangers = new ArrayList<>();
             for (var msg: history.getRetrievedHistory()) {
@@ -55,7 +58,7 @@ public class PlayYoutubeBanger implements ISlashCommand {
                     .addOptions(youtubeBangers)
                     .setRequiredRange(1, 1) // must select exactly one
                     .build();
-            
+
             event.reply("")
                     .addActionRow(menu)
                     .queue();
@@ -64,7 +67,7 @@ public class PlayYoutubeBanger implements ISlashCommand {
         LOGGER.info("used /play-youtube-banger command in {}", event.getChannel().getName());
     }
     
-    public static String[] extractTitleAndURL(String input) {
+    private static String[] extractTitleAndURL(String input) {
         String[] parts = input.split(":", 2);
         return new String[]{parts[0], parts[1]};
     }

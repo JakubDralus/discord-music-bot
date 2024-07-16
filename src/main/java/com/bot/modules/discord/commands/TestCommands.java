@@ -9,7 +9,7 @@ import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 
 
 public class TestCommands {
-    public void addTestCommands(JDA jda, String TEST_SERVER) {
+    public static void addTestCommands(JDA jda, String TEST_SERVER) {
         while (jda.getGuildById(TEST_SERVER) == null) {
             try {
                 //noinspection BusyWait
