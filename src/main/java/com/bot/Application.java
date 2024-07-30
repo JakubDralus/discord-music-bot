@@ -31,7 +31,8 @@ public class Application {
             GatewayIntent.DIRECT_MESSAGES,
             GatewayIntent.MESSAGE_CONTENT,  // Enables access to message.getContentRaw()
             GatewayIntent.GUILD_MESSAGE_REACTIONS, // Enables MessageReactionAddEvent for guild
-            GatewayIntent.GUILD_VOICE_STATES
+            GatewayIntent.GUILD_VOICE_STATES,
+            GatewayIntent.GUILD_EMOJIS_AND_STICKERS
         );
         final String discordToken = args[0];
         final String spotifyToken = args[1];

@@ -1,5 +1,6 @@
 package com.bot.modules.audioplayer;
 
+import com.bot.shared.AutoLeaver;
 import com.bot.shared.NowPlayingUtil;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
@@ -66,6 +67,8 @@ public class TrackScheduler extends AudioEventAdapter {
     @Override
     public void onTrackStart(AudioPlayer player, AudioTrack track) {
 //        System.out.println("on track start");
+        AutoLeaver.stopInactivityTimer();
+        
         if (!commandEvent.isAcknowledged()) {
             NowPlayingUtil.displayCurrentPlayingTrackEmbedReply(commandEvent, player);
         }
@@ -76,18 +79,21 @@ public class TrackScheduler extends AudioEventAdapter {
     
     @Override
     public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
+        System.out.println(queue.size());
         if (isRepeat) {
             player.startTrack(track.makeClone(), false);
         }
         else {
             var nextTrack = queue.poll();
             player.startTrack(nextTrack, false);
-//            System.out.println("end reason:" + endReason.toString());
             
             // show another track after prev finished
             if (endReason == AudioTrackEndReason.FINISHED && nextTrack != null) {
                 NowPlayingUtil.displayCurrentPlayingTrackEmbedNoReply(commandEvent, player);
             }
         }
+
+        if (player.getPlayingTrack() == null)
+            AutoLeaver.startInactivityTimer(commandEvent.getGuild().getAudioManager().getConnectedChannel().asVoiceChannel());
     }
 }
