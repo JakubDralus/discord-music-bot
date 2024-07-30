@@ -29,7 +29,7 @@ public class NowPlayingUtil {
     public static EmbedBuilder makeTrackEmbed(AudioTrack track, Member member) {
         String trackTitle = track.getInfo().title;
         String trackLink = track.getInfo().uri;
-//        String thumbnail = track.getInfo().artworkUrl; // unavailable in this lavaplayer version
+        String thumbnail = track.getInfo().artworkUrl;
         long trackDurationInSeconds = track.getDuration()/1000;
         String trackDuration = getDynamicDuration(trackDurationInSeconds);
         String nickname = member.getNickname() != null ? member.getNickname() : member.getEffectiveName();
@@ -40,7 +40,7 @@ public class NowPlayingUtil {
                 .addField("Duration", trackDuration, true)
                 .addField("Added by", nickname, true)
                 .addBlankField(true)
-//                .setThumbnail(thumbnail)
+                .setThumbnail(thumbnail)
                 .setColor(new Color(30, 215, 96)); //spotify green
     }
     
