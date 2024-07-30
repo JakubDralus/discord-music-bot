@@ -14,10 +14,6 @@ import java.util.Objects;
 
 
 /**
- *  This command is not very effective (<b>high chance some tracks will not be loaded</b>)
- *  probably due to YouTube API limitations (exact cause is not known).
- *  Because it is trying to load all tracks from playlist which means a lot of querying of the YT API is happening.
- *  The number of tracks not being loaded may vary, usually it's 1 to 7.
  *  <b>Do not spam this command!</b>
  */
 public class RatPartyMix implements ISlashCommand {
@@ -25,8 +21,6 @@ public class RatPartyMix implements ISlashCommand {
     
     @Override
     public void execute(SlashCommandInteractionEvent event) {
-        Playlist.getPlaylistsItems_Async();
-        
         AudioChannel userChannel = CommandUtil.getUserVoiceChannel(event);
         AudioChannel botChannel = CommandUtil.getBotVoiceChannel(event);
         
@@ -44,12 +38,15 @@ public class RatPartyMix implements ISlashCommand {
             CommandUtil.replyEmbedErr(event, "Please be in the same voice channel as the bot.");
             return;
         }
-    
+        
         PlayerManager playerManager = PlayerManager.get();
         playerManager.getMusicManager(event.getGuild()).getScheduler().setCommandEvent(event);
         
+        Playlist.getPlaylistsItems_Async();
+        var tracks = Playlist.getTracks();
+        
         int i = 0;
-        for (var trackName: Playlist.getTracks().values()) {
+        for (var trackName: tracks.values()) {
             ++i;
 //            System.out.println(trackName);
             if (!CustomPlaylistSettings.adjustSong(i, event)) {

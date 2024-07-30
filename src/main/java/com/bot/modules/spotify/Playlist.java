@@ -45,25 +45,28 @@ public class Playlist {
                 .GET()
                 .build();
         
+        HttpResponse<String> response = null;
         try {
             HttpClient httpClient = HttpClient.newHttpClient();
-            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-//            System.out.println("response body: " + response.body());
+            response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
             
-            ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode rootNode = objectMapper.readTree(response.body());
+            JsonNode rootNode = new ObjectMapper().readTree(response.body());
     
 //            System.out.println("id: " + rootNode.get("spotify_id").toString());
             return rootNode.get("spotify_id").toString().replace("\"", ""); // remove quotes from json;
         }
         catch (InterruptedException | IOException e) {
+            if (response != null ) {
+                System.out.println("response body: " + response.body());
+            }
             e.printStackTrace();
         }
         return null;
     }
     
     public static String getDailySongName() {
-        SpotifyToken.clientCredentials_Async();
+        // this line can be omitted because the token is always valid (refreshed every hour)
+//        SpotifyToken.clientCredentials_Async();
         SpotifyApi spotifyApi = SpotifyApiInstance.get();
         
         try {
@@ -90,11 +93,9 @@ public class Playlist {
         return null;
     }
     
-    // ------------------------------ from github example ----------------------------
     public static void getPlaylistsItems_Async() {
-        SpotifyToken.clientCredentials_Async(); // get token
+//        SpotifyToken.clientCredentials_Async(); // get token
         int offset = 0;
-    
         try {
             boolean morePages = true;
             

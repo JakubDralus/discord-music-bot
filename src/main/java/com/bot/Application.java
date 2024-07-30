@@ -60,6 +60,6 @@ public class Application {
     
         // scheduler that refreshes the Spotify token every hour
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-        scheduler.scheduleAtFixedRate(SpotifyToken::clientCredentials_Async, 1, 1, TimeUnit.HOURS);
+        scheduler.scheduleAtFixedRate(SpotifyToken::clientCredentials_Async, 0, 1, TimeUnit.HOURS);
     }
 }

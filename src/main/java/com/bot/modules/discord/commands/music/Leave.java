@@ -27,7 +27,8 @@ public class Leave implements ISlashCommand {
             scheduler.getPlayer().setPaused(false);
             scheduler.getPlayer().destroy();
             audioManager.closeAudioConnection();
-    
+            PlayerManager.get().getMusicManager(event.getGuild()).getAudioPlayer().destroy();
+            
             LOGGER.info("used /leave command in {}", event.getChannel().getName());
         }
     }

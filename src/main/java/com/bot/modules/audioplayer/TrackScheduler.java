@@ -69,7 +69,7 @@ public class TrackScheduler extends AudioEventAdapter {
         if (!commandEvent.isAcknowledged()) {
             NowPlayingUtil.displayCurrentPlayingTrackEmbedReply(commandEvent, player);
         }
-        if (menuEvent != null && !menuEvent.isAcknowledged() ){
+        if (menuEvent != null && !menuEvent.isAcknowledged()) {
             NowPlayingUtil.displayCurrentPlayingTrackEmbedReply(menuEvent,player);
         }
     }

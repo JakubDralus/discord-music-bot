@@ -23,31 +23,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 
 public class CommandManager extends ListenerAdapter {
-    
     private static final Logger LOGGER = LoggerFactory.getLogger(CommandManager.class);
-    private Map<String, ISlashCommand> commandsMap;
-    
-    public CommandManager() {
-        //...
-        commandMapper();
-    }
-    
-    @Override
-    public void onReady(@NotNull ReadyEvent event) {
-        LOGGER.info("command manager ready");
-    }
-    
-    @Override
-    public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
-        String commandName = event.getName();
-        
-        ISlashCommand command;
-        if ((command = commandsMap.get(commandName)) != null) {
-            command.execute(event);
-        }
-    }
-    
-    private void commandMapper() {
+    private static final Map<String, ISlashCommand> commandsMap;
+    static {
         commandsMap = new ConcurrentHashMap<>();
         
         //Admin Commands
@@ -76,6 +54,23 @@ public class CommandManager extends ListenerAdapter {
         commandsMap.put("play-youtube-banger", new PlayYoutubeBanger());
         commandsMap.put("yeahbuddy", new YeahBuddy());
         commandsMap.put("forward", new Forward());
+    }
+    
+    public CommandManager() {}
+    
+    @Override
+    public void onReady(@NotNull ReadyEvent event) {
+        LOGGER.info("command manager ready");
+    }
+    
+    @Override
+    public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
+        String commandName = event.getName();
+        
+        ISlashCommand command;
+        if ((command = commandsMap.get(commandName)) != null) {
+            command.execute(event);
+        }
     }
     
     @Override
