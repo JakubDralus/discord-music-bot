@@ -8,12 +8,11 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 public class AutoLeaver {
-    private static final long INACTIVITY_TIMEOUT = 5; // 5 minutes
+    private static final long INACTIVITY_TIMEOUT = 10; // 10 minutes
     private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     private static ScheduledFuture<?> currentTask;
     
     public static void startInactivityTimer(VoiceChannel channel) {
-//        System.out.println("Started inactivity timer");
         currentTask = scheduler.schedule(() -> {
             channel.getGuild().getAudioManager().closeAudioConnection();
             System.out.println("Disconnected due to inactivity");
@@ -31,7 +30,6 @@ public class AutoLeaver {
     public static void stopInactivityTimer() {
         if (currentTask != null) {
             currentTask.cancel(true);
-//            System.out.println("Stopped inactivity timer");
         }
     }
 }

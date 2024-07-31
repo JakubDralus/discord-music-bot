@@ -10,7 +10,6 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Objects;
@@ -55,10 +54,7 @@ public class PlayDailySong implements ISlashCommand {
             trackName = "ytsearch: " + trackName + " Official Audio";
         }
         catch (NullPointerException e) {
-            event.getChannel().sendMessageEmbeds(new EmbedBuilder()
-                    .setDescription("something went wrong")
-                    .setColor(Color.RED)
-                    .build()).queue();
+            CommandUtil.replyEmbedErr(event, "Something went wrong.");
             return;
         }
     

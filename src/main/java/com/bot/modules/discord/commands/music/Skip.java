@@ -21,7 +21,13 @@ public class Skip implements ISlashCommand {
     
     @Override
     public void execute(SlashCommandInteractionEvent event) {
-        LOGGER.info("used /skip command in {}", event.getChannel().getName());
+        PlayerManager playerManager = PlayerManager.get();
+        
+        var track = playerManager.getMusicManager(event.getGuild()).getAudioPlayer().getPlayingTrack();
+        if (track == null) {
+            CommandUtil.replyEmbedErr(event, "No track is being played right now");
+            return;
+        }
         
         AudioChannel userChannel = CommandUtil.getUserVoiceChannel(event);
         AudioChannel botChannel = CommandUtil.getBotVoiceChannel(event);
@@ -31,20 +37,12 @@ public class Skip implements ISlashCommand {
             return;
         }
         
-        if (botChannel == null) {
-            CommandUtil.connectToUserChannel(event, userChannel);
-            botChannel = userChannel;
-        }
-        
         if (!Objects.equals(botChannel, userChannel)) {
             CommandUtil.replyEmbedErr(event, "Please be in the same voice channel as the bot.");
             return;
         }
         
-        PlayerManager playerManager = PlayerManager.get();
-        
         OptionMapping message = event.getOption("count");
-        
         int count = 1;
         if (message != null) {
             count = event.getOption("count").getAsInt();
@@ -68,5 +66,7 @@ public class Skip implements ISlashCommand {
         else {
             event.reply("skipped to empty queue").queue();
         }
+        
+        LOGGER.info("used /skip command in {}", event.getChannel().getName());
     }
 }

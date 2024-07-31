@@ -1,6 +1,5 @@
 package com.bot.shared;
 
-
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.channel.middleman.AudioChannel;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
@@ -26,6 +25,12 @@ public class CommandUtil {
         event.replyEmbeds(new EmbedBuilder()
                 .setDescription(message)
                 .setColor(Color.RED)
+                .build()).queue();
+    }
+    
+    public static void replyEmbed(SlashCommandInteractionEvent event, String message) {
+        event.replyEmbeds(new EmbedBuilder()
+                .setDescription(message)
                 .build()).queue();
     }
 }

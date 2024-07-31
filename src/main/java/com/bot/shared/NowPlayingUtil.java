@@ -12,12 +12,9 @@ import net.dv8tion.jda.api.interactions.InteractionHook;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
-import java.util.Objects;
 
 
 public class NowPlayingUtil {
-    public static EmbedBuilder nowPlayingEmbedMsg;
-    public static AudioTrack nowPlayingTrack;
     
     private static String getDynamicDuration(long durationInSeconds) {
         long minutes = durationInSeconds / 60;
@@ -28,6 +25,7 @@ public class NowPlayingUtil {
     @NotNull
     public static EmbedBuilder makeTrackEmbed(AudioTrack track, Member member) {
         String trackTitle = track.getInfo().title;
+        String author = track.getInfo().author;
         String trackLink = track.getInfo().uri;
         String thumbnail = track.getInfo().artworkUrl;
         long trackDurationInSeconds = track.getDuration()/1000;
@@ -36,7 +34,8 @@ public class NowPlayingUtil {
         
         return new EmbedBuilder()
                 .setTitle("Now playing :musical_note:")
-                .setDescription("[" + trackTitle + "](" + trackLink + ")")
+                .setDescription("[" + trackTitle + "](" + trackLink + ")\n")
+                .appendDescription(author)
                 .addField("Duration", trackDuration, true)
                 .addField("Added by", nickname, true)
                 .addBlankField(true)
@@ -50,8 +49,6 @@ public class NowPlayingUtil {
         event.deferReply().submit(); // wait a bit for the external apis to get resources
         
         EmbedBuilder nowPlayingEmbed = makeTrackEmbed(track, event.getMember());
-        nowPlayingEmbedMsg = nowPlayingEmbed;
-        nowPlayingTrack = track;
         
         event.getHook().sendMessageEmbeds(nowPlayingEmbed.build())
                 .queue(originalMessage -> embedThread(player, originalMessage, track));
@@ -60,12 +57,10 @@ public class NowPlayingUtil {
     // this one is for menu selection event from /play-youtube-banger dropdown
     public static void displayCurrentPlayingTrackEmbedReply(StringSelectInteractionEvent event, AudioPlayer player) {
         PlayerManager playerManager = PlayerManager.get();
-        AudioTrack track = playerManager.getMusicManager(Objects.requireNonNull(event.getGuild())).getAudioPlayer().getPlayingTrack();
+        AudioTrack track = playerManager.getMusicManager(event.getGuild()).getAudioPlayer().getPlayingTrack();
         event.deferReply().submit(); // wait a bit for the external apis to get resources
         
         EmbedBuilder nowPlayingEmbed = makeTrackEmbed(track, event.getMember());
-        nowPlayingEmbedMsg = nowPlayingEmbed;
-        nowPlayingTrack = track;
         
         event.getHook().sendMessageEmbeds(nowPlayingEmbed.build())
                 .queue(originalMessage -> embedThread(player, originalMessage, track));
@@ -76,8 +71,6 @@ public class NowPlayingUtil {
         AudioTrack track = playerManager.getMusicManager(event.getGuild()).getAudioPlayer().getPlayingTrack();
         
         EmbedBuilder nowPlayingEmbed = makeTrackEmbed(track, event.getMember());
-        nowPlayingEmbedMsg = nowPlayingEmbed;
-        nowPlayingTrack = track;
         
         event.getChannel().sendMessageEmbeds(nowPlayingEmbed.build())
                 .queue(originalMessage -> embedThread(player, originalMessage, track));
@@ -90,7 +83,6 @@ public class NowPlayingUtil {
                 while (player.getPlayingTrack() != null && player.getPlayingTrack().equals(track)) {
                     Thread.sleep(1000);
                 }
-                
                 // If the track is not playing anymore or has been skipped, delete the original response
                 originalMessage.delete().queue();
             }
@@ -106,7 +98,6 @@ public class NowPlayingUtil {
                 while (player.getPlayingTrack() != null && player.getPlayingTrack().equals(track)) {
                     Thread.sleep(1000);
                 }
-                
                 // If the track is not playing anymore or has been skipped, delete the original response
                 originalMessage.deleteOriginal().queue();
             }

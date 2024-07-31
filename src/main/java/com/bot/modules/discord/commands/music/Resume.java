@@ -16,6 +16,14 @@ public class Resume implements ISlashCommand {
     
     @Override
     public void execute(SlashCommandInteractionEvent event) {
+        PlayerManager playerManager = PlayerManager.get();
+        
+        var track = playerManager.getMusicManager(event.getGuild()).getAudioPlayer().getPlayingTrack();
+        if (track == null) {
+            CommandUtil.replyEmbedErr(event, "No track is being played right now");
+            return;
+        }
+        
         AudioChannel userChannel = CommandUtil.getUserVoiceChannel(event);
         AudioChannel botChannel = CommandUtil.getBotVoiceChannel(event);
         
@@ -24,17 +32,11 @@ public class Resume implements ISlashCommand {
             return;
         }
         
-        if (botChannel == null) {
-            CommandUtil.connectToUserChannel(event, userChannel);
-            botChannel = userChannel;
-        }
-        
         if (!Objects.equals(botChannel, userChannel)) {
             CommandUtil.replyEmbedErr(event, "Please be in the same voice channel as the bot.");
             return;
         }
-    
-        PlayerManager playerManager = PlayerManager.get();
+        
         playerManager.getMusicManager(event.getGuild()).getScheduler().getPlayer().setPaused(false);
         
         event.reply("track resumed").queue();

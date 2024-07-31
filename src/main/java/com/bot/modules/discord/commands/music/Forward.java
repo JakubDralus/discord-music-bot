@@ -9,7 +9,6 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.*;
 import java.util.Objects;
 
 public class Forward implements ISlashCommand {
@@ -18,6 +17,15 @@ public class Forward implements ISlashCommand {
     
     @Override
     public void execute(SlashCommandInteractionEvent event) {
+        
+        PlayerManager playerManager = PlayerManager.get();
+        
+        var track = playerManager.getMusicManager(event.getGuild()).getAudioPlayer().getPlayingTrack();
+        if (track == null) {
+            CommandUtil.replyEmbedErr(event, "No track is being played right now");
+            return;
+        }
+        
         AudioChannel userChannel = CommandUtil.getUserVoiceChannel(event);
         AudioChannel botChannel = CommandUtil.getBotVoiceChannel(event);
         
@@ -26,22 +34,14 @@ public class Forward implements ISlashCommand {
             return;
         }
         
-        if (botChannel == null) {
-            CommandUtil.connectToUserChannel(event, userChannel);
-            botChannel = userChannel;
-        }
-        
         if (!Objects.equals(botChannel, userChannel)) {
             CommandUtil.replyEmbedErr(event, "Please be in the same voice channel as the bot.");
             return;
         }
         
-        PlayerManager playerManager = PlayerManager.get();
-        var track = playerManager.getMusicManager(event.getGuild()).getAudioPlayer().getPlayingTrack();
         var option = event.getOption("seconds");
         if (option == null) {
-            event.replyEmbeds(new EmbedBuilder().setDescription("Seconds can't be null.")
-                    .setColor(Color.RED).build()).queue();
+            CommandUtil.replyEmbedErr(event, "Seconds can't be null.");
             return;
         }
         

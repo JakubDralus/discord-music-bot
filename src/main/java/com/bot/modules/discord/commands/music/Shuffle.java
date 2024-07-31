@@ -13,6 +13,7 @@ public class Shuffle implements ISlashCommand {
     @Override
     public void execute(SlashCommandInteractionEvent event) {
         PlayerManager playerManager = PlayerManager.get();
+        
         if (!playerManager.getMusicManager(event.getGuild()).getScheduler().getQueue().isEmpty()){
             playerManager.getMusicManager(event.getGuild()).getScheduler().shuffleQueue();
         }

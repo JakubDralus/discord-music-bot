@@ -15,7 +15,8 @@ import net.dv8tion.jda.api.events.interaction.component.StringSelectInteractionE
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.*;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 
 @Getter
@@ -46,6 +47,9 @@ public class TrackScheduler extends AudioEventAdapter {
     
     public void queueTrack(AudioTrack track, boolean reply) {
 //        System.out.println("queue track: "+ track.getInfo().title);
+        
+        player.setPaused(false); // reset the pause
+        
         if (!player.startTrack(track, true)) {
             queue.offer(track);
             
@@ -53,12 +57,14 @@ public class TrackScheduler extends AudioEventAdapter {
                 commandEvent.replyEmbeds(new EmbedBuilder()
                         .setTitle("Added to queue :white_check_mark:")
                         .setDescription(track.getInfo().title)
+                        .appendDescription("\n tracks in queue: %d".formatted(queue.size()))
                         .build()).queue();
             }
             if (menuEvent != null && reply && !menuEvent.isAcknowledged()) {
                 menuEvent.replyEmbeds(new EmbedBuilder()
                         .setTitle("Added to queue :white_check_mark:")
                         .setDescription(track.getInfo().title)
+                        .appendDescription("\n tracks in queue: %d".formatted(queue.size()))
                         .build()).queue();
             }
         }

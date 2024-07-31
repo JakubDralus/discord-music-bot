@@ -1,5 +1,6 @@
 package com.bot.modules.discord.commands.music;
 
+import com.bot.modules.audioplayer.GuildMusicManager;
 import com.bot.modules.audioplayer.PlayerManager;
 import com.bot.modules.discord.commands.ISlashCommand;
 import com.bot.shared.CommandUtil;
@@ -16,6 +17,14 @@ public class Pause implements ISlashCommand {
     
     @Override
     public void execute(SlashCommandInteractionEvent event) {
+        PlayerManager playerManager = PlayerManager.get();
+        
+        var track = playerManager.getMusicManager(event.getGuild()).getAudioPlayer().getPlayingTrack();
+        if (track == null) {
+            CommandUtil.replyEmbedErr(event, "No track is being played right now");
+            return;
+        }
+        
         AudioChannel userChannel = CommandUtil.getUserVoiceChannel(event);
         AudioChannel botChannel = CommandUtil.getBotVoiceChannel(event);
         
@@ -24,20 +33,14 @@ public class Pause implements ISlashCommand {
             return;
         }
         
-        if (botChannel == null) {
-            CommandUtil.connectToUserChannel(event, userChannel);
-            botChannel = userChannel;
-        }
-        
         if (!Objects.equals(botChannel, userChannel)) {
             CommandUtil.replyEmbedErr(event, "Please be in the same voice channel as the bot.");
             return;
         }
-    
-        PlayerManager playerManager = PlayerManager.get();
-    
-        playerManager.getMusicManager(event.getGuild()).getScheduler().getPlayer().setPaused(true);
-        event.reply("track paused").queue();
+       
+        GuildMusicManager musicManager = playerManager.getMusicManager(event.getGuild());
+        musicManager.getScheduler().getPlayer().setPaused(true);
+        CommandUtil.replyEmbed(event, "Track paused.");
     
         LOGGER.info("used /pause command in {}", event.getChannel().getName());
     }

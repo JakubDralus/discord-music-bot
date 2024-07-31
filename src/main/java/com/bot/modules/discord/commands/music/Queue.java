@@ -15,6 +15,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Queue implements ISlashCommand {
     private static final Logger LOGGER = LoggerFactory.getLogger(Queue.class);
     
+    /**
+     * Maximum number of tracks that will be displayed in the reply embed
+     * before printing "and x more...".
+     */
+    private final int MAX_TRACKS_DISPLAY = 12;
+    
     @Override
     public void execute(SlashCommandInteractionEvent event) {
         PlayerManager playerManager = PlayerManager.get();
@@ -28,7 +34,7 @@ public class Queue implements ISlashCommand {
         
         // show top 15 tracks
         queue.forEach(track -> {
-            if (i.get() >= 15) {
+            if (i.get() >= MAX_TRACKS_DISPLAY) {
                 return;
             }
             i.getAndIncrement();
@@ -38,7 +44,10 @@ public class Queue implements ISlashCommand {
         event.replyEmbeds(new EmbedBuilder()
                 .setTitle("Tracks in queue:")
                 .appendDescription(tracks.toString())
-                .appendDescription(queue.size() > 10 ? ("\n and " + (queue.size()-10) + " more...") : "")
+                .appendDescription(queue.size() > MAX_TRACKS_DISPLAY
+                        ? ("\n and " + (queue.size() - MAX_TRACKS_DISPLAY) + " more...")
+                        : ""
+                )
                 .build()
         ).queue();
     
