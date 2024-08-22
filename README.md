@@ -54,23 +54,19 @@ Exact text from `/help` command:
 - [RatPartMix API](http://130.61.63.141:8888/docs)
 - (website coming soon)
 
-# Specification
+# Tech Stack
 
-- Java 19 (it think it can also work on java 17)
+- Java 19
 - Maven 3.9.6
-
-# Dependencies
-
-You can also find them in pom.xml
-
-- com.github.discord-jda:JDA - v5.0.0-beta.12
-- net.dv8tion:JDA - 5.0.0-beta.13
-- se.michaelthelin.spotify:spotify-web-api-java - 8.0.0
-- dev.arbjerg:lavaplayer - 2.1.0
+  
+- net.dv8tion:JDA - 5.0.0
+- se.michaelthelin.spotify:spotify-web-api-java - 8.3.6
+- dev.arbjerg:lavaplayer - 2.2.1
+- dev.lavalink.youtube:v2 - 1.4.0
+  
 - org.projectlombok:lombok - 1.18.28
 - org.slf4j:slf4j-api - 2.0.5
 - org.slf4j:slf4j-log4j12 - 2.0.5
-- log4j:log4j - 1.2.17
 
 # Resources:
 
