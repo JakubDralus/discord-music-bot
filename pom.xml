@@ -66,12 +66,6 @@
     </repositories>
 
     <dependencies>
-<!--        <dependency>-->
-<!--            <groupId>com.github.discord-jda</groupId>-->
-<!--            <artifactId>JDA</artifactId>-->
-<!--            <version>v5.0.0-beta.13</version>-->
-<!--        </dependency>-->
-<!--        todo: make a full migration to new JDA version-->
         <dependency>
             <groupId>net.dv8tion</groupId>
             <artifactId>JDA</artifactId>
@@ -81,7 +75,7 @@
         <dependency>
             <groupId>se.michaelthelin.spotify</groupId>
             <artifactId>spotify-web-api-java</artifactId>
-            <version>8.3.6</version>
+            <version>8.4.1</version>
         </dependency>
 
         <dependency>
@@ -102,27 +96,17 @@
             <artifactId>slf4j-log4j12</artifactId>
             <version>2.0.5</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>log4j</groupId>-->
-<!--            <artifactId>log4j</artifactId>-->
-<!--            <version>1.2.17</version>-->
-<!--        </dependency>-->
 
-<!--        <dependency>-->
-<!--            <groupId>dev.arbjerg</groupId>-->
-<!--            <artifactId>lavaplayer</artifactId>-->
-<!--            <version>0eaeee195f0315b2617587aa3537fa202df07ddc-SNAPSHOT</version>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>dev.arbjerg</groupId>
             <artifactId>lavaplayer</artifactId>
             <version>2.2.1</version>
         </dependency>
+
         <dependency>
             <groupId>dev.lavalink.youtube</groupId>
             <artifactId>v2</artifactId>
-            <version>1.4.0</version>
+            <version>1.7.2</version>
         </dependency>
     </dependencies>
-
 </project>
