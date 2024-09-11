@@ -22,11 +22,6 @@ jobs:
 
       - name: Run commands on remote server
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_HOSTNAME }} '
-          ps -ef | grep "java -jar target/discord-bot1" | grep -v grep | awk "{print \$2}" | xargs -r kill -9 &&
-          cd /Rat-Party-Mix-discord-music-bot &&
-          git pull &&
-          ./script.sh
-          '
+          ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_PRIVATE_KEY }} ${{ secrets.SSH_HOSTNAME }} "./Rat-Party-Mix-discord-music-bot/rpm.sh"
         env:
           GIT_SSH_COMMAND: 'ssh -i ~/.ssh/id_rsa'

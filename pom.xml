@@ -89,7 +89,7 @@
         <dependency>
             <groupId>dev.lavalink.youtube</groupId>
             <artifactId>v2</artifactId>
-            <version>1.7.0</version>
+            <version>1.7.2</version>
         </dependency>
 
         <!--         logger stuff -->
