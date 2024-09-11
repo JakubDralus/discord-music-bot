@@ -73,9 +73,9 @@ Exact text from `/help` command:
 - https://github.com/discord-jda/JDA
 - https://github.com/spotify-web-api-java/spotify-web-api-java
 - https://github.com/Walkyst/lavaplayer-fork
-- https://github.com/lavalink-devs/lavaplayer (current) <br><br>
-- https://github.com/lavalink-devs/youtube-source
-- 
+- https://github.com/lavalink-devs/lavaplayer (current) 
+- https://github.com/lavalink-devs/youtube-source <br><br>
+
 - https://github.com/Glaxier0/discord-music-bot
 - https://github.com/relaxingleg/Tutorial-Bot
 - https://www.youtube.com/watch?v=FvAkzKi9w5s&list=PLMDWhd7MfizXOJXn905x8UqkWtMJ6tl-b
