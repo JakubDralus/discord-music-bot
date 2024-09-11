@@ -24,8 +24,8 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_HOSTNAME }} '
           ps -ef | grep "java -jar target/discord-bot1" | grep -v grep | awk "{print \$2}" | xargs -r kill -9 &&
-          git pull &&
           cd /Rat-Party-Mix-discord-music-bot &&
+          git pull &&
           ./script.sh
           '
         env:
