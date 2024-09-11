@@ -59,10 +59,10 @@ Exact text from `/help` command:
 - Java 19
 - Maven 3.9.6
   
-- net.dv8tion:JDA - 5.0.0
-- se.michaelthelin.spotify:spotify-web-api-java - 8.3.6
+- net.dv8tion:JDA - 5.1.0
+- se.michaelthelin.spotify:spotify-web-api-java - 8.4.1
 - dev.arbjerg:lavaplayer - 2.2.1
-- dev.lavalink.youtube:v2 - 1.4.0
+- dev.lavalink.youtube:v2 - 1.7.0
   
 - org.projectlombok:lombok - 1.18.28
 - org.slf4j:slf4j-api - 2.0.5
@@ -74,6 +74,8 @@ Exact text from `/help` command:
 - https://github.com/spotify-web-api-java/spotify-web-api-java
 - https://github.com/Walkyst/lavaplayer-fork
 - https://github.com/lavalink-devs/lavaplayer (current) <br><br>
+- https://github.com/lavalink-devs/youtube-source
+- 
 - https://github.com/Glaxier0/discord-music-bot
 - https://github.com/relaxingleg/Tutorial-Bot
 - https://www.youtube.com/watch?v=FvAkzKi9w5s&list=PLMDWhd7MfizXOJXn905x8UqkWtMJ6tl-b
