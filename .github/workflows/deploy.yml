@@ -1,0 +1,33 @@
+name: Remote Deployment
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install SSH client
+        run: sudo apt-get install -y openssh-client
+
+      - name: Add SSH key
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Run commands on remote server
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_HOSTNAME }} '
+          ps -ef | grep "java -jar target/discord-bot1" | grep -v grep | awk "{print \$2}" | xargs -r kill -9 &&
+          git pull &&
+          cd /Rat-Party-Mix-discord-music-bot &&
+          ./script.sh
+          '
+        env:
+          GIT_SSH_COMMAND: 'ssh -i ~/.ssh/id_rsa'
