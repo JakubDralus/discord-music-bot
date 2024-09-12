@@ -11,7 +11,6 @@ import dev.lavalink.youtube.YoutubeAudioSourceManager;
 import dev.lavalink.youtube.clients.AndroidTestsuiteWithThumbnail;
 import dev.lavalink.youtube.clients.MusicWithThumbnail;
 import dev.lavalink.youtube.clients.WebWithThumbnail;
-import dev.lavalink.youtube.clients.skeleton.Client;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 
@@ -19,7 +18,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-// singleton
 public class PlayerManager {
     private static PlayerManager INSTANCE;
     private final Map<Long, GuildMusicManager> musicManagers;
@@ -28,9 +26,8 @@ public class PlayerManager {
     private PlayerManager() {
         this.musicManagers = new HashMap<>();
         this.audioPlayerManager = new DefaultAudioPlayerManager();
-        YoutubeAudioSourceManager ytSourceManager = new YoutubeAudioSourceManager(/*allowSearch:*/ true,
-                new Client[] { new MusicWithThumbnail(), new WebWithThumbnail(), new AndroidTestsuiteWithThumbnail() });
-        
+        YoutubeAudioSourceManager ytSourceManager = new YoutubeAudioSourceManager(true,
+                 new MusicWithThumbnail(), new WebWithThumbnail(), new AndroidTestsuiteWithThumbnail());
         audioPlayerManager.registerSourceManager(ytSourceManager);
         AudioSourceManagers.registerLocalSource(audioPlayerManager);
     }
@@ -38,7 +35,6 @@ public class PlayerManager {
     public static PlayerManager get() {
         if (INSTANCE == null) {
             INSTANCE = new PlayerManager();
-//            System.out.println("source managers: " + INSTANCE.audioPlayerManager.getSourceManagers());
         }
         return INSTANCE;
     }

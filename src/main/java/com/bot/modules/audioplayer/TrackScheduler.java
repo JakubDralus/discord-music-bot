@@ -4,6 +4,7 @@ import com.bot.shared.AutoLeaver;
 import com.bot.shared.NowPlayingUtil;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
+import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 import lombok.Getter;
@@ -85,7 +86,7 @@ public class TrackScheduler extends AudioEventAdapter {
     
     @Override
     public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
-        System.out.println(queue.size());
+//        System.out.println(queue.size());
         if (isRepeat) {
             player.startTrack(track.makeClone(), false);
         }
@@ -94,12 +95,22 @@ public class TrackScheduler extends AudioEventAdapter {
             player.startTrack(nextTrack, false);
             
             // show another track after prev finished
-            if (endReason == AudioTrackEndReason.FINISHED && nextTrack != null) {
+            if (endReason.mayStartNext && nextTrack != null) {
                 NowPlayingUtil.displayCurrentPlayingTrackEmbedNoReply(commandEvent, player);
             }
         }
 
         if (player.getPlayingTrack() == null)
             AutoLeaver.startInactivityTimer(commandEvent.getGuild().getAudioManager().getConnectedChannel().asVoiceChannel());
+    }
+    
+    @Override
+    public void onTrackException(AudioPlayer player, AudioTrack track, FriendlyException exception) {
+        exception.printStackTrace();
+    }
+    
+    @Override
+    public void onTrackStuck(AudioPlayer player, AudioTrack track, long thresholdMs) {
+        System.out.println("track stuck " + track.getInfo().title);
     }
 }
