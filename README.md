@@ -61,15 +61,11 @@ Exact text from `/help` command:
 
 - Java 19
 - Maven 3.9.6
-  
 - net.dv8tion:JDA - 5.1.0
 - se.michaelthelin.spotify:spotify-web-api-java - 8.4.1
 - dev.arbjerg:lavaplayer - 2.2.1
-- dev.lavalink.youtube:v2 - 1.7.0
+- dev.lavalink.youtube:v2 - 1.7.2
   
-- org.projectlombok:lombok - 1.18.28
-- org.slf4j:slf4j-api - 2.0.5
-- org.slf4j:slf4j-log4j12 - 2.0.5
 
 # Resources:
 
