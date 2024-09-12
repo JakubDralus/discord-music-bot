@@ -14,7 +14,10 @@ is updated and shares a randomly chosen daily song at 12PM (CET) via Twitter eve
 
 Another friend aka Zuzanna top G - is making thumbnails every year for the playlist using her Photoshop skills. (they kinda fire🔥)
 
-[![image](https://github.com/JakubDralus/Rat-Party-Mix-discord-music-bot/assets/129612952/2992073c-5616-48bd-bf07-d50f61ede836)](https://open.spotify.com/playlist/0RHhiQ6hGLKgjE7eqNdXzh)
+The playlist in mention ([link](https://open.spotify.com/playlist/0RHhiQ6hGLKgjE7eqNdXzh)): <br>
+<a href="https://open.spotify.com/playlist/0RHhiQ6hGLKgjE7eqNdXzh" target="_blank">
+  <img src="https://github.com/JakubDralus/Rat-Party-Mix-discord-music-bot/assets/129612952/2992073c-5616-48bd-bf07-d50f61ede836" width="500">
+</a>
 
 # Commands
 
@@ -70,12 +73,14 @@ Exact text from `/help` command:
 
 # Resources:
 
+repos:
 - https://github.com/discord-jda/JDA
 - https://github.com/spotify-web-api-java/spotify-web-api-java
 - https://github.com/Walkyst/lavaplayer-fork
 - https://github.com/lavalink-devs/lavaplayer (current) 
 - https://github.com/lavalink-devs/youtube-source <br><br>
 
+other:
 - https://github.com/Glaxier0/discord-music-bot
 - https://github.com/relaxingleg/Tutorial-Bot
 - https://www.youtube.com/watch?v=FvAkzKi9w5s&list=PLMDWhd7MfizXOJXn905x8UqkWtMJ6tl-b
