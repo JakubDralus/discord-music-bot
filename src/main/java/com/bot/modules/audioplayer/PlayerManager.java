@@ -8,9 +8,9 @@ import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import dev.lavalink.youtube.YoutubeAudioSourceManager;
-import dev.lavalink.youtube.clients.AndroidTestsuiteWithThumbnail;
 import dev.lavalink.youtube.clients.MusicWithThumbnail;
 import dev.lavalink.youtube.clients.WebWithThumbnail;
+import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 
@@ -26,9 +26,17 @@ public class PlayerManager {
     private PlayerManager() {
         this.musicManagers = new HashMap<>();
         this.audioPlayerManager = new DefaultAudioPlayerManager();
-        YoutubeAudioSourceManager ytSourceManager = new YoutubeAudioSourceManager(true,
-                 new MusicWithThumbnail(), new WebWithThumbnail(), new AndroidTestsuiteWithThumbnail());
+        // Web is dev.lavalink.youtube.clients.Web
+        String poToken = Dotenv.load().get("PO_TOKEN");
+        System.out.println(poToken);
+        WebWithThumbnail.setPoTokenAndVisitorData(poToken, Dotenv.load().get("VISITOR_DATA"));
+        
+        YoutubeAudioSourceManager ytSourceManager = new dev.lavalink.youtube.YoutubeAudioSourceManager(
+                true, new MusicWithThumbnail(), new WebWithThumbnail()
+        );
         audioPlayerManager.registerSourceManager(ytSourceManager);
+        AudioSourceManagers.registerRemoteSources(audioPlayerManager,
+                com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioSourceManager.class);
         AudioSourceManagers.registerLocalSource(audioPlayerManager);
     }
     
