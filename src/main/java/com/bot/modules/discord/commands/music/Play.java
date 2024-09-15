@@ -46,7 +46,7 @@ public class Play implements ISlashCommand {
             new URI(trackName);
         }
         catch (URISyntaxException e) {
-            trackName = "ytmsearch: " + trackName;
+            trackName = "scsearch: " + trackName;
             System.out.println("trackname " + trackName);
         }
         

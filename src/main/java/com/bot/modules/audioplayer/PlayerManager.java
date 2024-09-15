@@ -7,9 +7,6 @@ import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
-import dev.lavalink.youtube.YoutubeAudioSourceManager;
-import dev.lavalink.youtube.clients.*;
-import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 
@@ -25,13 +22,7 @@ public class PlayerManager {
     private PlayerManager() {
         this.musicManagers = new HashMap<>();
         this.audioPlayerManager = new DefaultAudioPlayerManager();
-        // Web is dev.lavalink.youtube.clients.Web
-        Web.setPoTokenAndVisitorData(Dotenv.load().get("PO_TOKEN"), Dotenv.load().get("VISITOR_DATA"));
-        
-        YoutubeAudioSourceManager ytSourceManager = new dev.lavalink.youtube.YoutubeAudioSourceManager(
-                true, new MusicWithThumbnail(), new WebWithThumbnail()
-        );
-        audioPlayerManager.registerSourceManager(ytSourceManager);
+
         AudioSourceManagers.registerRemoteSources(audioPlayerManager,
                 com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioSourceManager.class);
         AudioSourceManagers.registerLocalSource(audioPlayerManager);
@@ -69,7 +60,7 @@ public class PlayerManager {
         
             @Override
             public void noMatches() {
-                System.out.println("No match found");
+                System.out.println("No match found: " + trackURL);
                 if (event.isAcknowledged()) {
                     event.getChannel().sendMessage("no match found, try again").queue();
                 }
