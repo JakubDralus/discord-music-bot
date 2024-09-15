@@ -32,6 +32,7 @@ public class CommandManager extends ListenerAdapter {
         commandsMap.put("random-song", new RandomSong());
         commandsMap.put("play-random-song", new PlayRandomSong());
         commandsMap.put("echo", new Echo());
+        commandsMap.put("yeahbuddy", new YeahBuddy());
         
         // other
         commandsMap.put("info", new Info());
@@ -52,7 +53,6 @@ public class CommandManager extends ListenerAdapter {
         commandsMap.put("play-ratpartymix", new RatPartyMix());
         commandsMap.put("play-daily-song", new PlayDailySong());
         commandsMap.put("play-youtube-banger", new PlayYoutubeBanger());
-        commandsMap.put("yeahbuddy", new YeahBuddy());
         commandsMap.put("forward", new Forward());
     }
     

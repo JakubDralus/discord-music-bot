@@ -32,6 +32,7 @@ public class TestCommands {
                 Commands.slash("play-random-song", "play random song from playlist (test command)"),
                 Commands.slash("echo", "echo test (test command)")
                         .addOptions(new OptionData(OptionType.STRING, "message", "message to be echoed (test command)", true)),
+                Commands.slash("yeahbuddy", "GO TO THE GYM!!! (test command)"),
                 
                 // other commands
                 Commands.slash("info", "Info page for this music bot. (test command)"),
@@ -54,8 +55,7 @@ public class TestCommands {
                 Commands.slash("leave", "bot leaves the channel (test command)"),
                 Commands.slash("play-ratpartymix", "play the Rat Paty Mix 2023™ playlist **Do not spam this command!** (test command)"),
                 Commands.slash("play-daily-song", "play today's daily song (test command)"),
-                Commands.slash("play-youtube-banger", "play a song from #youtube-only-bangers (test command)"),
-                Commands.slash("yeahbuddy", "GO TO THE GYM!!! (test command)")
+                Commands.slash("play-youtube-banger", "play a song from #youtube-only-bangers (test command)")
             ).queue();
         }
     }
