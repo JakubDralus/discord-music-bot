@@ -43,3 +43,4 @@ build/
 /src/test/
 /.mvn/wrapper/maven-wrapper.jar
 .env
+script.sh
