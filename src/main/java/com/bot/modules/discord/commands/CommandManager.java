@@ -52,7 +52,7 @@ public class CommandManager extends ListenerAdapter {
         commandsMap.put("shuffle-queue", new Shuffle());
         commandsMap.put("play-ratpartymix", new RatPartyMix());
         commandsMap.put("play-daily-song", new PlayDailySong());
-        commandsMap.put("play-youtube-banger", new PlayYoutubeBanger());
+//        commandsMap.put("play-youtube-banger", new PlayYoutubeBanger());
         commandsMap.put("forward", new Forward());
     }
     

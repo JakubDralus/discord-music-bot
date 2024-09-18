@@ -29,13 +29,13 @@ public class Help implements ISlashCommand {
                 - `/leave`: Make the bot leave the channel.
                 - `/play-ratpartymix`: Play the Rat Party Mix 2023™ playlist. **Do not spam this command!**
                 - `/play-daily-song`: Play today's daily song.
-                - `/play-youtube-banger`: play a song from #youtube-only-bangers channel using a selection menu.
                 
                 **Other Commands:**
                 - `/help`: Display command list.
                 - `/info`: Get information about this music bot and link to the playlist.
                 - `/twitter`: Get information about the Twitter site.
                 """).queue();
+        //- `/play-youtube-banger`: play a song from #youtube-only-bangers channel using a selection menu.
     
         LOGGER.info("used /help command in {}", event.getChannel().getName());
     }

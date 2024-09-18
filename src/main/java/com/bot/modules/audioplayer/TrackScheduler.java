@@ -87,6 +87,7 @@ public class TrackScheduler extends AudioEventAdapter {
     @Override
     public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
 //        System.out.println(queue.size());
+        System.out.println("end reason: " + endReason);
         if (isRepeat) {
             player.startTrack(track.makeClone(), false);
         }

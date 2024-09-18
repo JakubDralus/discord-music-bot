@@ -11,20 +11,23 @@ public class CustomPlaylistSettings {
     public static boolean adjustSong(int id, SlashCommandInteractionEvent event) {
         PlayerManager playerManager = PlayerManager.get();
     
-        return switch (id) {
-            case 2 -> {
-                playerManager.play(event.getGuild(), "https://www.youtube.com/watch?v=v4tFZzBrI20", false, event);
-                yield true;
-            }
-            case 3 -> {
-                playerManager.play(event.getGuild(), "https://www.youtube.com/watch?v=oujZpIr5id8", false, event);
-                yield true;
-            }
-            case 5 -> {
-                playerManager.play(event.getGuild(), "https://www.youtube.com/watch?v=E0cykgYRhQg", false, event);
-                yield true;
-            }
-            default -> false;
-        };
+        return false;
+        // commented due to no longer using youtube client
+        // remember to bring this back when yt client will work again
+//        return switch (id) {
+//            case 2 -> {
+//                playerManager.play(event.getGuild(), "https://www.youtube.com/watch?v=v4tFZzBrI20", false, event);
+//                yield true;
+//            }
+//            case 3 -> {
+//                playerManager.play(event.getGuild(), "https://www.youtube.com/watch?v=oujZpIr5id8", false, event);
+//                yield true;
+//            }
+//            case 5 -> {
+//                playerManager.play(event.getGuild(), "https://www.youtube.com/watch?v=E0cykgYRhQg", false, event);
+//                yield true;
+//            }
+//            default -> false;
+//        };
     }
 }
