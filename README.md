@@ -1,7 +1,7 @@
 # Rat Party Mix Discord Music Bot
 
 Discord music bot for my [playlist on Spotify](https://open.spotify.com/playlist/0RHhiQ6hGLKgjE7eqNdXzh), that has couple of specific commands just to integrate with this playlist (made possible with help of Spotify API).
-It can of course play any other music track using [Lavaplayer](https://github.com/lavalink-devs/lavaplayer) that uses ~~YouTube~~ Sound Cloud Client for streaming and searching tracks. Branded with the name of the playlist just for fun.
+It can of course play any other music track using [Lavaplayer](https://github.com/lavalink-devs/lavaplayer) that uses ~~YouTube~~ Sound Cloud&trade; Client for streaming and searching tracks. Branded with the name of the playlist just for fun.
 
 ## About the playlist
 
