@@ -1,7 +1,7 @@
 # Rat Party Mix Discord Music Bot
 
 Discord music bot for my [playlist on Spotify](https://open.spotify.com/playlist/0RHhiQ6hGLKgjE7eqNdXzh), that has couple of specific commands just to integrate with this playlist (made possible with help of Spotify API).
-It can of course play any other music track using [Lavaplayer](https://github.com/lavalink-devs/lavaplayer) that uses YouTube API for streaming and searching tracks. Branded with the name of the playlist just for fun.
+It can of course play any other music track using [Lavaplayer](https://github.com/lavalink-devs/lavaplayer) that uses ~~YouTube~~ Sound Cloud Client for streaming and searching tracks. Branded with the name of the playlist just for fun.
 
 ## About the playlist
 
@@ -9,7 +9,7 @@ The playlist was created back when I was in high school. It features party hits 
 I recommend it as a ready-to-go playlist for parties if someone didn't have one already and I acted like it's some real brand (I still do) and it's kinda fun. 
 Then I combined this idea with my programming skills and created this bot as a side project. <br>
 
-A friend of mine also got hooked to this idea and created a bot 'tracker' ([Github](https://github.com/zawislakm/RatPartyMixTracker)) for this playlist. This bot notifies followers whenever the tracklist on Spotify 
+A friend of mine also got hooked to this idea and created a 'tracker' bot ([Github](https://github.com/zawislakm/RatPartyMixTracker)) for this playlist. This bot notifies followers whenever the tracklist on Spotify 
 is updated and shares a randomly chosen daily song at 12PM (CET) via Twitter everyday. Additionally, it is also possible to fetch daily song directly from [RatPartMix API](http://130.61.63.141:8888/docs).
 
 Another friend aka Zuzanna top G - is making thumbnails every year for the playlist using her Photoshop skills. (they kinda fire🔥)
@@ -41,8 +41,9 @@ Exact text from `/help` command:
 - `/leave`: Make the bot leave the channel.
 - `/play-ratpartymix`: Play the Rat Party Mix 2023™ playlist.
 - `/play-daily-song`: Play today's daily song.
-- `/play-youtube-banger`: play a song from #youtube-only-bangers channel using a selection menu.
 - `/yeahbuddy`: Get pumped up for the gym!
+  
+[//]: # (- `/play-youtube-banger`: play a song from #youtube-only-bangers channel using a selection menu.)
 
 **Other Commands:**
 
@@ -53,7 +54,7 @@ Exact text from `/help` command:
 # Rat Part Mix links
 
 - [Spotify playlist](https://open.spotify.com/playlist/0RHhiQ6hGLKgjE7eqNdXzh)
-- [Twitter bot](https://twitter.com/RatPartyMix) 'tracker' ([GitHub](https://github.com/zawislakm/RatPartyMixTracker))
+- [Twitter](https://twitter.com/RatPartyMix) 'tracker' bot ([GitHub](https://github.com/zawislakm/RatPartyMixTracker))
 - [RatPartMix API](http://130.61.63.141:8888/docs)
 - (website coming soon)
 
@@ -64,7 +65,7 @@ Exact text from `/help` command:
 - net.dv8tion:JDA - 5.1.0
 - se.michaelthelin.spotify:spotify-web-api-java - 8.4.1
 - dev.arbjerg:lavaplayer - 2.2.1
-- dev.lavalink.youtube:v2 - 1.7.2
+- ~~dev.lavalink.youtube:v2 - 1.7.2~~
   
 
 # Resources:
