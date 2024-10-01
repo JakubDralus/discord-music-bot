@@ -1,19 +1,21 @@
 package com.bot.modules.discord.commands;
 
 import com.bot.Application;
-import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.events.message.MessageDeleteEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Objects;
 import java.util.stream.IntStream;
 
-@Slf4j
+
 public class Listener extends ListenerAdapter {
+    private static final Logger LOGGER = LoggerFactory.getLogger(Listener.class);
     
     @Override
     public void onReady(@NotNull ReadyEvent event) {
@@ -35,7 +37,7 @@ public class Listener extends ListenerAdapter {
                 channel.sendMessage("Let's play some fucking bangers :sunglasses:").queue();
         }
         
-        log.info("I am ready to go!");
+        LOGGER.info("I am ready to go!");
     }
     
     @Override
@@ -56,7 +58,12 @@ public class Listener extends ListenerAdapter {
         String nickname = event.getAuthor().getEffectiveName();
         String contentDisplay = event.getMessage().getContentDisplay();
     
-        log.info("{} [{} - {}]: {}", channelName, authorName, nickname, contentDisplay);
+        LOGGER.info(String.format("%s [%s - %s]: %s",
+                channelName,
+                authorName,
+                nickname,
+                contentDisplay));
+        
         event.getChannel().sendMessage(contentDisplay).queue();
     }
     
@@ -66,14 +73,20 @@ public class Listener extends ListenerAdapter {
         String authorName = event.getAuthor().getName();
         String nickname = Objects.requireNonNull(event.getMember()).getNickname();
         String contentDisplay = event.getMessage().getContentDisplay();
-        if (nickname == null) nickname = "<no nickname>";
         
-        log.info("server: {}, channel: #{} by [{} - {}]: {}", guild, channelName, authorName, nickname, contentDisplay);
+        if (nickname == null) nickname = "<no nickname>";
+    
+        LOGGER.info(String.format("server: %s, channel: #%s by [%s - %s]: %s",
+                guild,
+                channelName,
+                authorName,
+                nickname,
+                contentDisplay));
     }
     
     @Override
     public void onMessageDelete(@NotNull MessageDeleteEvent event) {
         String channelName = event.getChannel().getName();
-        log.info("Message deleted on channel: #{}", channelName);
+        LOGGER.info(String.format("Message deleted on channel: #%s", channelName));
     }
 }
